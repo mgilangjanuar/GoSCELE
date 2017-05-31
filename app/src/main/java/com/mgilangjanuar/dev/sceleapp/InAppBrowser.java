@@ -1,0 +1,132 @@
+package com.mgilangjanuar.dev.sceleapp;
+
+import android.content.Intent;
+import android.net.Uri;
+import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.webkit.CookieManager;
+import android.webkit.DownloadListener;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
+import android.widget.Toast;
+
+import com.mgilangjanuar.dev.sceleapp.Models.AccountModel;
+
+public class InAppBrowser extends AppCompatActivity {
+
+    WebView webView;
+
+    String url;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_in_app_browser);
+
+        webView = (WebView) findViewById(R.id.web_view);
+
+        Bundle bundle = getIntent().getExtras();
+        if (bundle == null || bundle.getString("url") == null) {
+            Toast.makeText(this, "Broken URL", Toast.LENGTH_SHORT).show();
+            onBackPressed();
+            return;
+        }
+
+        url = bundle.getString("url");
+
+        if (url.contains("mod/forum/discuss.php?d=")) {
+            Intent intent = new Intent(InAppBrowser.this, ForumDetail.class).putExtra("url", url);
+            startActivity(intent);
+            super.onBackPressed();
+            return;
+        } else if (url.contains("mod/forum/view.php?")) {
+            Intent intent = new Intent(InAppBrowser.this, Forum.class).putExtra("url", url);
+            startActivity(intent);
+            super.onBackPressed();
+            return;
+        }
+
+        if (! (new AccountModel(this)).isUsingInAppBrowser()) {
+            Intent intent = new Intent(Intent.ACTION_VIEW);
+            intent.setData(Uri.parse(url));
+            startActivity(intent);
+            super.onBackPressed();
+            return;
+        }
+
+        final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_app_browser);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+        CookieManager.getInstance().setAcceptCookie(true);
+        webView.getSettings().setJavaScriptEnabled(true);
+        webView.setWebViewClient(new WebViewClient() {
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                toolbar.setTitle(url);
+                return super.shouldOverrideUrlLoading(view, url);
+            }
+
+            @Override
+            public void onLoadResource(WebView view, String url) {
+                super.onLoadResource(view, url);
+                toolbar.setTitle(view.getTitle());
+            }
+        });
+        webView.setDownloadListener(new DownloadListener() {
+            public void onDownloadStart(String url, String userAgent,
+                                        String contentDisposition, String mimetype,
+                                        long contentLength) {
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                intent.setData(Uri.parse(url));
+                startActivity(intent);
+            }
+        });
+        webView.loadUrl(url);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if(webView.canGoBack()) {
+            webView.goBack();
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.in_app_browser_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case (R.id.item_browser_share):
+                Intent shareIntent = new Intent(Intent.ACTION_SEND);
+                shareIntent.setType("text/plain");
+                shareIntent.putExtra(Intent.EXTRA_TEXT, webView.getUrl());
+                startActivity(Intent.createChooser(shareIntent, "Share Link"));
+                break;
+            case (R.id.item_browser_open):
+                Intent i = new Intent(Intent.ACTION_VIEW);
+                i.setData(Uri.parse(url));
+                startActivity(i);
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+}

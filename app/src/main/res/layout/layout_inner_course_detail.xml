@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layout_inner_course_detail"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/title_inner_course_post"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="15sp"
+        android:drawableLeft="@drawable/ic_chevron_right_black_24dp"
+        android:drawablePadding="4dip"
+        android:paddingBottom="10dp"
+        android:paddingTop="6dp"
+        android:textColor="@color/color_accent"
+        android:textStyle="italic"
+        android:clickable="true"
+        android:background="?attr/selectableItemBackground"
+        android:visibility="gone"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"/>
+
+    <TextView
+        android:id="@+id/comment_inner_course_post"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="10dp"
+        android:visibility="gone"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"/>
+
+</LinearLayout>
