@@ -1,17 +1,26 @@
 package com.mgilangjanuar.dev.sceleapp.Fragments.ForumDetail;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.mgilangjanuar.dev.sceleapp.Adapters.ForumDetailCommentAdapter;
 import com.mgilangjanuar.dev.sceleapp.Presenters.ForumDetailPresenter;
@@ -20,16 +29,18 @@ import com.mgilangjanuar.dev.sceleapp.R;
 public class Comments extends Fragment implements ForumDetailPresenter.ForumDetailServicePresenter {
 
     ForumDetailPresenter forumDetailPresenter;
+    FloatingActionButton actionButton;
 
     public Comments() {
         // Required empty public constructor
     }
 
-    public static Comments newInstance(ForumDetailPresenter forumDetailPresenter) {
+    public static Comments newInstance(ForumDetailPresenter forumDetailPresenter, FloatingActionButton actionButton) {
         Comments fragment = new Comments();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         fragment.forumDetailPresenter = forumDetailPresenter;
+        fragment.actionButton = actionButton;
         return fragment;
     }
 
@@ -105,5 +116,23 @@ public class Comments extends Fragment implements ForumDetailPresenter.ForumDeta
                 }, 1000);
             }
         });
+
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+                    actionButton.show();
+                }
+                super.onScrollStateChanged(recyclerView, newState);
+            }
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                if (dy > 0 || dy < 0 && actionButton.isShown()) {
+                    actionButton.hide();
+                }
+            }
+        });
     }
+
 }

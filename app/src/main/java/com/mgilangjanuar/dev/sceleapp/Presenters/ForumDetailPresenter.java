@@ -42,7 +42,7 @@ public class ForumDetailPresenter {
                 || forumDetailModel.getSavedForumCommentModelList() == null) {
             buildModel();
         }
-        return new ForumDetailCommentAdapter(activity, forumDetailModel.getSavedForumCommentModelList());
+        return new ForumDetailCommentAdapter(activity, forumDetailModel.getSavedForumCommentModelList(), this);
     }
 
     public void buildModel() {
@@ -61,6 +61,7 @@ public class ForumDetailPresenter {
                 forumCommentModel.author = e.get("author");
                 forumCommentModel.date = e.get("date");
                 forumCommentModel.content = e.get("content");
+                forumCommentModel.deleteUrl = e.get("deleteUrl");
                 forumDetailModel.forumCommentModelList.add(forumCommentModel);
             }
             forumDetailModel.save();
@@ -75,5 +76,21 @@ public class ForumDetailPresenter {
 
     public ForumDetailModel getForumDetailModel() {
         return forumDetailModel;
+    }
+
+    public void sendComment(String message) {
+        try {
+            forumService.postForumComment(message);
+        } catch (IOException e) {
+            Log.e("ForumDetailPresenter", e.getMessage());
+        }
+    }
+
+    public void deleteComment(ForumCommentModel model) {
+        try {
+            forumService.deleteForumComment(model.deleteUrl);
+        } catch (IOException e) {
+            Log.e("ForumDetailPresenter", e.getMessage());
+        }
     }
 }

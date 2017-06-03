@@ -1,5 +1,7 @@
 package com.mgilangjanuar.dev.sceleapp.Services;
 
+import android.util.Log;
+
 import com.mgilangjanuar.dev.sceleapp.Models.ConfigAppModel;
 
 import org.jsoup.Jsoup;
@@ -43,6 +45,7 @@ public class ForumService {
                 put("author", e.select(".author a").get(0).text());
                 put("date", e.select(".author").get(0).text().replace("by " + e.select(".author a").get(0).text() + " - ", ""));
                 put("content", e.select(".maincontent").get(0).html());
+                put("deleteUrl", e.select(".commands a:contains(Delete)").attr("href"));
             }});
         }
 
@@ -73,6 +76,50 @@ public class ForumService {
 
     public String getTitle() throws IOException {
         return getElements("title").text();
+    }
+
+    public void postForumComment(String message) throws IOException {
+        String url = getElements(".commands a:contains(Reply)").get(0).attr("href");
+
+        Document doc = Jsoup.connect(url)
+                .cookies(AuthService.getCookies())
+                .get();
+
+        Jsoup.connect(ConfigAppModel.urlTo("mod/forum/post.php"))
+                .data("subject", doc.select("#id_subject").attr("value"))
+                .data("message[text]", message)
+                .data("message[itemid]", doc.select("input[name=message[itemid]]").attr("value"))
+                .data("message[format]", doc.select("input[name=message[format]]").attr("value"))
+                .data("discussionsubscribe", "1")
+                .data("timeend", "0")
+                .data("course", doc.select("input[name=course]").attr("value"))
+                .data("forum", "0")
+                .data("discussion", doc.select("input[name=discussion]").attr("value"))
+                .data("parent", doc.select("input[name=parent]").attr("value"))
+                .data("userid", doc.select("input[name=userid]").attr("value"))
+                .data("groupid", doc.select("input[name=groupid]").attr("value"))
+                .data("edit", doc.select("input[name=edit]").attr("value"))
+                .data("reply", doc.select("input[name=reply]").attr("value"))
+                .data("sesskey", doc.select("input[name=sesskey]").attr("value"))
+                .data("_qf__mod_forum_post_form", "1")
+                .data("mform_isexpanded_id_general", "1")
+                .data("submitbutton", "Post to forum")
+                .cookies(AuthService.getCookies())
+                .post();
+    }
+
+    public void deleteForumComment(String url) throws IOException {
+        Document doc = Jsoup.connect(url)
+                .cookies(AuthService.getCookies())
+                .get();
+
+        Jsoup.connect(ConfigAppModel.urlTo("mod/forum/post.php"))
+                .data("sesskey", doc.select("input[name=sesskey]").attr("value"))
+                .data("delete", doc.select("input[name=delete]").attr("value"))
+                .data("confirm", doc.select("input[name=confirm]").attr("value"))
+                .data("submit", "Continue")
+                .cookies(AuthService.getCookies())
+                .post();
     }
 
 }

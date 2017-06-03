@@ -5,12 +5,16 @@ import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 
 import com.mgilangjanuar.dev.sceleapp.Models.ListCoursePostModel;
 import com.mgilangjanuar.dev.sceleapp.Presenters.AuthPresenter;
 import com.mgilangjanuar.dev.sceleapp.Presenters.CourseDetailPresenter;
 import com.mgilangjanuar.dev.sceleapp.Presenters.SchedulePresenter;
+import com.mgilangjanuar.dev.sceleapp.Services.ForumService;
+
+import java.io.IOException;
 
 public class MainActivity extends BaseActivity implements AuthPresenter.AuthServicePresenter {
 

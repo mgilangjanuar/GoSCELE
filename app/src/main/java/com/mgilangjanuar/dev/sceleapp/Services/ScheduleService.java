@@ -30,7 +30,7 @@ public class ScheduleService {
     }
 
     public long getCurrentTime() {
-        return ((new Date()).getTime() / 1000) - 2700; // 2700 is a magic number for fix schedule bug tim in scele
+        return (new Date()).getTime() / 1000;
     }
 
     public List<Map<String, String>> getSchedules() throws IOException {

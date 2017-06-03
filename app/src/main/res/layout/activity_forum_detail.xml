@@ -8,6 +8,7 @@
     tools:context="com.mgilangjanuar.dev.sceleapp.ForumDetail">
 
     <android.support.design.widget.AppBarLayout
+        android:id="@+id/appbar_forum_detail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
@@ -34,5 +35,16 @@
         android:layout_height="wrap_content"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         tools:context="com.mgilangjanuar.dev.sceleapp.ForumDetail" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_forum_comment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|right"
+        android:layout_margin="16dp"
+        android:src="@drawable/ic_reply_black_24dp"
+        android:background="?attr/selectableItemBackground"
+        app:layout_anchor="@+id/view_pager_activity_forum_detail"
+        app:layout_anchorGravity="bottom|right|end" />
 
 </android.support.design.widget.CoordinatorLayout>

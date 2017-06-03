@@ -124,11 +124,6 @@ public class SettingPresenter {
             put("title", "Application Version");
             put("content", versionName);
         }});
-
-        listContent.add(new HashMap<String, String>() {{
-            put("title", "Developer");
-            put("content", "Muhammad Gilang Januar (mgilangjanuar.com)");
-        }});
     }
 
     public void logoutActionHelper() {
