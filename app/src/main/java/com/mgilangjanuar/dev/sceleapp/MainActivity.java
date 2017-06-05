@@ -1,5 +1,6 @@
 package com.mgilangjanuar.dev.sceleapp;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.StrictMode;
@@ -16,17 +17,12 @@ import com.mgilangjanuar.dev.sceleapp.Services.ForumService;
 
 import java.io.IOException;
 
-public class MainActivity extends BaseActivity implements AuthPresenter.AuthServicePresenter {
-
-    AuthPresenter authPresenter;
+public class MainActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(com.mgilangjanuar.dev.sceleapp.R.layout.activity_main);
-
-        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-        StrictMode.setThreadPolicy(policy);
 
         bottomNavigationView = (BottomNavigationView) findViewById(com.mgilangjanuar.dev.sceleapp.R.id.bottom_navigation);
         AuthPresenter.BottomNavigationViewHelper.disableShiftMode(bottomNavigationView);
@@ -41,33 +37,12 @@ public class MainActivity extends BaseActivity implements AuthPresenter.AuthServ
         }
         selectMenu(mMenuItem);
 
-        authPresenter = new AuthPresenter(this);
-        authPresenter.showProgressDialog();
+        final Activity activity = this;
         (new Thread(new Runnable() {
             @Override
             public void run() {
-                authenticate();
+                (new SchedulePresenter(activity, null)).notifySchedule();
             }
         })).start();
-    }
-
-    @Override
-    public void authenticate() {
-        if (! isAuthenticate()) {
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    forceRedirect(new Intent(MainActivity.this, AuthActivity.class));
-                }
-            });
-        }
-        authPresenter.dismissProgressDialog();
-        (new SchedulePresenter(this, null)).notifySchedule();
-    }
-
-    @Override
-    public boolean isAuthenticate() {
-        return authPresenter.isUsernameAndPasswordExist()
-                && (authPresenter.isLogin() || authPresenter.login(authPresenter.getUsername(), authPresenter.getPassword()));
     }
 }

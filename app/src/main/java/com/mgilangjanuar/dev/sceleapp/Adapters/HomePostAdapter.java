@@ -1,6 +1,7 @@
 package com.mgilangjanuar.dev.sceleapp.Adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.mgilangjanuar.dev.sceleapp.ForumDetail;
 import com.mgilangjanuar.dev.sceleapp.Helpers.HtmlHandlerHelper;
 import com.mgilangjanuar.dev.sceleapp.Models.HomePostModel;
 import com.mgilangjanuar.dev.sceleapp.R;
@@ -46,7 +48,8 @@ public class HomePostAdapter extends RecyclerView.Adapter<HomePostAdapter.HomePo
         holder.layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context, model.title, Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(context, ForumDetail.class).putExtra("url", model.url);
+                context.startActivity(intent);
             }
         });
     }

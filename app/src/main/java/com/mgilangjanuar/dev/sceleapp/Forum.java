@@ -8,6 +8,7 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.mgilangjanuar.dev.sceleapp.Adapters.ForumAdapter;
@@ -51,6 +52,7 @@ public class Forum extends AppCompatActivity implements ForumPresenter.ForumServ
         final RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_view_forum);
         final ForumAdapter adapter = forumPresenter.buildAdapter();
         final String title = forumPresenter.getTitle();
+        final TextView status = (TextView) findViewById(R.id.text_status_forum);
 
         runOnUiThread(new Runnable() {
             @Override
@@ -60,6 +62,12 @@ public class Forum extends AppCompatActivity implements ForumPresenter.ForumServ
                 recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
                 recyclerView.setItemAnimator(new DefaultItemAnimator());
                 recyclerView.setAdapter(adapter);
+                if (adapter.getItemCount() == 0) {
+                    status.setText(getResources().getString(R.string.empty_text));
+                    status.setTextColor(getResources().getColor(R.color.color_accent));
+                } else {
+                    status.setVisibility(TextView.GONE);
+                }
             }
         });
 

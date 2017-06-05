@@ -24,6 +24,16 @@
 
         </android.support.design.widget.AppBarLayout>
 
+        <TextView
+            android:id="@+id/text_status_forum"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:text="@string/loading_text"
+            android:textColor="@android:color/darker_gray"
+            android:paddingTop="20dp"
+            android:textStyle="italic"/>
+
         <android.support.v4.widget.SwipeRefreshLayout
             android:id="@+id/swipe_refresh_forum"
             android:layout_width="match_parent"

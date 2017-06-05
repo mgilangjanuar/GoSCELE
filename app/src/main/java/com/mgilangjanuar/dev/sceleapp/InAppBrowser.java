@@ -1,8 +1,10 @@
 package com.mgilangjanuar.dev.sceleapp;
 
+import android.app.DownloadManager;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -10,6 +12,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.webkit.CookieManager;
 import android.webkit.DownloadListener;
+import android.webkit.URLUtil;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Toast;
@@ -48,6 +51,11 @@ public class InAppBrowser extends AppCompatActivity {
             startActivity(intent);
             super.onBackPressed();
             return;
+        }  else if (url.contains("course/view.php?id=")) {
+            Intent intent = new Intent(InAppBrowser.this, CourseDetail.class).putExtra("url", url);
+            startActivity(intent);
+            super.onBackPressed();
+            return;
         }
 
         if (! (new AccountModel(this)).isUsingInAppBrowser()) {
@@ -78,13 +86,29 @@ public class InAppBrowser extends AppCompatActivity {
                 toolbar.setTitle(view.getTitle());
             }
         });
+
+        // https://stackoverflow.com/questions/33434532/android-webview-download-files-like-browsers-do
         webView.setDownloadListener(new DownloadListener() {
             public void onDownloadStart(String url, String userAgent,
                                         String contentDisposition, String mimetype,
                                         long contentLength) {
-                Intent intent = new Intent(Intent.ACTION_VIEW);
-                intent.setData(Uri.parse(url));
-                startActivity(intent);
+                onBackPressed();
+                DownloadManager.Request request = new DownloadManager.Request(Uri.parse(url));
+
+                request.setMimeType(mimetype);
+                //------------------------COOKIE!!------------------------
+                String cookies = CookieManager.getInstance().getCookie(url);
+                request.addRequestHeader("cookie", cookies);
+                //------------------------COOKIE!!------------------------
+                request.addRequestHeader("User-Agent", userAgent);
+                request.setDescription("Downloading file...");
+                request.setTitle(URLUtil.guessFileName(url, contentDisposition, mimetype));
+                request.allowScanningByMediaScanner();
+                request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+                request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, URLUtil.guessFileName(url, contentDisposition, mimetype));
+                DownloadManager dm = (DownloadManager) getSystemService(DOWNLOAD_SERVICE);
+                dm.enqueue(request);
+                Toast.makeText(getApplicationContext(), "Downloading File", Toast.LENGTH_LONG).show();
             }
         });
         webView.loadUrl(url);
