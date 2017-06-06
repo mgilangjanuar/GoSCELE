@@ -55,14 +55,6 @@ public class HtmlHandlerHelper implements Html.TagHandler {
     public HtmlHandlerHelper(Context context, String html) {
         this.html = html;
         this.context = context;
-
-        Document doc = Jsoup.parse(html);
-        for (Element e: doc.select("img")) {
-            Log.e("aiushais", e.attr("src"));
-            StringBuilder stringBuilder = new StringBuilder(html);
-            stringBuilder.replace(html.indexOf(e.html()), html.lastIndexOf(e.html()), "[img "+e.attr("src")+"]");
-            html = stringBuilder.toString();
-        }
     }
 
     @Override
@@ -161,6 +153,7 @@ public class HtmlHandlerHelper implements Html.TagHandler {
 
     public void setTextViewHTML(final TextView text)
     {
+        if (html == null) { return; }
         CharSequence sequence;
         try {
             sequence = trimTrailingWhitespace(Html.fromHtml(html, new URLImageParser(text, context), this));
@@ -217,6 +210,7 @@ public class HtmlHandlerHelper implements Html.TagHandler {
 
             @Override
             protected void onPostExecute(Drawable result) {
+                if (result == null) { return; }
                 urlDrawable.setBounds(0, 0, 0 + result.getIntrinsicWidth(), 0 + result.getIntrinsicHeight()); //set the correct bound according to the result from HTTP call
                 urlDrawable.drawable = result; //change the reference of the current drawable to the result from the HTTP call
                 URLImageParser.this.container.invalidate(); //redraw the image by invalidating the container

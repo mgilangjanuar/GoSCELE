@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.mgilangjanuar.dev.sceleapp.ForumDetail;
 import com.mgilangjanuar.dev.sceleapp.Helpers.HtmlHandlerHelper;
 import com.mgilangjanuar.dev.sceleapp.Presenters.ForumDetailPresenter;
 import com.mgilangjanuar.dev.sceleapp.R;
@@ -67,6 +68,7 @@ public class Post extends Fragment implements ForumDetailPresenter.ForumDetailSe
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
+                ((ForumDetail) getActivity()).getSupportActionBar().setTitle(forumDetailPresenter.getForumDetailModel().getSavedTitle());
                 title.setText(forumDetailPresenter.getForumDetailModel().getSavedTitle());
                 date.setText(forumDetailPresenter.getForumDetailModel().getSavedDate());
                 author.setText(forumDetailPresenter.getForumDetailModel().getSavedAuthor());

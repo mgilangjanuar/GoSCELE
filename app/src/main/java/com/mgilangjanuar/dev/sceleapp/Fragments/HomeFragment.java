@@ -1,5 +1,7 @@
 package com.mgilangjanuar.dev.sceleapp.Fragments;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -11,11 +13,16 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.mgilangjanuar.dev.sceleapp.Adapters.HomePostAdapter;
+import com.mgilangjanuar.dev.sceleapp.Forum;
+import com.mgilangjanuar.dev.sceleapp.InAppBrowser;
 import com.mgilangjanuar.dev.sceleapp.MainActivity;
 import com.mgilangjanuar.dev.sceleapp.Presenters.HomePresenter;
 import com.mgilangjanuar.dev.sceleapp.R;
@@ -43,7 +50,9 @@ public class HomeFragment extends Fragment implements HomePresenter.HomeServiceP
     public void onViewCreated(final View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar_home);
-        toolbar.setTitle(getActivity().getResources().getString(R.string.app_name));
+        toolbar.setTitle(getActivity().getResources().getString(R.string.title_fragment_home_alt));
+        ((MainActivity) getActivity()).setSupportActionBar(toolbar);
+        toolbar.inflateMenu(R.menu.home_forum_menu);
 
         (new Thread(new Runnable() {
             @Override
@@ -56,8 +65,9 @@ public class HomeFragment extends Fragment implements HomePresenter.HomeServiceP
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home, container, false);
+        View view = inflater.inflate(R.layout.fragment_home, container, false);
+        setHasOptionsMenu(true);
+        return view;
     }
 
     @Override
@@ -110,5 +120,78 @@ public class HomeFragment extends Fragment implements HomePresenter.HomeServiceP
                 }, 1000);
             }
         });
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.home_forum_menu, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        String url = "";
+        switch (item.getItemId()) {
+            case (R.id.item_pengumuman_akademis):
+                url = "https://scele.cs.ui.ac.id/mod/forum/view.php?id=1";
+                break;
+            case (R.id.item_forum_kurikulum_2016):
+                url = "https://scele.cs.ui.ac.id/mod/forum/view.php?id=471";
+                break;
+            case (R.id.item_forum_umum):
+                url = "https://scele.cs.ui.ac.id/mod/forum/view.php?id=2";
+                break;
+            case (R.id.item_forum_kp_st_ta):
+                url = "https://scele.cs.ui.ac.id/mod/forum/view.php?id=3";
+                break;
+            case (R.id.item_forum_perpustakaan):
+                url = "https://scele.cs.ui.ac.id/mod/forum/view.php?id=4";
+                break;
+            case (R.id.item_forum_beasiswa):
+                url = "https://scele.cs.ui.ac.id/mod/forum/view.php?id=5";
+                break;
+            case (R.id.item_forum_asisten):
+                url = "https://scele.cs.ui.ac.id/mod/forum/view.php?id=5420";
+                break;
+            case (R.id.item_forum_feedback):
+                url = "https://scele.cs.ui.ac.id/mod/forum/view.php?id=6";
+                break;
+            case (R.id.item_forum_usul):
+                url = "https://scele.cs.ui.ac.id/mod/forum/view.php?id=7";
+                break;
+            case (R.id.item_forum_santai):
+                url = "https://scele.cs.ui.ac.id/mod/forum/view.php?id=8";
+                break;
+            case (R.id.item_forum_tanya_jawab):
+                url = "https://scele.cs.ui.ac.id/mod/forum/view.php?id=9";
+                break;
+            case (R.id.item_forum_lowongan):
+                url = "https://scele.cs.ui.ac.id/mod/forum/view.php?id=10";
+                break;
+            case (R.id.item_forum_peraturan_akademis):
+                url = "https://scele.cs.ui.ac.id/mod/forum/view.php?id=11";
+                break;
+            case (R.id.item_forum_lost_and_found):
+                url = "https://scele.cs.ui.ac.id/mod/forum/view.php?id=12";
+                break;
+            case (R.id.item_forum_ukm):
+                url = "https://scele.cs.ui.ac.id/mod/forum/view.php?id=13";
+                break;
+            case (R.id.item_forum_kompetisi):
+                url = "https://scele.cs.ui.ac.id/mod/forum/view.php?id=14";
+                break;
+            case (R.id.item_forum_informasi_wisudawan):
+                url = "https://scele.cs.ui.ac.id/mod/forum/view.php?id=15";
+                break;
+            case (R.id.item_forum_helpdesk):
+                url = "https://scele.cs.ui.ac.id/mod/forum/view.php?id=16";
+                break;
+            case (R.id.item_forum_labsitter):
+                url = "https://scele.cs.ui.ac.id/mod/forum/view.php?id=17";
+                break;
+        }
+        Intent intent = new Intent(getActivity(), Forum.class).putExtra("url", url);
+        startActivity(intent);
+        return super.onOptionsItemSelected(item);
     }
 }

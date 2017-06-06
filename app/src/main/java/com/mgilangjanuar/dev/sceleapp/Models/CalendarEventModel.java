@@ -25,10 +25,14 @@ public class CalendarEventModel extends BaseRecord implements BaseRecord.BasicIn
 
     @Override
     public void save() {
-        Gson gson = new Gson();
-        prefsEditor.putString(getAttributeTag("listEvent"), gson.toJson(this.listEvent));
-        prefsEditor.putString(getAttributeTag("date"), this.date);
-        prefsEditor.commit();
+        try {
+            Gson gson = new Gson();
+            prefsEditor.putString(getAttributeTag("listEvent"), gson.toJson(this.listEvent));
+            prefsEditor.putString(getAttributeTag("date"), this.date);
+            prefsEditor.commit();
+        } catch (Exception e) {
+
+        }
     }
 
     @Override

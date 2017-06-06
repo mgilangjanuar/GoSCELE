@@ -14,6 +14,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.mgilangjanuar.dev.sceleapp.Adapters.CourseDetailAdapter;
+import com.mgilangjanuar.dev.sceleapp.CourseDetail;
+import com.mgilangjanuar.dev.sceleapp.Models.CourseModel;
 import com.mgilangjanuar.dev.sceleapp.Presenters.CourseDetailPresenter;
 import com.mgilangjanuar.dev.sceleapp.R;
 
@@ -63,11 +65,14 @@ public class DashboardFragment extends Fragment implements CourseDetailPresenter
         recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view_course_detail);
         final CourseDetailAdapter adapter = courseDetailPresenter.buildDashboardAdapter();
         final TextView status = (TextView) view.findViewById(R.id.text_status_course_dashboard);
+        final CourseModel courseModel = courseDetailPresenter.getCourseModel();
 
         if (getActivity() == null) { return; }
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
+                ((CourseDetail) getActivity()).getSupportActionBar().setTitle(courseModel.name);
+
                 recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
                 recyclerView.setItemAnimator(new DefaultItemAnimator());
                 if (recyclerView.getAdapter() == null || ! adapter.equals(recyclerView.getAdapter())) {

@@ -44,6 +44,8 @@
                 android:drawableLeft="@drawable/ic_person_black_24dp"
                 android:drawablePadding="3dip"
                 android:textSize="13sp"
+                android:maxLines="1"
+                android:ellipsize="end"
                 android:textColor="@android:color/darker_gray"/>
 
         </LinearLayout>

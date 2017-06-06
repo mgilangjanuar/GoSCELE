@@ -14,14 +14,12 @@ import android.view.MenuItem;
 import android.webkit.CookieManager;
 import android.webkit.DownloadListener;
 import android.webkit.URLUtil;
-import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Toast;
 
 import com.mgilangjanuar.dev.sceleapp.Models.AccountModel;
 import com.mgilangjanuar.dev.sceleapp.Presenters.AuthPresenter;
-import com.mgilangjanuar.dev.sceleapp.Services.AuthService;
 
 import java.util.Map;
 
@@ -80,9 +78,8 @@ public class InAppBrowser extends AppCompatActivity {
         AuthPresenter authPresenter = new AuthPresenter(this);
         final Map<String, String> cookies = authPresenter.getCookies();
 
-        CookieManager.getInstance().setCookie(url, "MoodleSession=" + cookies.get("MoodleSession"));
-
         CookieManager.getInstance().setAcceptCookie(true);
+        CookieManager.getInstance().setCookie(url, "MoodleSession=" + cookies.get("MoodleSession"));
         webView.getSettings().setJavaScriptEnabled(true);
         webView.getSettings().setAppCacheEnabled(true);
         webView.setWebViewClient(new WebViewClient() {
@@ -112,6 +109,8 @@ public class InAppBrowser extends AppCompatActivity {
                 CookieManager.getInstance().setCookie(url, "MoodleSession=" + cookies.get("MoodleSession"));
 
                 String cookiesAlt = CookieManager.getInstance().getCookie(url);
+                Log.e("aiushausa", cookiesAlt);
+                Log.e("aiushausaa", cookies.toString());
                 request.addRequestHeader("cookie", "MoodleSession=" + cookies.get("MoodleSession"));
                 //------------------------COOKIE!!------------------------
                 request.addRequestHeader("User-Agent", userAgent);

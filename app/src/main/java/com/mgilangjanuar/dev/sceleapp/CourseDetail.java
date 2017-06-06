@@ -32,6 +32,7 @@ public class CourseDetail extends AppCompatActivity {
 
         url = bundle.getString("url");
         final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_course_detail);
+        toolbar.setTitle(getResources().getString(R.string.loading_text));
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -56,13 +57,6 @@ public class CourseDetail extends AppCompatActivity {
 
         final TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_course_detail);
         tabLayout.setupWithViewPager(viewPager);
-
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                getSupportActionBar().setTitle(presenter.getCourseModel().name);
-            }
-        });
     }
 
     @Override

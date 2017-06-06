@@ -19,7 +19,7 @@
                 android:id="@+id/toolbar_home"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                android:title="@string/app_name" />
+                android:title="@string/title_fragment_home_alt" />
 
         </android.support.design.widget.AppBarLayout>
 

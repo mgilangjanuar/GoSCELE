@@ -42,6 +42,7 @@ public class ForumDetail extends AppCompatActivity {
 
         url = bundle.getString("url");
         final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_forum_detail);
+        toolbar.setTitle(getResources().getString(R.string.loading_text));
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -56,7 +57,6 @@ public class ForumDetail extends AppCompatActivity {
 
     public void setupForumDetail() {
         forumDetailPresenter = new ForumDetailPresenter(this, url);
-        forumDetailPresenter.buildCommentAdapter();
 
         final FloatingActionButton actionButton = (FloatingActionButton) findViewById(R.id.fab_forum_comment);
         actionButton.hide();
@@ -72,7 +72,6 @@ public class ForumDetail extends AppCompatActivity {
             public void run() {
                 viewPager.setAdapter(baseTabViewPagerAdapter);
                 tabLayout.setupWithViewPager(viewPager);
-                getSupportActionBar().setTitle(forumDetailPresenter.getForumDetailModel().getSavedTitle());
             }
         });
         actionButton.setOnClickListener(new View.OnClickListener() {
@@ -93,14 +92,10 @@ public class ForumDetail extends AppCompatActivity {
             }
 
             @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-
-            }
+            public void onTabUnselected(TabLayout.Tab tab) {}
 
             @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-
-            }
+            public void onTabReselected(TabLayout.Tab tab) {}
         });
     }
 

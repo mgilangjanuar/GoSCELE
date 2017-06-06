@@ -3,6 +3,10 @@ package com.mgilangjanuar.dev.sceleapp.Fragments;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +17,7 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
+import com.mgilangjanuar.dev.sceleapp.Adapters.SettingAdapter;
 import com.mgilangjanuar.dev.sceleapp.Models.AccountModel;
 import com.mgilangjanuar.dev.sceleapp.Presenters.SettingPresenter;
 import com.mgilangjanuar.dev.sceleapp.R;
@@ -56,23 +61,18 @@ public class SettingFragment extends Fragment implements SettingPresenter.Settin
     @Override
     public void setupContents(View view) {
         settingPresenter = new SettingPresenter(getActivity(), view);
-        final ListView listView = (ListView) getActivity().findViewById(R.id.list_settings);
-        listView.setAdapter(settingPresenter.buildAdapter());
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if (position == 4) {            // position 4 == logout
-                    settingPresenter.logoutActionHelper();
-                } else if (position == 5) {     // position 5 == toggle in-app browser
-                    AccountModel accountModel = new AccountModel(getActivity());
-                    accountModel.getSavedName();
-                    accountModel.getSavedPassword();
-                    accountModel.getSavedUsername();
-                    accountModel.isUsingInAppBrowser = accountModel.isUsingInAppBrowser() ? false : true;
-                    accountModel.save();
-                    setupContents(view);
-                }
 
+        final RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view_setting);
+        final SettingAdapter adapter = settingPresenter.buildAdapter();
+        if (getActivity() == null) { return; }
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+                recyclerView.setLayoutManager(layoutManager);
+                recyclerView.setItemAnimator(new DefaultItemAnimator());
+                recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), layoutManager.getOrientation()));
+                recyclerView.setAdapter(adapter);
             }
         });
     }

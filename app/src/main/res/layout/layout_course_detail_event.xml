@@ -28,7 +28,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="22sp"
-                android:paddingBottom="6dp"/>
+                android:paddingBottom="6dp"
+                android:textIsSelectable="true"/>
 
             <TextView
                 android:id="@+id/info_course_detail_event"

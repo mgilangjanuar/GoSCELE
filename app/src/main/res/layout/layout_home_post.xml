@@ -50,6 +50,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="13sp"
+                    android:maxLines="1"
+                    android:ellipsize="end"
                     android:drawableLeft="@drawable/ic_person_black_24dp"
                     android:drawablePadding="3dip"
                     android:textColor="@android:color/darker_gray"/>
@@ -63,7 +65,8 @@
                 android:paddingBottom="20dp"
                 android:paddingLeft="20dp"
                 android:paddingRight="20dp"
-                android:textSize="15sp"/>
+                android:textSize="15sp"
+                android:textIsSelectable="true"/>
 
         </LinearLayout>
 

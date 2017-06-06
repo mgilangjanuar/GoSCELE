@@ -33,6 +33,7 @@ public class Forum extends AppCompatActivity implements ForumPresenter.ForumServ
         url = bundle.getString("url");
 
         final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_forum);
+        toolbar.setTitle(getResources().getString(R.string.loading_text));
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);

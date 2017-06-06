@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.mgilangjanuar.dev.sceleapp.Adapters.SettingAdapter;
 import com.mgilangjanuar.dev.sceleapp.AuthActivity;
 import com.mgilangjanuar.dev.sceleapp.MainActivity;
 import com.mgilangjanuar.dev.sceleapp.Models.AccountModel;
@@ -41,25 +42,12 @@ public class SettingPresenter {
         listContent = new ArrayList<>();
     }
 
-    public SimpleAdapter buildAdapter() {
+    public SettingAdapter buildAdapter() {
         if (listContent.isEmpty()) {
             buildList();
         }
 
-        return new SimpleAdapter(
-                view.getContext(),
-                listContent,
-                android.R.layout.simple_expandable_list_item_2,
-                new String[] {"title", "content"},
-                new int[] {android.R.id.text1, android.R.id.text2}
-        ) {
-            public boolean isEnabled(int position) {
-                if (position == 0 || position == 3 || position == 6) {
-                    return false;
-                }
-                return true;
-            }
-        };
+        return new SettingAdapter(activity, listContent, this);
     }
 
     public void buildList() {
@@ -90,17 +78,10 @@ public class SettingPresenter {
             put("content", "Logout from " + accountModel.getSavedUsername());
         }});
 
-        if (accountModel.isUsingInAppBrowser()) {
-            listContent.add(new HashMap<String, String>() {{
-                put("title", "In-App Browser: Enable");
-                put("content", "Click for disable in-app browser");
-            }});
-        } else {
-            listContent.add(new HashMap<String, String>() {{
-                put("title", "In-App Browser: Disable");
-                put("content", "Click for enable in-app browser");
-            }});
-        }
+        listContent.add(new HashMap<String, String>() {{
+            put("title", "In-App Browser");
+            put("content", "Click toggle for enable/disable in-app browser");
+        }});
 
         listContent.add(new HashMap<String, String>() {{
             put("title", "");
@@ -124,6 +105,11 @@ public class SettingPresenter {
         listContent.add(new HashMap<String, String>() {{
             put("title", "Application Version");
             put("content", versionName);
+        }});
+
+        listContent.add(new HashMap<String, String>() {{
+            put("title", "Credits");
+            put("content", "View our greatest team");
         }});
     }
 

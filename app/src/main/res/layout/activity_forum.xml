@@ -20,7 +20,7 @@
                 android:id="@+id/toolbar_forum"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                android:title="@string/app_name" />
+                android:title="@string/loading_text" />
 
         </android.support.design.widget.AppBarLayout>
 

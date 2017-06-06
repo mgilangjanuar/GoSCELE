@@ -1,13 +1,7 @@
 package com.mgilangjanuar.dev.sceleapp.Fragments;
 
-import android.app.AlarmManager;
-import android.app.Notification;
-import android.app.PendingIntent;
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.SystemClock;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -19,17 +13,13 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.style.ForegroundColorSpan;
-import android.util.Log;
-import android.view.DragEvent;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.mgilangjanuar.dev.sceleapp.Helpers.ScheduleBroadcastReceiver;
+import com.mgilangjanuar.dev.sceleapp.MainActivity;
 import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.prolificinteractive.materialcalendarview.DayViewDecorator;
 import com.prolificinteractive.materialcalendarview.DayViewFacade;
@@ -49,6 +39,7 @@ public class ScheduleFragment extends Fragment implements SettingPresenter.Setti
 
     SchedulePresenter schedulePresenter;
     MaterialCalendarView materialCalendarView;
+    boolean isCannotChangeMonth;
 
     public ScheduleFragment() {}
 
@@ -108,9 +99,8 @@ public class ScheduleFragment extends Fragment implements SettingPresenter.Setti
             });
         } catch (NullPointerException e) {}
 
-        setupMaterialCalendarView(view, recyclerView);
-
-        setupSlidingUpPanelLayout(view);
+        SlidingUpPanelLayout slidingUpPanelLayout = setupSlidingUpPanelLayout(view);
+        setupMaterialCalendarView(view, recyclerView, slidingUpPanelLayout);
     }
 
     private void addDecoratorMaterialCalendarView() {
@@ -125,7 +115,8 @@ public class ScheduleFragment extends Fragment implements SettingPresenter.Setti
 
             @Override
             public void decorate(DayViewFacade view) {
-                view.addSpan(new ForegroundColorSpan(ContextCompat.getColor(getContext(), android.R.color.holo_red_light)));
+                view.addSpan(new ForegroundColorSpan(ContextCompat.getColor(getContext(), android.R.color.white)));
+                view.setSelectionDrawable(ContextCompat.getDrawable(getContext(), R.drawable.round));
             }
         });
 
@@ -150,7 +141,7 @@ public class ScheduleFragment extends Fragment implements SettingPresenter.Setti
         title.setText("Schedules (" + schedulePresenter.getListScheduleModel().scheduleModelList.size() + ")");
     }
 
-    private void updateAdapterHelper(final View view, final RecyclerView recyclerView, long time, final boolean isShowDialog) {
+    private void updateAdapterHelper(final View view, final RecyclerView recyclerView, long time, final SlidingUpPanelLayout slidingUpPanelLayout, final boolean isShowDialog) {
         if (isShowDialog) {schedulePresenter.showProgressDialog();}
         schedulePresenter.time = time;
         (new Thread(new Runnable() {
@@ -163,42 +154,24 @@ public class ScheduleFragment extends Fragment implements SettingPresenter.Setti
                         setDate(view, schedulePresenter.getDateForce());
                         recyclerView.setAdapter(scheduleAdapter);
                         if (isShowDialog) {schedulePresenter.dismissProgressDialog();}
+                        slidingUpPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);
                     }
                 });
             }
         })).start();
     }
 
-    private void updateAdapter(final View view, final RecyclerView recyclerView, long time) {
-        updateAdapterHelper(view, recyclerView, time, true);
+    private void updateAdapter(final View view, final RecyclerView recyclerView, long time, SlidingUpPanelLayout slidingUpPanelLayout) {
+        updateAdapterHelper(view, recyclerView, time, slidingUpPanelLayout, true);
     }
 
-    private void setupMaterialCalendarView(final View view, final RecyclerView recyclerView) {
+    private void setupMaterialCalendarView(final View view, final RecyclerView recyclerView, final SlidingUpPanelLayout slidingUpPanelLayout) {
         materialCalendarView = (MaterialCalendarView) view.findViewById(R.id.calendar_view);
         materialCalendarView.setDynamicHeightEnabled(true);
         materialCalendarView.setOnDateChangedListener(new OnDateSelectedListener() {
             @Override
             public void onDateSelected(@NonNull MaterialCalendarView widget, @NonNull CalendarDay date, boolean selected) {
-                final int color;
-                if (schedulePresenter.convertTimeToString(schedulePresenter.getCurrentTime())
-                        .equals((new SimpleDateFormat("EEEE, dd MMM yyyy")).format(date.getDate().getTime()))) {
-                    color = android.R.color.white;
-                } else {
-                    color = R.color.color_accent;
-                }
-                widget.addDecorator(new DayViewDecorator() {
-                    @Override
-                    public boolean shouldDecorate(CalendarDay day) {
-                        return schedulePresenter.convertTimeToString(schedulePresenter.getCurrentTime())
-                                .equals((new SimpleDateFormat("EEEE, dd MMM yyyy")).format(day.getDate().getTime()));
-                    }
-
-                    @Override
-                    public void decorate(DayViewFacade view) {
-                        view.addSpan(new ForegroundColorSpan(ContextCompat.getColor(getContext(), color)));
-                    }
-                });
-                updateAdapter(view, recyclerView, date.getDate().getTime() / 1000);
+                updateAdapter(view, recyclerView, date.getDate().getTime() / 1000, slidingUpPanelLayout);
             }
         });
 
@@ -212,21 +185,29 @@ public class ScheduleFragment extends Fragment implements SettingPresenter.Setti
             });
         } catch (NullPointerException e) {}
 
+
+        final String titleToolbar = ((MainActivity) getActivity()).getSupportActionBar().getTitle().toString();
         materialCalendarView.setOnMonthChangedListener(new OnMonthChangedListener() {
             @Override
             public void onMonthChanged(MaterialCalendarView widget, final CalendarDay date) {
-                schedulePresenter.showProgressDialog();
+                schedulePresenter.time2 = date.getDate().getTime() / 1000;
+                materialCalendarView.removeDecorators();
+                ((MainActivity) getActivity()).getSupportActionBar().setTitle("Please wait...");
+
+                if (isCannotChangeMonth) { return; }
+                isCannotChangeMonth = true;
+
                 (new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        schedulePresenter.time2 = date.getDate().getTime() / 1000;
                         schedulePresenter.buildCalendarEventModel();
                         if (getActivity() == null) { return; }
                         getActivity().runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
                                 addDecoratorMaterialCalendarView();
-                                schedulePresenter.dismissProgressDialog();
+                                ((MainActivity) getActivity()).getSupportActionBar().setTitle(titleToolbar);
+                                isCannotChangeMonth = false;
                             }
                         });
                     }
@@ -238,6 +219,7 @@ public class ScheduleFragment extends Fragment implements SettingPresenter.Setti
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
+                materialCalendarView.removeDecorators();
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
@@ -261,7 +243,7 @@ public class ScheduleFragment extends Fragment implements SettingPresenter.Setti
         });
     }
 
-    private void setupSlidingUpPanelLayout(final View view) {
+    private SlidingUpPanelLayout setupSlidingUpPanelLayout(final View view) {
         final SlidingUpPanelLayout slidingUpPanelLayout = (SlidingUpPanelLayout) view.findViewById(R.id.sliding_layout);
         slidingUpPanelLayout.addPanelSlideListener(new SlidingUpPanelLayout.PanelSlideListener() {
             @Override
@@ -287,5 +269,7 @@ public class ScheduleFragment extends Fragment implements SettingPresenter.Setti
                 return;
             }
         });
+
+        return slidingUpPanelLayout;
     }
 }

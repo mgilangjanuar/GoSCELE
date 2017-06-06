@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group
+        android:checkableBehavior="none">
+        <item
+            android:id="@+id/item_pengumuman_akademis"
+            android:icon="@null"
+            android:title="Pengumuman Akademis"/>
+        <item
+            android:id="@+id/item_forum_kurikulum_2016"
+            android:icon="@null"
+            android:title="Forum Kurikulum 2016"/>
+        <item
+            android:id="@+id/item_forum_umum"
+            android:icon="@null"
+            android:title="Forum Umum"/>
+        <item
+            android:id="@+id/item_forum_kp_st_ta"
+            android:icon="@null"
+            android:title="Forum KP - ST - TA"/>
+        <item
+            android:id="@+id/item_forum_perpustakaan"
+            android:icon="@null"
+            android:title="Forum Perpustakaan"/>
+        <item
+            android:id="@+id/item_forum_beasiswa"
+            android:icon="@null"
+            android:title="Forum Beasiswa"/>
+        <item
+            android:id="@+id/item_forum_asisten"
+            android:icon="@null"
+            android:title="Forum Asisten"/>
+        <item
+            android:id="@+id/item_forum_feedback"
+            android:icon="@null"
+            android:title="Forum Feedback"/>
+        <item
+            android:id="@+id/item_forum_usul"
+            android:icon="@null"
+            android:title="Forum Usul"/>
+        <item
+            android:id="@+id/item_forum_santai"
+            android:icon="@null"
+            android:title="Forum Santai"/>
+        <item
+            android:id="@+id/item_forum_tanya_jawab"
+            android:icon="@null"
+            android:title="Forum Tanya-Jawab"/>
+        <item
+            android:id="@+id/item_forum_lowongan"
+            android:icon="@null"
+            android:title="Forum Lowongan"/>
+        <item
+            android:id="@+id/item_forum_peraturan_akademis"
+            android:icon="@null"
+            android:title="Forum Peraturan Akademis"/>
+        <item
+            android:id="@+id/item_forum_lost_and_found"
+            android:icon="@null"
+            android:title="Forum Lost and Found"/>
+        <item
+            android:id="@+id/item_forum_ukm"
+            android:icon="@null"
+            android:title="Forum UKM"/>
+        <item
+            android:id="@+id/item_forum_kompetisi"
+            android:icon="@null"
+            android:title="Forum Kompetisi"/>
+        <item
+            android:id="@+id/item_forum_informasi_wisudawan"
+            android:icon="@null"
+            android:title="Forum Informasi Wisudawan"/>
+        <item
+            android:id="@+id/item_forum_helpdesk"
+            android:icon="@null"
+            android:title="Forum Heldesk"/>
+        <item
+            android:id="@+id/item_forum_labsitter"
+            android:icon="@null"
+            android:title="Forum Labsitter"/>
+    </group>
+
+</menu>
