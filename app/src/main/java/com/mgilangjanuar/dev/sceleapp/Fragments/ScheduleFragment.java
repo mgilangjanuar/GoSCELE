@@ -221,6 +221,7 @@ public class ScheduleFragment extends Fragment implements SettingPresenter.Setti
                     public void run() {
                         schedulePresenter.time2 = date.getDate().getTime() / 1000;
                         schedulePresenter.buildCalendarEventModel();
+                        if (getActivity() == null) { return; }
                         getActivity().runOnUiThread(new Runnable() {
                             @Override
                             public void run() {

@@ -154,7 +154,7 @@ public class ForumDetail extends AppCompatActivity {
 
                     @Override
                     public void onClick(View view) {
-                        final String message = edittext.getText().toString();
+                        final String message = edittext.getText().toString().replaceAll("\\n", "<br />");
                         if (message.equals("")) {
                             Toast.makeText(getApplicationContext(), "Message couldn't be blank", Toast.LENGTH_SHORT).show();
                         } else {

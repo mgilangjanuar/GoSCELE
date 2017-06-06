@@ -9,7 +9,9 @@
         android:title="Share"
         app:showAsAction="ifRoom" />
 
-    <group android:checkableBehavior="none">
+    <group
+        android:id="@+id/group_more"
+        android:checkableBehavior="none">
         <item
             android:id="@+id/item_browser_open"
             android:icon="@null"

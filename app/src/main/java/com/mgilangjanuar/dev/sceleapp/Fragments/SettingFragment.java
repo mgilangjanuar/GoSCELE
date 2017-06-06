@@ -8,13 +8,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.BaseAdapter;
 import android.widget.ListView;
+import android.widget.SimpleAdapter;
+import android.widget.TextView;
 
 import com.mgilangjanuar.dev.sceleapp.Models.AccountModel;
 import com.mgilangjanuar.dev.sceleapp.Presenters.SettingPresenter;
 import com.mgilangjanuar.dev.sceleapp.R;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 public class SettingFragment extends Fragment implements SettingPresenter.SettingServicePresenter {
 
@@ -52,7 +56,7 @@ public class SettingFragment extends Fragment implements SettingPresenter.Settin
     @Override
     public void setupContents(View view) {
         settingPresenter = new SettingPresenter(getActivity(), view);
-        ListView listView = (ListView) getActivity().findViewById(R.id.list_settings);
+        final ListView listView = (ListView) getActivity().findViewById(R.id.list_settings);
         listView.setAdapter(settingPresenter.buildAdapter());
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -68,6 +72,7 @@ public class SettingFragment extends Fragment implements SettingPresenter.Settin
                     accountModel.save();
                     setupContents(view);
                 }
+
             }
         });
     }

@@ -26,7 +26,8 @@ import com.mgilangjanuar.dev.sceleapp.R;
 
 public class SettingPresenter {
 
-    ArrayList<Map<String, String>> listContent;
+    public ArrayList<Map<String, String>> listContent;
+
     Activity activity;
     View view;
 
@@ -81,7 +82,7 @@ public class SettingPresenter {
 
         listContent.add(new HashMap<String, String>() {{
             put("title", "");
-            put("content", "ACCOUNT SETTING");
+            put("content", "ACCOUNT SETTINGS");
         }});
 
         listContent.add(new HashMap<String, String>() {{

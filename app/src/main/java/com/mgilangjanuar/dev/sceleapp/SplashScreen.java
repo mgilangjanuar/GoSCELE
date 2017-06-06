@@ -49,7 +49,7 @@ public class SplashScreen extends BaseActivity implements AuthPresenter.AuthServ
                             if (data.quoteAuthor == null || data.quoteAuthor.equals("")) {
                                 data.quoteAuthor = "Unknown";
                             }
-                            textView.setText("\"" + data.quoteText + "\"" + "\n\u2014 " + data.quoteAuthor);
+                            textView.setText("\"" + data.quoteText.trim() + "\"" + "\n\u2014 " + data.quoteAuthor.trim());
                         }
                     });
                 } catch (IOException e) {

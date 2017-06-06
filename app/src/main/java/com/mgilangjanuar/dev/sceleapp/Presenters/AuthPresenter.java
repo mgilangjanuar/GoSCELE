@@ -9,12 +9,17 @@ import android.util.Log;
 
 import java.io.IOException;
 import java.lang.reflect.Field;
+import java.util.Map;
 
 import com.mgilangjanuar.dev.sceleapp.Models.AccountModel;
+import com.mgilangjanuar.dev.sceleapp.Models.ConfigAppModel;
 import com.mgilangjanuar.dev.sceleapp.Models.ListCourseModel;
 import com.mgilangjanuar.dev.sceleapp.Models.ListCurrentCourseModel;
 import com.mgilangjanuar.dev.sceleapp.Models.ListScheduleModel;
 import com.mgilangjanuar.dev.sceleapp.Services.AuthService;
+
+import org.jsoup.Connection;
+import org.jsoup.Jsoup;
 
 /**
  * Created by muhammadgilangjanuar on 5/14/17.
@@ -132,6 +137,15 @@ public class AuthPresenter {
                 Log.e("BNVHelper", "Unable to change value of shift mode", e);
             }
         }
+    }
+
+    public Map<String, String> getCookies() {
+        try {
+            return authService.getCookies();
+        } catch (IOException e) {
+            Log.e("AuthPresenter", e.getMessage());
+        }
+        return null;
     }
 
 }

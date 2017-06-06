@@ -12,8 +12,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.mgilangjanuar.dev.sceleapp.AuthActivity;
+import com.mgilangjanuar.dev.sceleapp.ForumDetail;
 import com.mgilangjanuar.dev.sceleapp.Helpers.HtmlHandlerHelper;
 import com.mgilangjanuar.dev.sceleapp.MainActivity;
 import com.mgilangjanuar.dev.sceleapp.Models.ForumCommentModel;
@@ -71,6 +73,12 @@ public class ForumDetailCommentAdapter extends RecyclerView.Adapter<ForumDetailC
                                 @Override
                                 public void run() {
                                     presenter.deleteComment(model);
+                                    ((ForumDetail) context).runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            Toast.makeText(context, "Deleted!", Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
                                 }
                             })).start();
                             list.remove(position);
