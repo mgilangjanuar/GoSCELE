@@ -108,8 +108,8 @@ public class SettingPresenter {
         }});
 
         listContent.add(new HashMap<String, String>() {{
-            put("title", "Credits");
-            put("content", "View our greatest team");
+            put("title", "Credits and Contributions");
+            put("content", "Click to view");
         }});
     }
 

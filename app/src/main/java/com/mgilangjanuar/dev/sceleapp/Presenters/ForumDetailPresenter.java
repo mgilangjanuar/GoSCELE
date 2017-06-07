@@ -65,6 +65,7 @@ public class ForumDetailPresenter {
                 forumDetailModel.forumCommentModelList.add(forumCommentModel);
             }
             forumDetailModel.save();
+
         } catch (IOException e) {
             Log.e("ForumDetailPresenter", e.getMessage());
         }

@@ -2,6 +2,8 @@ package com.mgilangjanuar.dev.sceleapp.Adapters;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.view.LayoutInflater;
@@ -71,7 +73,7 @@ public class SettingAdapter extends RecyclerView.Adapter<SettingAdapter.SettingV
                 }
             });
         }
-        if (model.get("title").contains("Credits")) {
+        if (model.get("title").contains("Credits and Contributions")) {
             holder.relativeLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -104,10 +106,16 @@ public class SettingAdapter extends RecyclerView.Adapter<SettingAdapter.SettingV
                             "Fathoni<br />" +
                             "</p>"));
                     AlertDialog.Builder alertDialog = new AlertDialog.Builder(context);
-                    alertDialog.setTitle("Credits");
+                    alertDialog.setTitle("Credits and Contributions");
                     alertDialog.setView(view);
                     alertDialog.setPositiveButton("Close", null);
-                    AlertDialog alert = alertDialog.create();
+                    final AlertDialog alert = alertDialog.create();
+                    alert.setOnShowListener( new DialogInterface.OnShowListener() {
+                        @Override
+                        public void onShow(DialogInterface arg0) {
+                            alert.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(Color.DKGRAY);
+                        }
+                    });
                     alert.show();
                 }
             });

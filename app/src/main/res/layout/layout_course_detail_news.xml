@@ -29,8 +29,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="20sp"
-                android:paddingBottom="6dp"
-                android:textIsSelectable="true"/>
+                android:paddingBottom="6dp"/>
 
             <TextView
                 android:id="@+id/info_course_detail_news"
@@ -39,8 +38,7 @@
                 android:textSize="14sp"
                 android:maxLines="1"
                 android:ellipsize="end"
-                android:textColor="@android:color/darker_gray"
-                android:textIsSelectable="true"/>
+                android:textColor="@android:color/darker_gray"/>
 
         </LinearLayout>
 

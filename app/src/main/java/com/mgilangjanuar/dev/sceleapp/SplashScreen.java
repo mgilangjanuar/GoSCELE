@@ -1,6 +1,9 @@
 package com.mgilangjanuar.dev.sceleapp;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -36,6 +39,12 @@ public class SplashScreen extends BaseActivity implements AuthPresenter.AuthServ
         progressBar.getIndeterminateDrawable().setColorFilter(0xFFFFFFFF, android.graphics.PorterDuff.Mode.MULTIPLY);
 
         final TextView textView = (TextView) findViewById(R.id.text_quote);
+
+        if (! isNetworkAvailable()) {
+            textView.setText("\"Oh Snap! Please check your internet connection.\"\n\u2014 A Panda");
+            return;
+        }
+
         (new Thread(new Runnable() {
             @Override
             public void run() {
@@ -80,5 +89,12 @@ public class SplashScreen extends BaseActivity implements AuthPresenter.AuthServ
     public boolean isAuthenticate() {
         return authPresenter.isUsernameAndPasswordExist()
                 && (authPresenter.isLogin() || authPresenter.login(authPresenter.getUsername(), authPresenter.getPassword()));
+    }
+
+    private boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     }
 }
