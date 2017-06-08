@@ -54,6 +54,7 @@ public class ForumService {
         results.put("author", getElements(".author a").get(0).text());
         results.put("date", getElements(".author").get(0).text().replace("by " + getElements(".author a").get(0).text() + " - ", ""));
         results.put("content", getElements(".maincontent").get(0).html());
+        results.put("deleteUrl", getElements(".commands a:contains(Delete)").size() > 0 ? getElements(".commands a:contains(Delete)").get(0).attr("href") : "");
         results.put("forumCommentModelList", subResults);
 
         return results;
@@ -78,22 +79,16 @@ public class ForumService {
         return getElements("title").text();
     }
 
-    public void postForumComment(String message) throws IOException {
-        String url = getElements(".commands a:contains(Reply)").get(0).attr("href");
-
-        Document doc = Jsoup.connect(url)
-                .cookies(AuthService.getCookies())
-                .get();
-
+    private void postHelper(String title, String message, Document doc) throws IOException {
         Jsoup.connect(ConfigAppModel.urlTo("mod/forum/post.php"))
-                .data("subject", doc.select("#id_subject").attr("value"))
+                .data("subject", title)
                 .data("message[text]", message)
                 .data("message[itemid]", doc.select("input[name=message[itemid]]").attr("value"))
                 .data("message[format]", doc.select("input[name=message[format]]").attr("value"))
                 .data("discussionsubscribe", "1")
                 .data("timeend", "0")
                 .data("course", doc.select("input[name=course]").attr("value"))
-                .data("forum", "0")
+                .data("forum", doc.select("input[name=forum]").attr("value"))
                 .data("discussion", doc.select("input[name=discussion]").attr("value"))
                 .data("parent", doc.select("input[name=parent]").attr("value"))
                 .data("userid", doc.select("input[name=userid]").attr("value"))
@@ -108,11 +103,17 @@ public class ForumService {
                 .post();
     }
 
-    public void deleteForumComment(String url) throws IOException {
+    public void postForumComment(String message) throws IOException {
+        String url = getElements(".commands a:contains(Reply)").get(0).attr("href");
+
         Document doc = Jsoup.connect(url)
                 .cookies(AuthService.getCookies())
                 .get();
 
+        postHelper(doc.select("#id_subject").attr("value"), message, doc);
+    }
+
+    private void deleteHelper(Document doc) throws IOException {
         Jsoup.connect(ConfigAppModel.urlTo("mod/forum/post.php"))
                 .data("sesskey", doc.select("input[name=sesskey]").attr("value"))
                 .data("delete", doc.select("input[name=delete]").attr("value"))
@@ -120,6 +121,33 @@ public class ForumService {
                 .data("submit", "Continue")
                 .cookies(AuthService.getCookies())
                 .post();
+    }
+
+    public void deleteForumComment(String url) throws IOException {
+        Document doc = Jsoup.connect(url)
+                .cookies(AuthService.getCookies())
+                .get();
+
+        deleteHelper(doc);
+    }
+
+    public void postForum(String title, String message) throws IOException {
+        String url = getElements("#newdiscussionform").attr("action");
+        String id = getElements("#newdiscussionform input[name=forum]").attr("value");
+
+        Document doc = Jsoup.connect(url + "?forum=" + id)
+                .cookies(AuthService.getCookies())
+                .get();
+
+        postHelper(title, message, doc);
+    }
+
+    public void deleteForum(String url) throws IOException {
+        Document doc = Jsoup.connect(url)
+                .cookies(AuthService.getCookies())
+                .get();
+
+        deleteHelper(doc);
     }
 
 }

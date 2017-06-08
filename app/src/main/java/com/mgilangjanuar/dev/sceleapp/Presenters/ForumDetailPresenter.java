@@ -45,7 +45,11 @@ public class ForumDetailPresenter {
         return new ForumDetailCommentAdapter(activity, forumDetailModel.getSavedForumCommentModelList(), this);
     }
 
-    public void buildModel() {
+    public void buildPostModel() {
+        if (forumDetailModel.getSavedUrl() != null
+                && forumDetailModel.getSavedUrl().equals(url)) {
+            return;
+        }
         try {
             clear();
             Map<String, Object> data = forumService.getForumDetails();
@@ -54,7 +58,16 @@ public class ForumDetailPresenter {
             forumDetailModel.author = (String) data.get("author");
             forumDetailModel.date = (String) data.get("date");
             forumDetailModel.content = (String) data.get("content");
+            forumDetailModel.deleteUrl = (String) data.get("deleteUrl");
+            forumDetailModel.save();
+        } catch (IOException e) {
+            Log.e("ForumDetailPresenter", e.getMessage());
+        }
+    }
 
+    public void buildModel() {
+        try {
+            Map<String, Object> data = forumService.getForumDetails();
             forumDetailModel.forumCommentModelList = new ArrayList<>();
             for (Map<String, String> e: (List<Map<String, String>>) data.get("forumCommentModelList")) {
                 ForumCommentModel forumCommentModel = new ForumCommentModel();
@@ -65,7 +78,6 @@ public class ForumDetailPresenter {
                 forumDetailModel.forumCommentModelList.add(forumCommentModel);
             }
             forumDetailModel.save();
-
         } catch (IOException e) {
             Log.e("ForumDetailPresenter", e.getMessage());
         }
@@ -90,6 +102,14 @@ public class ForumDetailPresenter {
     public void deleteComment(ForumCommentModel model) {
         try {
             forumService.deleteForumComment(model.deleteUrl);
+        } catch (IOException e) {
+            Log.e("ForumDetailPresenter", e.getMessage());
+        }
+    }
+
+    public void deletePost() {
+        try {
+            forumService.deleteForum(forumDetailModel.deleteUrl);
         } catch (IOException e) {
             Log.e("ForumDetailPresenter", e.getMessage());
         }

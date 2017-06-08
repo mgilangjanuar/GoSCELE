@@ -85,6 +85,17 @@
 
         </RelativeLayout>
 
+        <TextView
+            android:id="@+id/text_status_schedule"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:text="@string/loading_text"
+            android:textColor="@android:color/darker_gray"
+            android:paddingTop="20dp"
+            android:textStyle="italic"
+            android:layout_below="@+id/header_slidingup_panel_schedule"/>
+
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recycler_view_schedule"
             android:layout_width="match_parent"

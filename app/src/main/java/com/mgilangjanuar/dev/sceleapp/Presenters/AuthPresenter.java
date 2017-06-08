@@ -6,6 +6,7 @@ import android.support.design.internal.BottomNavigationItemView;
 import android.support.design.internal.BottomNavigationMenuView;
 import android.support.design.widget.BottomNavigationView;
 import android.util.Log;
+import android.widget.Toast;
 
 import java.io.IOException;
 import java.lang.reflect.Field;
@@ -34,7 +35,7 @@ public class AuthPresenter {
 
     public interface AuthServicePresenter {
         void authenticate();
-        boolean isAuthenticate();
+        boolean isAuthenticate() throws IOException;
     }
 
     public AuthPresenter(Activity activity) {
@@ -43,22 +44,12 @@ public class AuthPresenter {
         this.accountModel = new AccountModel(activity);
     }
 
-    public boolean isLogin() {
-        try {
-            return authService.isLogin();
-        } catch (IOException e) {
-            Log.e("AuthPresenter", e.getMessage());
-        }
-        return  false;
+    public boolean isLogin() throws IOException {
+        return authService.isLogin();
     }
 
-    public boolean login(String username, String password) {
-        try {
-            return authService.login(username, password);
-        } catch (IOException e) {
-            Log.e("AuthPresenter", e.getMessage());
-        }
-        return  false;
+    public boolean login(String username, String password) throws IOException {
+        return authService.login(username, password);
     }
 
     public String getUserText() {
@@ -96,10 +87,11 @@ public class AuthPresenter {
             accountModel.clear();
             (new ListCourseModel(activity)).clear();
             (new ListScheduleModel(activity)).clear();
+            return ! isLogin();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return !isLogin();
+        return  false;
     }
 
     public void showProgressDialog() {

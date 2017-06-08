@@ -106,11 +106,6 @@ public class SettingPresenter {
             put("title", "Application Version");
             put("content", versionName);
         }});
-
-        listContent.add(new HashMap<String, String>() {{
-            put("title", "Credits and Contributions");
-            put("content", "Click to view");
-        }});
     }
 
     public void logoutActionHelper() {

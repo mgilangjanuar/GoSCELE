@@ -1,6 +1,10 @@
 package com.mgilangjanuar.dev.sceleapp;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.graphics.Color;
 import android.os.Handler;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -8,6 +12,12 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,6 +28,9 @@ public class Forum extends AppCompatActivity implements ForumPresenter.ForumServ
 
     ForumPresenter forumPresenter;
     String url;
+
+    SwipeRefreshLayout swipeRefreshLayout;
+    RecyclerView recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +63,7 @@ public class Forum extends AppCompatActivity implements ForumPresenter.ForumServ
     public void setupForum() {
         forumPresenter = new ForumPresenter(this, url);
 
-        final RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_view_forum);
+        recyclerView = (RecyclerView) findViewById(R.id.recycler_view_forum);
         final ForumAdapter adapter = forumPresenter.buildAdapter();
         final String title = forumPresenter.getTitle();
         final TextView status = (TextView) findViewById(R.id.text_status_forum);
@@ -72,7 +85,7 @@ public class Forum extends AppCompatActivity implements ForumPresenter.ForumServ
             }
         });
 
-        final SwipeRefreshLayout swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_forum);
+        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_forum);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -97,11 +110,134 @@ public class Forum extends AppCompatActivity implements ForumPresenter.ForumServ
                 }, 1000);
             }
         });
+
+        final FloatingActionButton actionButton = (FloatingActionButton) findViewById(R.id.fab_forum);
+        actionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                buildAlertDialog();
+            }
+        });
+
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+                    actionButton.show();
+                }
+                super.onScrollStateChanged(recyclerView, newState);
+            }
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                if (dy > 0 || dy < 0 && actionButton.isShown()) {
+                    actionButton.hide();
+                }
+            }
+        });
     }
 
     @Override
     public boolean onSupportNavigateUp() {
         onBackPressed();
         return true;
+    }
+
+    private void buildAlertDialog() {
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+        alert.setTitle("Add New Thread");
+        alert.setMessage("Write your thread here:");
+
+        final EditText title = new EditText(this);
+        title.setSingleLine(true);
+        title.setHint("Subject");
+
+        final EditText message = new EditText(this);
+        message.setSingleLine(false);
+        message.setMaxLines(7);
+        message.setHint("Content");
+
+        LinearLayout container = new LinearLayout(this);
+        container.setOrientation(LinearLayout.VERTICAL);
+        LinearLayout.LayoutParams params = new  LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        params.leftMargin = getResources().getDimensionPixelSize(R.dimen.dialog_margin);
+        params.rightMargin = getResources().getDimensionPixelSize(R.dimen.dialog_margin);
+        title.setLayoutParams(params);
+        container.addView(title);
+        message.setLayoutParams(params);
+        container.addView(message);
+
+        alert.setView(container);
+
+        alert.setPositiveButton("Send", null);
+
+        alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                dialog.dismiss();
+            }
+        });
+
+        final AlertDialog alertDialog = alert.create();
+
+        alertDialog.setOnShowListener( new DialogInterface.OnShowListener() {
+            @Override
+            public void onShow(DialogInterface arg0) {
+                alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(Color.DKGRAY);
+                alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(Color.DKGRAY);
+
+                Button button = alertDialog.getButton(AlertDialog.BUTTON_POSITIVE);
+                button.setOnClickListener(new View.OnClickListener() {
+
+                    @Override
+                    public void onClick(View view) {
+                        final String titleText = title.getText().toString().trim();
+                        final String messageText = message.getText().toString().replaceAll("\\n", "<br />");
+                        if (titleText.equals("") || messageText.equals("")) {
+                            Toast.makeText(getApplicationContext(), "Title and message are required fields", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(getApplicationContext(), "Please wait...", Toast.LENGTH_LONG).show();
+                            (new Thread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    forumPresenter.sendNews(titleText, messageText);
+                                    refreshingForum();
+                                    runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            Toast.makeText(getApplicationContext(), "Sent!", Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
+                                }
+                            })).start();
+                            alertDialog.dismiss();
+                        }
+                    }
+                });
+            }
+        });
+        alertDialog.show();
+    }
+
+    public void refreshingForum() {
+        swipeRefreshLayout.post(new Runnable() {
+            @Override
+            public void run() {
+                swipeRefreshLayout.setRefreshing(true);
+                (new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        forumPresenter.clear();
+                        final ForumAdapter adapter = forumPresenter.buildAdapter();
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                recyclerView.setAdapter(adapter);
+                                swipeRefreshLayout.setRefreshing(false);
+                            }
+                        });
+                    }
+                })).start();
+            }
+        });
     }
 }

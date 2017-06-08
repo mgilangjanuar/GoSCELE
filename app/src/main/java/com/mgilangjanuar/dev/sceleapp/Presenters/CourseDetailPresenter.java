@@ -60,6 +60,7 @@ public class CourseDetailPresenter {
         if (listCoursePostModel.getSavedCourseModel() == null
                 || ! listCoursePostModel.getSavedCourseModel().url.equals(url)
                 || listCoursePostModel.getSavedCoursePostModels() == null) {
+            Log.e("aoishioasas", "aoishais");
             buildDashboardModel();
         }
         if (courseDetailAdapter == null) {
@@ -133,7 +134,7 @@ public class CourseDetailPresenter {
             model.url = url;
             model.name = courseDetailService.getCourseName(url);
         } catch (IOException e) {
-            Log.e("CourseDetailPresenter", e.getMessage());
+            Log.e("CourseDetailPresenter", e.getMessage() + " ");
         }
         return model;
     }

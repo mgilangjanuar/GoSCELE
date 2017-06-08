@@ -8,6 +8,8 @@ import android.widget.EditText;
 
 import com.mgilangjanuar.dev.sceleapp.Presenters.AuthPresenter;
 
+import java.io.IOException;
+
 public class AuthActivity extends BaseActivity implements AuthPresenter.AuthServicePresenter {
 
     AuthPresenter authPresenter;
@@ -41,7 +43,7 @@ public class AuthActivity extends BaseActivity implements AuthPresenter.AuthServ
     }
 
     @Override
-    public boolean isAuthenticate() {
+    public boolean isAuthenticate() throws IOException {
         return authPresenter.isUsernameAndPasswordExist()
                 && authPresenter.login(authPresenter.getUsername(), authPresenter.getPassword());
     }
@@ -50,14 +52,23 @@ public class AuthActivity extends BaseActivity implements AuthPresenter.AuthServ
         (new Thread(new Runnable() {
             @Override
             public void run() {
-                if (authPresenter.login(username, password)) {
-                    authPresenter.save(username, password);
-                    forceRedirect(new Intent(AuthActivity.this, MainActivity.class));
-                } else {
+                try {
+                    if (authPresenter.login(username, password)) {
+                        authPresenter.save(username, password);
+                        forceRedirect(new Intent(AuthActivity.this, MainActivity.class));
+                    } else {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                showToast("Username or password wrong");
+                            }
+                        });
+                    }
+                } catch (IOException e) {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            showToast("Username or password wrong");
+                            showToast("Whoops! Please check your internet connection");
                         }
                     });
                 }

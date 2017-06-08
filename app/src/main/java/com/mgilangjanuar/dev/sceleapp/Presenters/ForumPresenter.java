@@ -78,4 +78,12 @@ public class ForumPresenter {
     public void clear() {
         listForumModel.clear();
     }
+
+    public void sendNews(String title, String message) {
+        try {
+            forumService.postForum(title, message);
+        } catch (IOException e) {
+            Log.e("ForumPresenter", e.getMessage());
+        }
+    }
 }

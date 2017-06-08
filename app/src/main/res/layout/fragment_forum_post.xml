@@ -64,6 +64,17 @@
                         android:textSize="15sp"
                         android:textIsSelectable="true"/>
 
+                    <Button
+                        android:id="@+id/button_delete_post"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Delete"
+                        android:textColor="@android:color/white"
+                        android:drawableLeft="@drawable/ic_delete_black_24dp"
+                        android:textSize="10sp"
+                        android:layout_marginTop="10dp"
+                        android:visibility="gone" />
+
                 </LinearLayout>
 
             </android.support.v7.widget.CardView>

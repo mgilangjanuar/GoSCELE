@@ -72,6 +72,7 @@ public class HomeFragment extends Fragment implements HomePresenter.HomeServiceP
 
     @Override
     public void setupHome(View view) {
+        if (getActivity() == null) { return; }
         homePresenter = new HomePresenter(getActivity(), view);
         recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view_home);
 

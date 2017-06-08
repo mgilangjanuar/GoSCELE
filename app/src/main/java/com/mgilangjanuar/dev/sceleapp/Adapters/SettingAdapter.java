@@ -73,16 +73,16 @@ public class SettingAdapter extends RecyclerView.Adapter<SettingAdapter.SettingV
                 }
             });
         }
-        if (model.get("title").contains("Credits and Contributions")) {
-            holder.relativeLayout.setOnClickListener(new View.OnClickListener() {
+        if (model.get("title").contains("Application Version")) {
+            holder.relativeLayout.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
-                public void onClick(View v) {
+                public boolean onLongClick(View v) {
                     LayoutInflater inflater= LayoutInflater.from(context);
                     View view=inflater.inflate(R.layout.layout_credits, null);
 
                     TextView textview=(TextView)view.findViewById(R.id.content_credits);
                     textview.setText(Html.fromHtml("" +
-                            "<br /><h3>Main Developer</h3>" +
+                            "<h3>Main Developer</h3>" +
                             "<p>M Gilang Januar</p>" +
                             "<br /><h3>Contributor</h3>" +
                             "<p>Sumarliyanti</p>" +
@@ -104,6 +104,10 @@ public class SettingAdapter extends RecyclerView.Adapter<SettingAdapter.SettingV
                             "Gilang Gumilar<br />" +
                             "Izzan Nuruddin<br />" +
                             "Fathoni<br />" +
+                            "</p>" +
+                            "<br /><h3>Special Thanks</h3>" +
+                            "<p>" +
+                            "You" +
                             "</p>"));
                     AlertDialog.Builder alertDialog = new AlertDialog.Builder(context);
                     alertDialog.setTitle("Credits and Contributions");
@@ -117,6 +121,7 @@ public class SettingAdapter extends RecyclerView.Adapter<SettingAdapter.SettingV
                         }
                     });
                     alert.show();
+                    return true;
                 }
             });
         }

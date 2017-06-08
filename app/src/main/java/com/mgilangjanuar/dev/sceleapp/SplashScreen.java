@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.mgilangjanuar.dev.sceleapp.Models.QuoteModel;
@@ -78,17 +79,29 @@ public class SplashScreen extends BaseActivity implements AuthPresenter.AuthServ
 
     @Override
     public void authenticate() {
-        if (isAuthenticate()) {
-            forceRedirect(new Intent(SplashScreen.this, MainActivity.class));
-        } else {
+        if (! authPresenter.isUsernameAndPasswordExist()) {
             forceRedirect(new Intent(SplashScreen.this, AuthActivity.class));
+        } else {
+            try {
+                if (isAuthenticate()) {
+                    forceRedirect(new Intent(SplashScreen.this, MainActivity.class));
+                } else {
+                    forceRedirect(new Intent(SplashScreen.this, AuthActivity.class));
+                }
+            } catch (IOException e) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(getApplicationContext(), "Whoops! Please check your internet connection", Toast.LENGTH_LONG).show();
+                    }
+                });
+            }
         }
     }
 
     @Override
-    public boolean isAuthenticate() {
-        return authPresenter.isUsernameAndPasswordExist()
-                && (authPresenter.isLogin() || authPresenter.login(authPresenter.getUsername(), authPresenter.getPassword()));
+    public boolean isAuthenticate() throws IOException {
+        return authPresenter.isLogin() || authPresenter.login(authPresenter.getUsername(), authPresenter.getPassword());
     }
 
     private boolean isNetworkAvailable() {

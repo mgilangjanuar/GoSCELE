@@ -19,6 +19,7 @@ public class ForumDetailModel extends BaseRecord implements BaseRecord.BasicInte
     public String author;
     public String date;
     public String content;
+    public String deleteUrl;
     public List<ForumCommentModel> forumCommentModelList;
 
     public ForumDetailModel(Context context) {
@@ -36,6 +37,7 @@ public class ForumDetailModel extends BaseRecord implements BaseRecord.BasicInte
         prefsEditor.putString(getAttributeTag("author"), this.author);
         prefsEditor.putString(getAttributeTag("date"), this.date);
         prefsEditor.putString(getAttributeTag("content"), this.content);
+        prefsEditor.putString(getAttributeTag("deleteUrl"), this.deleteUrl);
         prefsEditor.putString(getAttributeTag("forumCommentModelList"), gson.toJson(this.forumCommentModelList));
         prefsEditor.commit();
     }
@@ -47,6 +49,7 @@ public class ForumDetailModel extends BaseRecord implements BaseRecord.BasicInte
         prefsEditor.putString(getAttributeTag("author"), null);
         prefsEditor.putString(getAttributeTag("date"), null);
         prefsEditor.putString(getAttributeTag("content"), null);
+        prefsEditor.putString(getAttributeTag("deleteUrl"), null);
         prefsEditor.putString(getAttributeTag("forumCommentModelList"), null);
         prefsEditor.commit();
     }
@@ -74,6 +77,11 @@ public class ForumDetailModel extends BaseRecord implements BaseRecord.BasicInte
     public String getSavedContent() {
         content = sharedPreferences.getString(getAttributeTag("content"), null);
         return content;
+    }
+
+    public String getSavedDeleteUrl() {
+        deleteUrl = sharedPreferences.getString(getAttributeTag("deleteUrl"), null);
+        return deleteUrl;
     }
 
     public List<ForumCommentModel> getSavedForumCommentModelList() {

@@ -85,9 +85,10 @@ public class ScheduleFragment extends Fragment implements SettingPresenter.Setti
         final RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view_schedule);
 
         final ScheduleAdapter adapter = schedulePresenter.buildScheduleAdapterForce();
+        final TextView status = (TextView) view.findViewById(R.id.text_status_schedule);
 
-        if (getActivity() == null) { return; }
         try {
+            if (getActivity() == null) { return; }
             getActivity().runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
@@ -95,6 +96,12 @@ public class ScheduleFragment extends Fragment implements SettingPresenter.Setti
                     recyclerView.setItemAnimator(new DefaultItemAnimator());
                     recyclerView.setAdapter(adapter);
                     setDate(view, schedulePresenter.getDate());
+                    if (adapter.getItemCount() == 0) {
+                        status.setText(getActivity().getResources().getString(R.string.empty_text));
+                        status.setTextColor(getActivity().getResources().getColor(R.color.color_accent));
+                    } else {
+                        status.setVisibility(TextView.GONE);
+                    }
                 }
             });
         } catch (NullPointerException e) {}
@@ -143,16 +150,26 @@ public class ScheduleFragment extends Fragment implements SettingPresenter.Setti
 
     private void updateAdapterHelper(final View view, final RecyclerView recyclerView, long time, final SlidingUpPanelLayout slidingUpPanelLayout, final boolean isShowDialog) {
         if (isShowDialog) {schedulePresenter.showProgressDialog();}
+        final TextView status = (TextView) view.findViewById(R.id.text_status_schedule);
+        status.setVisibility(TextView.VISIBLE);
+
         schedulePresenter.time = time;
         (new Thread(new Runnable() {
             @Override
             public void run() {
                 final ScheduleAdapter scheduleAdapter = schedulePresenter.buildScheduleAdapterForce();
+                if (getActivity() == null) { return; }
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                         setDate(view, schedulePresenter.getDateForce());
                         recyclerView.setAdapter(scheduleAdapter);
+                        if (scheduleAdapter.getItemCount() == 0) {
+                            status.setText(getActivity().getResources().getString(R.string.empty_text));
+                            status.setTextColor(getActivity().getResources().getColor(R.color.color_accent));
+                        } else {
+                            status.setVisibility(TextView.GONE);
+                        }
                         if (isShowDialog) {schedulePresenter.dismissProgressDialog();}
                         slidingUpPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);
                     }
@@ -177,6 +194,7 @@ public class ScheduleFragment extends Fragment implements SettingPresenter.Setti
 
         schedulePresenter.buildCalendarEventModel();
         try {
+            if (getActivity() == null) { return; }
             getActivity().runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
@@ -249,10 +267,11 @@ public class ScheduleFragment extends Fragment implements SettingPresenter.Setti
             @Override
             public void onPanelSlide(View panel, final float slideOffset) {
                 final ImageView imageView = (ImageView) view.findViewById(R.id.img_detail_description);
+                final TextView title = (TextView) view.findViewById(R.id.title_slidingup_panel_schedule);
+                if (getActivity() == null) { return; }
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        TextView title = (TextView) view.findViewById(R.id.title_slidingup_panel_schedule);
                         if (slideOffset > 0.5) {
                             imageView.setImageResource(R.drawable.ic_sliding_down);
                             title.setText(schedulePresenter.getDate());
