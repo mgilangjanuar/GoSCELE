@@ -8,6 +8,7 @@ import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -82,7 +83,7 @@ public class Post extends Fragment implements ForumDetailPresenter.ForumDetailSe
                 date.setText(forumDetailPresenter.getForumDetailModel().getSavedDate());
                 author.setText(forumDetailPresenter.getForumDetailModel().getSavedAuthor());
                 helper.setTextViewHTML(content);
-                if (! forumDetailPresenter.getForumDetailModel().getSavedUrl().equals("")) {
+                if (! forumDetailPresenter.getForumDetailModel().getSavedDeleteUrl().equals("")) {
                     button.setVisibility(Button.VISIBLE);
                     button.getBackground().setColorFilter(getContext().getResources().getColor(android.R.color.holo_red_light), PorterDuff.Mode.MULTIPLY);
                     button.setOnClickListener(new View.OnClickListener() {

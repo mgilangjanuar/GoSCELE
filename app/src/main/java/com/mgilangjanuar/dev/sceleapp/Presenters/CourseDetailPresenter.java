@@ -60,7 +60,6 @@ public class CourseDetailPresenter {
         if (listCoursePostModel.getSavedCourseModel() == null
                 || ! listCoursePostModel.getSavedCourseModel().url.equals(url)
                 || listCoursePostModel.getSavedCoursePostModels() == null) {
-            Log.e("aoishioasas", "aoishais");
             buildDashboardModel();
         }
         if (courseDetailAdapter == null) {

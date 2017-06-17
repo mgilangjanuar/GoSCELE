@@ -54,7 +54,7 @@ public class ForumService {
         results.put("author", getElements(".author a").get(0).text());
         results.put("date", getElements(".author").get(0).text().replace("by " + getElements(".author a").get(0).text() + " - ", ""));
         results.put("content", getElements(".maincontent").get(0).html());
-        results.put("deleteUrl", getElements(".commands a:contains(Delete)").size() > 0 ? getElements(".commands a:contains(Delete)").get(0).attr("href") : "");
+        results.put("deleteUrl", getElements(".forumpost").get(0).select(".commands a:contains(Delete)").attr("href"));
         results.put("forumCommentModelList", subResults);
 
         return results;
