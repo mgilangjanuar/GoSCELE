@@ -7,8 +7,8 @@ android {
         applicationId "com.mgilangjanuar.dev.sceleapp"
         minSdkVersion 14
         targetSdkVersion 25
-        versionCode 5
-        versionName "ORION 0.5 (Beta)"
+        versionCode 6
+        versionName "ORION 0.6 (Beta)"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {

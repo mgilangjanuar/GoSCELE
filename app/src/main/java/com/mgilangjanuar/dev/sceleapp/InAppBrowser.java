@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Base64;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -14,6 +15,7 @@ import android.view.MenuItem;
 import android.webkit.CookieManager;
 import android.webkit.DownloadListener;
 import android.webkit.URLUtil;
+import android.webkit.ValueCallback;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Toast;
@@ -21,6 +23,8 @@ import android.widget.Toast;
 import com.mgilangjanuar.dev.sceleapp.Models.AccountModel;
 import com.mgilangjanuar.dev.sceleapp.Presenters.AuthPresenter;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Map;
 
 public class InAppBrowser extends AppCompatActivity {
@@ -75,7 +79,7 @@ public class InAppBrowser extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
-        AuthPresenter authPresenter = new AuthPresenter(this);
+        final AuthPresenter authPresenter = new AuthPresenter(this);
         final Map<String, String> cookies = authPresenter.getCookies();
 
         CookieManager.getInstance().setAcceptCookie(true);
@@ -94,6 +98,20 @@ public class InAppBrowser extends AppCompatActivity {
                 super.onLoadResource(view, url);
                 toolbar.setTitle(view.getTitle());
             }
+
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                super.onPageFinished(view, url);
+                if (url.contains("login/")) {
+                    webView.evaluateJavascript("(function() {document.getElementsByName('username')[0].value='"+authPresenter.getUsername()+"';document.getElementsByName('password')[0].value='"+authPresenter.getPassword()+"';document.getElementById('login').submit(); "+
+                            "return { var1: \"variable1\", var2: \"variable2\" }; })();", new ValueCallback<String>() {
+                        @Override
+                        public void onReceiveValue(String s) {
+                            Log.d("Authentication", "success");
+                        }
+                    });
+                }
+            }
         });
 
         // https://stackoverflow.com/questions/33434532/android-webview-download-files-like-browsers-do
@@ -109,8 +127,6 @@ public class InAppBrowser extends AppCompatActivity {
                 CookieManager.getInstance().setCookie(url, "MoodleSession=" + cookies.get("MoodleSession"));
 
                 String cookiesAlt = CookieManager.getInstance().getCookie(url);
-                Log.e("aiushausa", cookiesAlt);
-                Log.e("aiushausaa", cookies.toString());
                 request.addRequestHeader("cookie", "MoodleSession=" + cookies.get("MoodleSession"));
                 //------------------------COOKIE!!------------------------
                 request.addRequestHeader("User-Agent", userAgent);
