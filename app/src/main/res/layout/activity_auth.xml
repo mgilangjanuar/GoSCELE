@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/color_primary"
+    android:background="@color/color_primary_dark"
     tools:context="com.mgilangjanuar.dev.sceleapp.AuthActivity">
 
     <ImageView
@@ -26,20 +26,20 @@
         android:layout_marginLeft="67dp"
         android:layout_marginRight="67dp"
         android:layout_marginStart="67dp"
+        android:backgroundTint="@color/color_accent"
         android:ems="10"
         android:hint="Username"
         android:inputType="textPersonName"
         android:textColor="@android:color/white"
-        android:textColorHint="@android:color/darker_gray"
-        android:backgroundTint="@color/color_accent"
+        android:textColorHint="@android:color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.387"
         tools:layout_constraintLeft_creator="1"
-        tools:layout_constraintRight_creator="1"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintVertical_bias="0.387" />
+        tools:layout_constraintRight_creator="1" />
 
     <EditText
         android:id="@+id/password"
@@ -56,7 +56,7 @@
         android:hint="Password"
         android:inputType="textPassword"
         android:textColor="@android:color/white"
-        android:textColorHint="@android:color/darker_gray"
+        android:textColorHint="@android:color/white"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"

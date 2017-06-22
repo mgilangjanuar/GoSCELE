@@ -20,7 +20,8 @@
                 android:id="@+id/toolbar_app_browser"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                android:title="@string/app_name" />
+                android:title="@string/app_name"
+                android:theme="@style/AppTheme.ActionBar"/>
 
         </android.support.design.widget.AppBarLayout>
 

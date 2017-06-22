@@ -52,6 +52,7 @@
         android:src="@drawable/ic_add_black_24dp"
         android:background="?attr/selectableItemBackground"
         app:layout_anchor="@+id/swipe_refresh_forum"
-        app:layout_anchorGravity="bottom|right|end" />
+        app:layout_anchorGravity="bottom|right|end"
+        android:visibility="gone"/>
 
 </android.support.design.widget.CoordinatorLayout>

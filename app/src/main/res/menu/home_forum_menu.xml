@@ -8,7 +8,7 @@
         <item
             android:id="@+id/item_pengumuman_akademis"
             android:icon="@null"
-            android:title="Pengumuman Akademis"/>
+            android:title="Pengumuman Akademis" />
         <item
             android:id="@+id/item_forum_kurikulum_2016"
             android:icon="@null"

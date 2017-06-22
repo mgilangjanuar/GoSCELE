@@ -95,6 +95,7 @@ public class SplashScreen extends BaseActivity implements AuthPresenter.AuthServ
                         Toast.makeText(getApplicationContext(), "Whoops! Please check your internet connection", Toast.LENGTH_LONG).show();
                     }
                 });
+                authenticate();
             }
         }
     }

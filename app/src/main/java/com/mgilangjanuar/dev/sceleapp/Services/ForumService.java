@@ -44,7 +44,7 @@ public class ForumService {
             subResults.add(new HashMap<String, String>() {{
                 put("author", e.select(".author a").get(0).text());
                 put("date", e.select(".author").get(0).text().replace("by " + e.select(".author a").get(0).text() + " - ", ""));
-                put("content", e.select(".maincontent").get(0).html());
+                put("content", e.select(".maincontent").get(0).html() + "\n\n" + e.select(".forumpost").get(0).select(".attachments").html());
                 put("deleteUrl", e.select(".commands a:contains(Delete)").attr("href"));
             }});
         }
@@ -53,7 +53,7 @@ public class ForumService {
         results.put("title", getElements(".subject").get(0).text());
         results.put("author", getElements(".author a").get(0).text());
         results.put("date", getElements(".author").get(0).text().replace("by " + getElements(".author a").get(0).text() + " - ", ""));
-        results.put("content", getElements(".maincontent").get(0).html());
+        results.put("content", getElements(".maincontent").get(0).html() + "\n\n" + getElements(".forumpost").get(0).select(".attachments").html());
         results.put("deleteUrl", getElements(".forumpost").get(0).select(".commands a:contains(Delete)").attr("href"));
         results.put("forumCommentModelList", subResults);
 
@@ -134,12 +134,16 @@ public class ForumService {
     public void postForum(String title, String message) throws IOException {
         String url = getElements("#newdiscussionform").attr("action");
         String id = getElements("#newdiscussionform input[name=forum]").attr("value");
-
         Document doc = Jsoup.connect(url + "?forum=" + id)
                 .cookies(AuthService.getCookies())
                 .get();
 
         postHelper(title, message, doc);
+    }
+
+    public boolean isCanPostForum() throws IOException {
+        String url = getElements("#newdiscussionform").attr("action");
+        return url != null && !url.equals("");
     }
 
     public void deleteForum(String url) throws IOException {

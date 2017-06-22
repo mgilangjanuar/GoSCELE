@@ -79,6 +79,15 @@ public class ForumPresenter {
         listForumModel.clear();
     }
 
+    public boolean isCanSendNews() {
+        try {
+            return forumService.isCanPostForum();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
     public void sendNews(String title, String message) {
         try {
             forumService.postForum(title, message);

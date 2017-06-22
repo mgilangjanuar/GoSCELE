@@ -12,6 +12,7 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -111,29 +112,37 @@ public class Forum extends AppCompatActivity implements ForumPresenter.ForumServ
         });
 
         final FloatingActionButton actionButton = (FloatingActionButton) findViewById(R.id.fab_forum);
-        actionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                buildAlertDialog();
-            }
-        });
-
-        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
-                    actionButton.show();
+        if (forumPresenter.isCanSendNews()) {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    actionButton.setVisibility(FloatingActionButton.VISIBLE);
                 }
-                super.onScrollStateChanged(recyclerView, newState);
-            }
-
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                if (dy > 0 || dy < 0 && actionButton.isShown()) {
-                    actionButton.hide();
+            });
+            actionButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    buildAlertDialog();
                 }
-            }
-        });
+            });
+
+            recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+                @Override
+                public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                    if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+                        actionButton.show();
+                    }
+                    super.onScrollStateChanged(recyclerView, newState);
+                }
+
+                @Override
+                public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                    if (dy > 0 || dy < 0 && actionButton.isShown()) {
+                        actionButton.hide();
+                    }
+                }
+            });
+        }
     }
 
     @Override

@@ -1,18 +1,20 @@
 package com.mgilangjanuar.dev.sceleapp;
 
 import android.app.DownloadManager;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Base64;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.webkit.CookieManager;
+import android.webkit.CookieSyncManager;
 import android.webkit.DownloadListener;
 import android.webkit.URLUtil;
 import android.webkit.ValueCallback;
@@ -22,10 +24,6 @@ import android.widget.Toast;
 
 import com.mgilangjanuar.dev.sceleapp.Models.AccountModel;
 import com.mgilangjanuar.dev.sceleapp.Presenters.AuthPresenter;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Map;
 
 public class InAppBrowser extends AppCompatActivity {
 
@@ -80,10 +78,8 @@ public class InAppBrowser extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         final AuthPresenter authPresenter = new AuthPresenter(this);
-        final Map<String, String> cookies = authPresenter.getCookies();
 
         CookieManager.getInstance().setAcceptCookie(true);
-        CookieManager.getInstance().setCookie(url, "MoodleSession=" + cookies.get("MoodleSession"));
         webView.getSettings().setJavaScriptEnabled(true);
         webView.getSettings().setAppCacheEnabled(true);
         webView.setWebViewClient(new WebViewClient() {
@@ -124,10 +120,9 @@ public class InAppBrowser extends AppCompatActivity {
 
                 request.setMimeType(mimetype);
                 //------------------------COOKIE!!------------------------
-                CookieManager.getInstance().setCookie(url, "MoodleSession=" + cookies.get("MoodleSession"));
-
+                CookieManager.getInstance().setCookie(url, authPresenter.getCookies());
                 String cookiesAlt = CookieManager.getInstance().getCookie(url);
-                request.addRequestHeader("cookie", "MoodleSession=" + cookies.get("MoodleSession"));
+                request.addRequestHeader("cookie", cookiesAlt);
                 //------------------------COOKIE!!------------------------
                 request.addRequestHeader("User-Agent", userAgent);
                 request.setDescription("Downloading file...");
@@ -141,7 +136,12 @@ public class InAppBrowser extends AppCompatActivity {
             }
         });
 
-        webView.loadUrl(url, cookies);
+        webView.clearCache(true);
+        webView.clearHistory();
+        clearCookies(this);
+
+        CookieManager.getInstance().setCookie(url, authPresenter.getCookies());
+        webView.loadUrl(url);
     }
 
     @Override
@@ -182,5 +182,22 @@ public class InAppBrowser extends AppCompatActivity {
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    // source: https://stackoverflow.com/a/31950789
+    @SuppressWarnings("deprecation")
+    private void clearCookies(Context context) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
+            CookieManager.getInstance().removeAllCookies(null);
+            CookieManager.getInstance().flush();
+        } else {
+            CookieSyncManager cookieSyncMngr=CookieSyncManager.createInstance(context);
+            cookieSyncMngr.startSync();
+            CookieManager cookieManager=CookieManager.getInstance();
+            cookieManager.removeAllCookie();
+            cookieManager.removeSessionCookie();
+            cookieSyncMngr.stopSync();
+            cookieSyncMngr.sync();
+        }
     }
 }

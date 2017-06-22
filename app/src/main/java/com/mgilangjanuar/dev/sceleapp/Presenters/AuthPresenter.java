@@ -131,16 +131,11 @@ public class AuthPresenter {
         }
     }
 
-    public Map<String, String> getCookies() {
+    public String getCookies() {
         try {
-//            Connection.Response response = Jsoup.connect(ConfigAppModel.urlTo("login/index.php?authldap_skipntlmsso=1"))
-//                    .data("username", accountModel.getSavedUsername(), "password", accountModel.getSavedPassword())
-//                    .method(Connection.Method.POST)
-//                    .execute();
-//            return response.cookies();
-            return authService.getCookies();
+            return "MoodleSession=" + authService.getCookies().get("MoodleSession");
         } catch (IOException e) {
-            Log.e("AuthPresenter", e.getMessage());
+            e.printStackTrace();
         }
         return null;
     }
