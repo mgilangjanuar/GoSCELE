@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.mgilangjanuar.dev.sceleapp.Forum">
+    tools:context="com.mgilangjanuar.dev.goscele.Forum">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -27,6 +27,7 @@
         android:textAlignment="center"
         android:text="@string/loading_text"
         android:textColor="@android:color/darker_gray"
+        android:layout_marginTop="?attr/actionBarSize"
         android:paddingTop="20dp"
         android:textStyle="italic"/>
 
@@ -39,7 +40,9 @@
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recycler_view_forum"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:paddingBottom="80dp"/>
 
     </android.support.v4.widget.SwipeRefreshLayout>
 

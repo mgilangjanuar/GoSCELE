@@ -4,11 +4,11 @@ android {
     compileSdkVersion 25
     buildToolsVersion "25.0.2"
     defaultConfig {
-        applicationId "com.mgilangjanuar.dev.sceleapp"
+        applicationId "com.mgilangjanuar.dev.goscele"
         minSdkVersion 14
         targetSdkVersion 25
-        versionCode 6
-        versionName "ORION 0.6 (Beta)"
+        versionCode 7
+        versionName "ORION 0.7 (Beta)"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -20,7 +20,7 @@ android {
 }
 
 dependencies {
-//    compile nfileTree(dir: 'libs', include: ['*.jar'])
+    compile fileTree(dir: 'libs', include: ['*.jar'])
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })

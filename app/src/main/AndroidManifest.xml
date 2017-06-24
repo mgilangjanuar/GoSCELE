@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.mgilangjanuar.dev.sceleapp">
+    package="com.mgilangjanuar.dev.goscele">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -14,26 +14,26 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".MainActivity"
+            android:name="com.mgilangjanuar.dev.goscele.MainActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".AuthActivity"
+            android:name="com.mgilangjanuar.dev.goscele.AuthActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".InAppBrowser"
+            android:name="com.mgilangjanuar.dev.goscele.InAppBrowser"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".CourseDetail"
+            android:name="com.mgilangjanuar.dev.goscele.CourseDetail"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ForumDetail"
+            android:name="com.mgilangjanuar.dev.goscele.ForumDetail"
             android:screenOrientation="portrait" />
-        <activity android:name=".AlarmNotificationCancellation" />
+        <activity android:name="com.mgilangjanuar.dev.goscele.AlarmNotificationCancellation" />
         <activity
-            android:name=".Forum"
+            android:name="com.mgilangjanuar.dev.goscele.Forum"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".SplashScreen"
+            android:name="com.mgilangjanuar.dev.goscele.SplashScreen"
             android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -41,7 +41,7 @@
             </intent-filter>
         </activity>
 
-        <receiver android:name=".Helpers.ScheduleBroadcastReceiver" />
+        <receiver android:name="com.mgilangjanuar.dev.goscele.Helpers.ScheduleBroadcastReceiver" />
     </application>
 
 </manifest>

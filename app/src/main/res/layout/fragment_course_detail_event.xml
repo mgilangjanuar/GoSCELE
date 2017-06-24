@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.mgilangjanuar.dev.sceleapp.Fragments.CourseDetail.EventFragment">
+    tools:context="com.mgilangjanuar.dev.goscele.Fragments.CourseDetail.EventFragment">
 
     <TextView
         android:id="@+id/text_status_course_event"

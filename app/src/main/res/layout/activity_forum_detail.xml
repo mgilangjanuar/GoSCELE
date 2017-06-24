@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.mgilangjanuar.dev.sceleapp.ForumDetail">
+    tools:context="com.mgilangjanuar.dev.goscele.ForumDetail">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbar_forum_detail"
@@ -34,7 +34,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        tools:context="com.mgilangjanuar.dev.sceleapp.ForumDetail" />
+        tools:context="com.mgilangjanuar.dev.goscele.ForumDetail" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab_forum_comment"
