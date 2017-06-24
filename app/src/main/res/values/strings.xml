@@ -29,7 +29,6 @@
     <string name="title_forum_detail_post">Post</string>
     <string name="title_forum_detail_comments">Comments</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="loading_text">Loading...</string>
     <string name="empty_text">(empty)</string>
 

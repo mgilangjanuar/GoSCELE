@@ -92,11 +92,7 @@ public class SplashScreen extends BaseActivity implements AuthPresenter.AuthServ
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        Snackbar snack = Snackbar.make(findViewById(android.R.id.content), "Whoops! Please check your internet connection", Snackbar.LENGTH_SHORT);
-                        View view = snack.getView();
-                        TextView textView = (TextView) view.findViewById(android.support.design.R.id.snackbar_text);
-                        textView.setTextColor(Color.WHITE);
-                        snack.show();
+                        showToast("Whoops! Please check your internet connection");
                     }
                 });
                 authenticate();

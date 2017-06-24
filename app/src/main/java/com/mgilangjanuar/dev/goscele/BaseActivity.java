@@ -1,14 +1,18 @@
 package com.mgilangjanuar.dev.goscele;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.mgilangjanuar.dev.goscele.Fragments.CourseFragment;
@@ -36,7 +40,11 @@ public class BaseActivity extends AppCompatActivity {
     }
 
     public void showToast(String text) {
-        Toast.makeText(getApplicationContext(), text, Toast.LENGTH_LONG).show();
+        Snackbar snack = Snackbar.make(findViewById(android.R.id.content), text, Snackbar.LENGTH_SHORT);
+        View view = snack.getView();
+        TextView textView = (TextView) view.findViewById(android.support.design.R.id.snackbar_text);
+        textView.setTextColor(Color.WHITE);
+        snack.show();
     }
 
     @Override
@@ -57,8 +65,6 @@ public class BaseActivity extends AppCompatActivity {
     protected void selectMenu(MenuItem item) {
         Fragment fragment = null;
 
-        FragmentTransaction beginTransaction = getSupportFragmentManager().beginTransaction();
-
         switch (item.getItemId()) {
             case com.mgilangjanuar.dev.goscele.R.id.action_home:
                 fragment = HomeFragment.newInstance();
@@ -76,8 +82,7 @@ public class BaseActivity extends AppCompatActivity {
 
         if (currentItem == null || !item.equals(currentItem)) {
             item.setChecked(true);
-            beginTransaction.replace(com.mgilangjanuar.dev.goscele.R.id.container, fragment);
-            beginTransaction.commit();
+            switchFragment(R.id.container, fragment);
         }
         currentItem = item;
     }

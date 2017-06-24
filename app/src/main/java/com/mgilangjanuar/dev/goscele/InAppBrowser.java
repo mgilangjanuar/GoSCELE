@@ -1,15 +1,22 @@
 package com.mgilangjanuar.dev.goscele;
 
+import android.Manifest;
+import android.app.Activity;
 import android.app.DownloadManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
-import android.support.design.widget.Snackbar;
+import android.provider.Settings;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -111,11 +118,19 @@ public class InAppBrowser extends AppCompatActivity {
             }
         });
 
+        final Activity activity = this;
+
         // https://stackoverflow.com/questions/33434532/android-webview-download-files-like-browsers-do
         webView.setDownloadListener(new DownloadListener() {
             public void onDownloadStart(String url, String userAgent,
                                         String contentDisposition, String mimetype,
                                         long contentLength) {
+                if (ContextCompat.checkSelfPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                    showStoragePermissionAlertDialog();
+                    onBackPressed();
+                    return;
+                }
+
                 onBackPressed();
                 DownloadManager.Request request = new DownloadManager.Request(Uri.parse(url));
 
@@ -132,8 +147,12 @@ public class InAppBrowser extends AppCompatActivity {
                 request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
                 request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, URLUtil.guessFileName(url, contentDisposition, mimetype));
                 DownloadManager dm = (DownloadManager) getSystemService(DOWNLOAD_SERVICE);
-                dm.enqueue(request);
-                Toast.makeText(getApplicationContext(), "Downloading file...", Toast.LENGTH_LONG).show();
+                try {
+                    dm.enqueue(request);
+                    Toast.makeText(getApplicationContext(), "Downloading file...", Toast.LENGTH_LONG).show();
+                } catch (Exception e) {
+                    Toast.makeText(getApplicationContext(), "Oh snap! Download failed!", Toast.LENGTH_LONG).show();
+                }
             }
         });
 
@@ -192,7 +211,7 @@ public class InAppBrowser extends AppCompatActivity {
             CookieManager.getInstance().removeAllCookies(null);
             CookieManager.getInstance().flush();
         } else {
-            CookieSyncManager cookieSyncMngr=CookieSyncManager.createInstance(context);
+            CookieSyncManager cookieSyncMngr = CookieSyncManager.createInstance(context);
             cookieSyncMngr.startSync();
             CookieManager cookieManager=CookieManager.getInstance();
             cookieManager.removeAllCookie();
@@ -200,5 +219,28 @@ public class InAppBrowser extends AppCompatActivity {
             cookieSyncMngr.stopSync();
             cookieSyncMngr.sync();
         }
+    }
+
+    private void showStoragePermissionAlertDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setCancelable(false);
+        builder.setTitle("Enable Storage Permission");
+        builder.setMessage(Html.fromHtml("Please enable your storage permission for GoSCELE." +
+                "<br><br>Go to <i>Permission Manager</i> -> <i>Storage</i> -> <i>Accept</i>"));
+        builder.setInverseBackgroundForced(true);
+        builder.setPositiveButton("Enable", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                Intent intent = new Intent();
+                intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                intent.setData(Uri.fromParts("package", getPackageName(), null));
+                startActivity(intent);
+            }
+        });
+        builder.setNegativeButton("Ignore", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        builder.create().show();
     }
 }
