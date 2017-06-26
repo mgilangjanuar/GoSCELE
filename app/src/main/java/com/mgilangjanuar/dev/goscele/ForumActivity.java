@@ -24,7 +24,7 @@ import android.widget.Toast;
 import com.mgilangjanuar.dev.goscele.Adapters.ForumAdapter;
 import com.mgilangjanuar.dev.goscele.Presenters.ForumPresenter;
 
-public class Forum extends AppCompatActivity implements ForumPresenter.ForumServicePresenter {
+public class ForumActivity extends AppCompatActivity implements ForumPresenter.ForumServicePresenter {
 
     ForumPresenter forumPresenter;
     String url;

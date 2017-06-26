@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.mgilangjanuar.dev.goscele.ForumDetail;
+import com.mgilangjanuar.dev.goscele.ForumDetailActivity;
 import com.mgilangjanuar.dev.goscele.Helpers.HtmlHandlerHelper;
 import com.mgilangjanuar.dev.goscele.Models.HomePostModel;
 import com.mgilangjanuar.dev.goscele.R;
@@ -47,7 +47,7 @@ public class HomePostAdapter extends RecyclerView.Adapter<HomePostAdapter.HomePo
         holder.layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, ForumDetail.class).putExtra("url", model.url);
+                Intent intent = new Intent(context, ForumDetailActivity.class).putExtra("url", model.url);
                 context.startActivity(intent);
             }
         });

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.mgilangjanuar.dev.goscele.SplashScreen"
+    tools:context="com.mgilangjanuar.dev.goscele.SplashScreenActivity"
     android:background="@color/color_primary_dark">
 
     <ImageView

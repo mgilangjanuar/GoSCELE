@@ -13,7 +13,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import com.mgilangjanuar.dev.goscele.CourseDetail;
+import com.mgilangjanuar.dev.goscele.CourseDetailActivity;
 import com.mgilangjanuar.dev.goscele.Models.CourseModel;
 import com.mgilangjanuar.dev.goscele.Presenters.CoursePresenter;
 import com.mgilangjanuar.dev.goscele.R;
@@ -74,7 +74,7 @@ public class CurrentCoursesViewAdapter extends RecyclerView.Adapter<CurrentCours
         holder.relativeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                context.startActivity((new Intent(context, CourseDetail.class)).putExtra("url", courseModel.url));
+                context.startActivity((new Intent(context, CourseDetailActivity.class)).putExtra("url", courseModel.url));
             }
         });
     }

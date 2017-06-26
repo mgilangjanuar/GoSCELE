@@ -15,7 +15,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.mgilangjanuar.dev.goscele.Adapters.CourseDetailAdapter;
-import com.mgilangjanuar.dev.goscele.CourseDetail;
+import com.mgilangjanuar.dev.goscele.CourseDetailActivity;
 import com.mgilangjanuar.dev.goscele.Models.CourseModel;
 import com.mgilangjanuar.dev.goscele.Presenters.CourseDetailPresenter;
 import com.mgilangjanuar.dev.goscele.R;
@@ -72,7 +72,7 @@ public class DashboardFragment extends Fragment implements CourseDetailPresenter
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                ((CourseDetail) getActivity()).getSupportActionBar().setTitle(courseModel.name);
+                ((CourseDetailActivity) getActivity()).getSupportActionBar().setTitle(courseModel.name);
 
                 recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
                 recyclerView.setItemAnimator(new DefaultItemAnimator());

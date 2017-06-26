@@ -19,7 +19,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.mgilangjanuar.dev.goscele.Adapters.HomePostAdapter;
-import com.mgilangjanuar.dev.goscele.Forum;
+import com.mgilangjanuar.dev.goscele.ForumActivity;
 import com.mgilangjanuar.dev.goscele.MainActivity;
 import com.mgilangjanuar.dev.goscele.Presenters.HomePresenter;
 import com.mgilangjanuar.dev.goscele.R;
@@ -49,7 +49,6 @@ public class HomeFragment extends Fragment implements HomePresenter.HomeServiceP
         Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar_home);
         toolbar.setTitle(getActivity().getResources().getString(R.string.title_fragment_home_alt));
         ((MainActivity) getActivity()).setSupportActionBar(toolbar);
-        toolbar.inflateMenu(R.menu.home_forum_menu);
 
         (new Thread(new Runnable() {
             @Override
@@ -188,7 +187,7 @@ public class HomeFragment extends Fragment implements HomePresenter.HomeServiceP
                 url = "https://scele.cs.ui.ac.id/mod/forum/view.php?id=17";
                 break;
         }
-        Intent intent = new Intent(getActivity(), Forum.class).putExtra("url", url);
+        Intent intent = new Intent(getActivity(), ForumActivity.class).putExtra("url", url);
         startActivity(intent);
         return super.onOptionsItemSelected(item);
     }

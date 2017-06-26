@@ -13,7 +13,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.mgilangjanuar.dev.goscele.ForumDetail;
+import com.mgilangjanuar.dev.goscele.ForumDetailActivity;
 import com.mgilangjanuar.dev.goscele.Helpers.HtmlHandlerHelper;
 import com.mgilangjanuar.dev.goscele.Models.ForumCommentModel;
 import com.mgilangjanuar.dev.goscele.Presenters.ForumDetailPresenter;
@@ -69,7 +69,7 @@ public class ForumDetailCommentAdapter extends RecyclerView.Adapter<ForumDetailC
                                 @Override
                                 public void run() {
                                     presenter.deleteComment(model);
-                                    ((ForumDetail) context).runOnUiThread(new Runnable() {
+                                    ((ForumDetailActivity) context).runOnUiThread(new Runnable() {
                                         @Override
                                         public void run() {
                                             Toast.makeText(context, "Deleted!", Toast.LENGTH_SHORT).show();

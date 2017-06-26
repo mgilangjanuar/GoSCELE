@@ -8,4 +8,4 @@
     android:layout_alignParentBottom="true"
     app:itemIconTint="@color/buttom_navigation_style"
     app:itemTextColor="@color/buttom_navigation_style"
-    app:menu="@menu/bottom_navigation_main" />
+    app:menu="@menu/bottom_navigation_menu" />

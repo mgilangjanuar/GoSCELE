@@ -10,6 +10,7 @@ import java.util.Map;
 
 import com.mgilangjanuar.dev.goscele.Adapters.AllCoursesViewAdapter;
 import com.mgilangjanuar.dev.goscele.Adapters.CurrentCoursesViewAdapter;
+import com.mgilangjanuar.dev.goscele.Adapters.SearchCourseAdapter;
 import com.mgilangjanuar.dev.goscele.Models.CourseModel;
 import com.mgilangjanuar.dev.goscele.Models.ListCourseModel;
 import com.mgilangjanuar.dev.goscele.Models.ListCurrentCourseModel;
@@ -31,6 +32,7 @@ public class CoursePresenter {
 
     ListCourseModel listCourseModel;
     ListCurrentCourseModel listCurrentCourseModel;
+    ListCourseModel listSearchCourseModel;
 
     public static boolean isDataCurrentCoursesViewAdapterChanged;
     public static boolean isDataAllCoursesViewAdapterChanged;
@@ -44,6 +46,7 @@ public class CoursePresenter {
         this.view = view;
         listCourseModel = new ListCourseModel(activity);
         listCurrentCourseModel = new ListCurrentCourseModel(activity);
+        listSearchCourseModel = new ListCourseModel(activity);
         courseService = new CourseService();
     }
 
@@ -125,5 +128,24 @@ public class CoursePresenter {
 
     public View getView() {
         return  this.view;
+    }
+
+    public SearchCourseAdapter buildSearchAdapter(String query) {
+        buildSearchCourses(query);
+        return new SearchCourseAdapter(activity, listSearchCourseModel.courseModelList);
+    }
+
+    public void buildSearchCourses(String query) {
+        try {
+            listSearchCourseModel.courseModelList = new ArrayList<>();
+            for (Map<String, String> course: courseService.searchCourse(query)) {
+                CourseModel courseModel = new CourseModel();
+                courseModel.url = course.get("url");
+                courseModel.name = course.get("name");
+                listSearchCourseModel.courseModelList.add(courseModel);
+            }
+        } catch (IOException e) {
+            Log.e("CoursePresenter", e.getMessage());
+        }
     }
 }

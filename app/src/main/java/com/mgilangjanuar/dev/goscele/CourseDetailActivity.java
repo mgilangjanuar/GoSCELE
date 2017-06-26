@@ -13,7 +13,7 @@ import com.mgilangjanuar.dev.goscele.Fragments.CourseDetail.EventFragment;
 import com.mgilangjanuar.dev.goscele.Fragments.CourseDetail.NewsFragment;
 import com.mgilangjanuar.dev.goscele.Presenters.CourseDetailPresenter;
 
-public class CourseDetail extends AppCompatActivity {
+public class CourseDetailActivity extends AppCompatActivity {
 
     String url;
     CourseDetailPresenter presenter;

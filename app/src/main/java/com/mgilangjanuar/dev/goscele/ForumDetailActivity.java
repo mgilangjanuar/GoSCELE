@@ -21,7 +21,7 @@ import com.mgilangjanuar.dev.goscele.Fragments.ForumDetail.Comments;
 import com.mgilangjanuar.dev.goscele.Fragments.ForumDetail.Post;
 import com.mgilangjanuar.dev.goscele.Presenters.ForumDetailPresenter;
 
-public class ForumDetail extends AppCompatActivity {
+public class ForumDetailActivity extends AppCompatActivity {
 
     String url;
     ForumDetailPresenter forumDetailPresenter;
@@ -110,7 +110,7 @@ public class ForumDetail extends AppCompatActivity {
 
     private void buildAlertDialog() {
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
-        alert.setTitle("Reply Forum");
+        alert.setTitle("Reply ForumActivity");
         alert.setMessage("Write your reply here:");
 
         final EditText edittext = new EditText(this);

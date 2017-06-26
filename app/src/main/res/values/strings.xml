@@ -33,4 +33,8 @@
     <string name="empty_text">(empty)</string>
 
     <string name="title_fragment_home_alt">Latest Updates</string>
+
+    <string name="title_activity_search_course">Search Course</string>
+    <string name="hint_search">Search...</string>
+    <string name="text_search">Search</string>
 </resources>

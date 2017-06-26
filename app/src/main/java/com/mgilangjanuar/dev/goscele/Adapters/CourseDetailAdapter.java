@@ -31,7 +31,7 @@ public class CourseDetailAdapter extends RecyclerView.Adapter<CourseDetailAdapte
 
     @Override
     public CourseDetailViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new CourseDetailViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_course_detail, parent, false));
+        return new CourseDetailViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_course_detail_dashboard, parent, false));
     }
 
     @Override

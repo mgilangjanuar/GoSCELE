@@ -14,7 +14,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.mgilangjanuar.dev.goscele.ForumDetail;
+import com.mgilangjanuar.dev.goscele.ForumDetailActivity;
 import com.mgilangjanuar.dev.goscele.Helpers.HtmlHandlerHelper;
 import com.mgilangjanuar.dev.goscele.Presenters.ForumDetailPresenter;
 import com.mgilangjanuar.dev.goscele.R;
@@ -75,7 +75,7 @@ public class Post extends Fragment implements ForumDetailPresenter.ForumDetailSe
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                ((ForumDetail) getActivity()).getSupportActionBar().setTitle(forumDetailPresenter.getForumDetailModel().getSavedTitle());
+                ((ForumDetailActivity) getActivity()).getSupportActionBar().setTitle(forumDetailPresenter.getForumDetailModel().getSavedTitle());
                 title.setText(forumDetailPresenter.getForumDetailModel().getSavedTitle());
                 date.setText(forumDetailPresenter.getForumDetailModel().getSavedDate());
                 author.setText(forumDetailPresenter.getForumDetailModel().getSavedAuthor());

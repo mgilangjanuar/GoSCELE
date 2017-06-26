@@ -23,7 +23,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
-import com.mgilangjanuar.dev.goscele.InAppBrowser;
+import com.mgilangjanuar.dev.goscele.InAppBrowserActivity;
 
 import org.xml.sax.XMLReader;
 
@@ -141,7 +141,7 @@ public class HtmlHandlerHelper implements Html.TagHandler {
         int flags = strBuilder.getSpanFlags(span);
         ClickableSpan clickable = new ClickableSpan() {
             public void onClick(View view) {
-                context.startActivity((new Intent(context, InAppBrowser.class)).putExtra("url", span.getURL()));
+                context.startActivity((new Intent(context, InAppBrowserActivity.class)).putExtra("url", span.getURL()));
             }
         };
         strBuilder.setSpan(clickable, start, end, flags);

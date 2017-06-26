@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.mgilangjanuar.dev.goscele.ForumDetail;
+import com.mgilangjanuar.dev.goscele.ForumDetailActivity;
 import com.mgilangjanuar.dev.goscele.Models.CourseNewsModel;
 import com.mgilangjanuar.dev.goscele.R;
 
@@ -42,7 +42,7 @@ public class CourseDetailNewsAdapter extends RecyclerView.Adapter<CourseDetailNe
         holder.layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, ForumDetail.class).putExtra("url", model.url);
+                Intent intent = new Intent(context, ForumDetailActivity.class).putExtra("url", model.url);
                 context.startActivity(intent);
             }
         });

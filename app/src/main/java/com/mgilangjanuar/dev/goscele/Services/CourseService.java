@@ -6,6 +6,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -34,6 +35,26 @@ public class CourseService {
             results.add(new HashMap<String, String>(){{
                 put("url", course.select("a").attr("href"));
                 put("name", course.text());
+            }});
+        }
+        return results;
+    }
+
+    private Elements searchCourseHelper(String query) throws IOException {
+        Document doc;
+        doc = Jsoup.connect(ConfigAppModel.urlTo("course/search.php?search=" + URLEncoder.encode(query, "UTF-8")))
+                .cookies(AuthService.getCookies())
+                .get();
+
+        return doc == null ? null : doc.select(".coursebox");
+    }
+
+    public List<Map<String, String>> searchCourse(String query) throws IOException {
+        List<Map<String, String>> results = new ArrayList<>();
+        for (final Element course: searchCourseHelper(query)) {
+            results.add(new HashMap<String, String>(){{
+                put("url", course.select(".coursename a").attr("href"));
+                put("name", course.select(".coursename").text());
             }});
         }
         return results;

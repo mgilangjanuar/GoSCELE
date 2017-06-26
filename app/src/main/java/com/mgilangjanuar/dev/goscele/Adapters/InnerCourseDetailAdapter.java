@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.mgilangjanuar.dev.goscele.Helpers.HtmlHandlerHelper;
-import com.mgilangjanuar.dev.goscele.InAppBrowser;
+import com.mgilangjanuar.dev.goscele.InAppBrowserActivity;
 import com.mgilangjanuar.dev.goscele.Models.InnerCoursePostModel;
 import com.mgilangjanuar.dev.goscele.R;
 
@@ -44,7 +44,7 @@ public class InnerCourseDetailAdapter extends RecyclerView.Adapter<InnerCourseDe
             holder.title.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    context.startActivity((new Intent(context, InAppBrowser.class)).putExtra("url", model.url));
+                    context.startActivity((new Intent(context, InAppBrowserActivity.class)).putExtra("url", model.url));
                 }
             });
         }

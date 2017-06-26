@@ -1,14 +1,15 @@
 package com.mgilangjanuar.dev.goscele.Adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.mgilangjanuar.dev.goscele.InAppBrowserActivity;
 import com.mgilangjanuar.dev.goscele.Models.CourseEventModel;
 import com.mgilangjanuar.dev.goscele.R;
 
@@ -41,7 +42,7 @@ public class CourseDetailEventAdapter extends RecyclerView.Adapter<CourseDetailE
         holder.layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context, model.title, Toast.LENGTH_SHORT).show();
+                context.startActivity((new Intent(context, InAppBrowserActivity.class)).putExtra("url", model.url));
             }
         });
     }

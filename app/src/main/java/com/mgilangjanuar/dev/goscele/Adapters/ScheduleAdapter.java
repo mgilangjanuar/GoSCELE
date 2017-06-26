@@ -12,8 +12,9 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import com.mgilangjanuar.dev.goscele.CourseDetail;
+import com.mgilangjanuar.dev.goscele.CourseDetailActivity;
 import com.mgilangjanuar.dev.goscele.Helpers.HtmlHandlerHelper;
+import com.mgilangjanuar.dev.goscele.InAppBrowserActivity;
 import com.mgilangjanuar.dev.goscele.Models.ScheduleModel;
 import com.mgilangjanuar.dev.goscele.R;
 
@@ -73,6 +74,13 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.Schedu
             htmlHandlerHelper.setTextViewHTML(holder.description);
         }
 
+        holder.layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                context.startActivity((new Intent(context, InAppBrowserActivity.class)).putExtra("url", scheduleModel.url));
+            }
+        });
+
         holder.share.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -86,7 +94,7 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.Schedu
         holder.course.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                context.startActivity((new Intent(context, CourseDetail.class)).putExtra("url", scheduleModel.courseModel.url));
+                context.startActivity((new Intent(context, CourseDetailActivity.class)).putExtra("url", scheduleModel.courseModel.url));
             }
         });
     }
