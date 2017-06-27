@@ -22,7 +22,8 @@ public class BaseRecord {
 
     public BaseRecord(Context context) {
         this.context = context;
-        this.sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        this.sharedPreferences = context.getSharedPreferences(context.getPackageName(), Context.MODE_PRIVATE);
+//        this.sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         this.prefsEditor = sharedPreferences.edit();
     }
 

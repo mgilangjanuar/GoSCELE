@@ -46,6 +46,7 @@
         </activity>
 
         <receiver android:name=".Helpers.ScheduleBroadcastReceiver" />
+
     </application>
 
 </manifest>

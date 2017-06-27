@@ -51,6 +51,7 @@
                 android:elevation="1dp"
                 android:hint="@string/hint_search"
                 android:paddingTop="15dp"
+                android:inputType="textNoSuggestions"
                 android:singleLine="true" />
 
             <ImageButton

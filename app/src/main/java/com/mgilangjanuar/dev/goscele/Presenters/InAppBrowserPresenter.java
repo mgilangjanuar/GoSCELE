@@ -30,6 +30,8 @@ import com.mgilangjanuar.dev.goscele.Models.AccountModel;
 import com.mgilangjanuar.dev.goscele.Models.CourseModel;
 import com.mgilangjanuar.dev.goscele.Models.ListCourseModel;
 
+import java.util.List;
+
 /**
  * Created by mjanuar on 25/06/17.
  */
@@ -209,7 +211,10 @@ public class InAppBrowserPresenter {
 
     private boolean isAlreadyEnrollCourse() {
         ListCourseModel listCourseModel = new ListCourseModel(activity);
-        for (CourseModel model: listCourseModel.getSavedCourseModelList()) {
+        List<CourseModel> savedCourseModelList = listCourseModel.getSavedCourseModelList();
+        if (savedCourseModelList == null) { return false; }
+
+        for (CourseModel model: savedCourseModelList) {
             if (model.url.equals(url)) {
                 return true;
             }

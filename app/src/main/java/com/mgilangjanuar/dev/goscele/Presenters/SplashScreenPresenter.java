@@ -12,6 +12,7 @@ import com.mgilangjanuar.dev.goscele.AuthActivity;
 import com.mgilangjanuar.dev.goscele.BaseActivity;
 import com.mgilangjanuar.dev.goscele.MainActivity;
 import com.mgilangjanuar.dev.goscele.Models.QuoteModel;
+import com.mgilangjanuar.dev.goscele.R;
 
 import java.io.IOException;
 import java.io.InputStream;
