@@ -1,5 +1,7 @@
 package com.mgilangjanuar.dev.goscele.Services;
 
+import com.mgilangjanuar.dev.goscele.Models.ConfigAppModel;
+
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -7,8 +9,6 @@ import org.jsoup.select.Elements;
 
 import java.io.IOException;
 import java.util.Map;
-
-import com.mgilangjanuar.dev.goscele.Models.ConfigAppModel;
 
 /**
  * Created by muhammadgilangjanuar on 5/14/17.
@@ -27,6 +27,10 @@ public class AuthService {
         return cookies;
     }
 
+    public static void setCookies(Map<String, String> otherCookies) {
+        cookies = otherCookies;
+    }
+
     private Elements authHelper(String username, String password) throws IOException {
         Document doc;
         if (username != null && password != null) {
@@ -40,7 +44,6 @@ public class AuthService {
         doc = Jsoup.connect(ConfigAppModel.BASE_URL)
                 .cookies(getCookies())
                 .get();
-
         return doc == null ? null : doc.select(".usertext");
     }
 

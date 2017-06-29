@@ -42,6 +42,8 @@
         android:text="ToggleButton"
         android:layout_alignParentRight="true"
         android:layout_marginLeft="10dp"
+        android:textOn="Yes"
+        android:textOff="No"
         android:visibility="gone"/>
 
 </RelativeLayout>

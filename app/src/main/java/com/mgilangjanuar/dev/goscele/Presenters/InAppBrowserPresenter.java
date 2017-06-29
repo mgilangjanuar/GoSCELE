@@ -1,17 +1,14 @@
 package com.mgilangjanuar.dev.goscele.Presenters;
 
-import android.Manifest;
 import android.app.Activity;
 import android.app.DownloadManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
 import android.provider.Settings;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
@@ -70,13 +67,24 @@ public class InAppBrowserPresenter {
         public void onPageFinished(WebView view, String url) {
             super.onPageFinished(view, url);
             if (url.contains("login/")) {
-                webView.evaluateJavascript("(function() {document.getElementsByName('username')[0].value='"+authPresenter.getUsername()+"';document.getElementsByName('password')[0].value='"+authPresenter.getPassword()+"';document.getElementById('login').submit(); "+
-                        "return { var1: \"variable1\", var2: \"variable2\" }; })();", new ValueCallback<String>() {
-                    @Override
-                    public void onReceiveValue(String s) {
-                        Log.d("Authentication", "success");
-                    }
-                });
+                AccountModel accountModel = new AccountModel(activity);
+                if (accountModel.isSaveCredential()) {
+                    webView.evaluateJavascript("(function() {document.getElementsByName('username')[0].value='" + authPresenter.getUsername() + "';document.getElementsByName('password')[0].value='" + authPresenter.getPassword() + "';document.getElementById('login').submit(); " +
+                            "return { var1: \"variable1\", var2: \"variable2\" }; })();", new ValueCallback<String>() {
+                        @Override
+                        public void onReceiveValue(String s) {
+                            Log.d("Authentication", "success");
+                        }
+                    });
+                } else {
+                    webView.evaluateJavascript("(function() {document.getElementsByName('username')[0].value='" + authPresenter.getUsername() + "';" +
+                            "return { var1: \"variable1\", var2: \"variable2\" }; })();", new ValueCallback<String>() {
+                        @Override
+                        public void onReceiveValue(String s) {
+                            Log.d("Authentication", "without password");
+                        }
+                    });
+                }
             }
         }
     }

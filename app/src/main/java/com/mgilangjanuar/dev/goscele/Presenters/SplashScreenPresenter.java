@@ -5,14 +5,16 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
+import android.os.Bundle;
 import android.os.StrictMode;
 
 import com.google.gson.Gson;
 import com.mgilangjanuar.dev.goscele.AuthActivity;
 import com.mgilangjanuar.dev.goscele.BaseActivity;
+import com.mgilangjanuar.dev.goscele.InAppBrowserActivity;
 import com.mgilangjanuar.dev.goscele.MainActivity;
 import com.mgilangjanuar.dev.goscele.Models.QuoteModel;
-import com.mgilangjanuar.dev.goscele.R;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -44,24 +46,24 @@ public class SplashScreenPresenter implements AuthPresenter.AuthServicePresenter
         (new Thread(new Runnable() {
             @Override
             public void run() {
-                if (! authPresenter.isUsernameAndPasswordExist()) {
-                    ((BaseActivity) activity).forceRedirect(new Intent(activity, AuthActivity.class));
-                } else {
-                    try {
-                        if (isAuthenticate()) {
-                            ((BaseActivity) activity).forceRedirect(new Intent(activity, MainActivity.class));
-                        } else {
-                            ((BaseActivity) activity).forceRedirect(new Intent(activity, AuthActivity.class));
-                        }
-                    } catch (IOException e) {
-                        activity.runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                ((BaseActivity) activity).showToast("Whoops! Please check your internet connection");
-                            }
-                        });
-                        authenticate();
+                Bundle bundle = activity.getIntent().getExtras();
+                Uri data = bundle == null ? null : (Uri) bundle.get("uri");
+                try {
+                    if (!authPresenter.isUsernameAndPasswordExist() || !isAuthenticate()) {
+                        ((BaseActivity) activity).forceRedirect(new Intent(activity, AuthActivity.class));
+                    } else if (data != null && data.getPath() != null && !data.getPath().equals("") && !data.getPath().equals("/")) {
+                        ((BaseActivity) activity).forceRedirect(new Intent(activity, InAppBrowserActivity.class).putExtra("url", data.toString()));
+                    } else {
+                        ((BaseActivity) activity).forceRedirect(new Intent(activity, MainActivity.class));
                     }
+                } catch (IOException e) {
+                    activity.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            ((BaseActivity) activity).showToast("Whoops! Please check your internet connection");
+                        }
+                    });
+                    authenticate();
                 }
             }
         })).start();

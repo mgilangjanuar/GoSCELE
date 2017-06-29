@@ -54,7 +54,6 @@ public class AuthActivity extends BaseActivity implements AuthPresenter.AuthServ
             public void run() {
                 try {
                     if (authPresenter.login(username, password)) {
-                        authPresenter.save(username, password);
                         forceRedirect(new Intent(AuthActivity.this, MainActivity.class));
                     } else {
                         runOnUiThread(new Runnable() {

@@ -44,7 +44,7 @@ public class SettingAdapter extends RecyclerView.Adapter<SettingAdapter.SettingV
     }
 
     @Override
-    public void onBindViewHolder(SettingViewHolder holder, int position) {
+    public void onBindViewHolder(final SettingViewHolder holder, int position) {
         Map<String, String> model = list.get(position);
         holder.title.setText(model.get("title"));
         holder.subtitle.setText(model.get("content"));
@@ -58,20 +58,29 @@ public class SettingAdapter extends RecyclerView.Adapter<SettingAdapter.SettingV
                 }
             });
         } else if (model.get("title").contains("In-App Browser")) {
-            AccountModel accountModel = new AccountModel(context);
+            final AccountModel accountModel = new AccountModel(context);
             holder.toggle.setVisibility(ToggleButton.VISIBLE);
             holder.toggle.setChecked(accountModel.isUsingInAppBrowser() ? true : false);
             holder.toggle.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    AccountModel accountModel = new AccountModel(context);
-                    accountModel.getSavedName();
-                    accountModel.getSavedPassword();
-                    accountModel.getSavedUsername();
-                    accountModel.isUsingInAppBrowser = accountModel.isUsingInAppBrowser() ? false : true;
-                    accountModel.save();
+                    accountModel.toggleInAppBrowser();
                 }
             });
+        } else if (model.get("title").contains("Save Password")) {
+            final AccountModel accountModel = new AccountModel(context);
+            holder.toggle.setVisibility(ToggleButton.VISIBLE);
+            holder.toggle.setChecked(accountModel.isSaveCredential() ? true : false);
+            holder.toggle.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    accountModel.toggleSaveCredential();
+                    if (accountModel.isSaveCredential() && accountModel.getSavedPassword() == null) {
+                        presenter.savePasswordActionHelper(holder.toggle);
+                    }
+                }
+            });
+
         } else if (model.get("title").contains("Rate and Feedback")) {
             holder.relativeLayout.setOnClickListener(new View.OnClickListener() {
                 @Override

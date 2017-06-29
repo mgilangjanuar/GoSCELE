@@ -34,19 +34,29 @@
         <activity
             android:name=".SearchCourseActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".AlarmNotificationCancellation" />
         <activity
             android:name=".SplashScreenActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
+        <activity android:name=".DeepLinkActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data
+                    android:host="scele.cs.ui.ac.id"
+                    android:scheme="https" />
+                <data
+                    android:host="scele.cs.ui.ac.id"
+                    android:scheme="http" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".AlarmNotificationCancellation" />
         <receiver android:name=".Helpers.ScheduleBroadcastReceiver" />
-
     </application>
 
 </manifest>

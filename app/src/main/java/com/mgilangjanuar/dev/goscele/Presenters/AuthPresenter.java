@@ -7,13 +7,13 @@ import android.support.design.internal.BottomNavigationMenuView;
 import android.support.design.widget.BottomNavigationView;
 import android.util.Log;
 
-import java.io.IOException;
-import java.lang.reflect.Field;
-
 import com.mgilangjanuar.dev.goscele.Models.AccountModel;
 import com.mgilangjanuar.dev.goscele.Models.ListCourseModel;
 import com.mgilangjanuar.dev.goscele.Models.ListScheduleModel;
 import com.mgilangjanuar.dev.goscele.Services.AuthService;
+
+import java.io.IOException;
+import java.lang.reflect.Field;
 
 /**
  * Created by muhammadgilangjanuar on 5/14/17.
@@ -35,6 +35,9 @@ public class AuthPresenter {
         this.authService = new AuthService();
         this.activity = activity;
         this.accountModel = new AccountModel(activity);
+        if (accountModel.getSavedCookies() != null) {
+            AuthService.setCookies(accountModel.cookies);
+        }
     }
 
     public boolean isLogin() throws IOException {
@@ -42,7 +45,9 @@ public class AuthPresenter {
     }
 
     public boolean login(String username, String password) throws IOException {
-        return authService.login(username, password);
+        boolean isLogin = authService.login(username, password);
+        save(username, password);
+        return isLogin;
     }
 
     public String getUserText() {
@@ -58,7 +63,13 @@ public class AuthPresenter {
         accountModel.username = username;
         accountModel.password = password;
         accountModel.name = getUserText();
-        accountModel.isUsingInAppBrowser = true;
+        accountModel.isUsingInAppBrowser = accountModel.isUsingInAppBrowser();
+        accountModel.isSaveCredential = accountModel.isSaveCredential();
+        try {
+            accountModel.cookies = AuthService.getCookies();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         accountModel.save();
     }
 
@@ -71,7 +82,7 @@ public class AuthPresenter {
     }
 
     public boolean isUsernameAndPasswordExist() {
-        return getUsername() != null && getPassword() != null;
+        return (accountModel.isSaveCredential() && getUsername() != null && getPassword() != null) || (! accountModel.isSaveCredential());
     }
 
     public boolean logout() {
@@ -112,7 +123,6 @@ public class AuthPresenter {
                     BottomNavigationItemView item = (BottomNavigationItemView) menuView.getChildAt(i);
                     //noinspection RestrictedApi
                     item.setShiftingMode(false);
-                    // set once again checked value, so view will be updated
                     //noinspection RestrictedApi
                     item.setChecked(item.getItemData().isChecked());
                 }

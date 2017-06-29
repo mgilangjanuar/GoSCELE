@@ -8,6 +8,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.view.View;
+import android.widget.ToggleButton;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -78,7 +79,12 @@ public class SettingPresenter {
 
         listContent.add(new HashMap<String, String>() {{
             put("title", "In-App Browser");
-            put("content", "Click toggle for enable/disable in-app browser");
+            put("content", "Enable in-app browser?");
+        }});
+
+        listContent.add(new HashMap<String, String>() {{
+            put("title", "Save Password");
+            put("content", "Allow application store password?");
         }});
 
         listContent.add(new HashMap<String, String>() {{
@@ -146,5 +152,35 @@ public class SettingPresenter {
         alert.show();
     }
 
+    public void savePasswordActionHelper(final ToggleButton toggle) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+        builder.setCancelable(false);
+        builder.setTitle("Save Password");
+        builder.setMessage("The application needs re-authentication for password saving. Are you sure?");
+        builder.setInverseBackgroundForced(true);
+        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                ((MainActivity) activity).forceRedirect(new Intent(activity, AuthActivity.class));
+            }
+        });
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                if (toggle.isChecked()) {
+                    toggle.performClick();
+                }
+                dialog.dismiss();
+            }
+        });
+        final AlertDialog alert = builder.create();
+
+        alert.setOnShowListener( new DialogInterface.OnShowListener() {
+            @Override
+            public void onShow(DialogInterface arg0) {
+                alert.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(Color.DKGRAY);
+                alert.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(Color.DKGRAY);
+            }
+        });
+        alert.show();
+    }
 
 }
