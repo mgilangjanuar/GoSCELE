@@ -153,21 +153,32 @@ public class SettingPresenter {
     }
 
     public void savePasswordActionHelper(final ToggleButton toggle) {
+        final AccountModel accountModel = new AccountModel(activity);
+        String message;
+        if (accountModel.isSaveCredential()) {
+            message = "The application will remove your password. Want to continue?";
+        } else {
+            message = "The application needs re-authentication for password saving. Want to continue?";
+        }
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
         builder.setCancelable(false);
         builder.setTitle("Save Password");
-        builder.setMessage("The application needs re-authentication for password saving. Are you sure?");
+        builder.setMessage(message);
         builder.setInverseBackgroundForced(true);
         builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
-                ((MainActivity) activity).forceRedirect(new Intent(activity, AuthActivity.class));
+                accountModel.toggleSaveCredential();
+                if (accountModel.isSaveCredential()) {
+                    ((MainActivity) activity).forceRedirect(new Intent(activity, AuthActivity.class));
+                    toggle.setChecked(true);
+                } else {
+                    toggle.setChecked(false);
+                }
             }
         });
         builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
-                if (toggle.isChecked()) {
-                    toggle.performClick();
-                }
+                toggle.setChecked(! toggle.isChecked());
                 dialog.dismiss();
             }
         });

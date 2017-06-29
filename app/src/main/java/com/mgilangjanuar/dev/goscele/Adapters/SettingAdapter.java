@@ -74,13 +74,9 @@ public class SettingAdapter extends RecyclerView.Adapter<SettingAdapter.SettingV
             holder.toggle.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    accountModel.toggleSaveCredential();
-                    if (accountModel.isSaveCredential() && accountModel.getSavedPassword() == null) {
-                        presenter.savePasswordActionHelper(holder.toggle);
-                    }
+                    presenter.savePasswordActionHelper(holder.toggle);
                 }
             });
-
         } else if (model.get("title").contains("Rate and Feedback")) {
             holder.relativeLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
