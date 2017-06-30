@@ -153,6 +153,7 @@ public class SettingPresenter {
     }
 
     public void savePasswordActionHelper(final ToggleButton toggle) {
+        toggle.setChecked(! toggle.isChecked());
         final AccountModel accountModel = new AccountModel(activity);
         String message;
         if (accountModel.isSaveCredential()) {
@@ -178,7 +179,6 @@ public class SettingPresenter {
         });
         builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
-                toggle.setChecked(! toggle.isChecked());
                 dialog.dismiss();
             }
         });
