@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -23,6 +24,16 @@
                 android:theme="@style/AppTheme.ActionBar"/>
 
         </android.support.design.widget.AppBarLayout>
+        <ProgressBar
+            android:id="@+id/progress_bar_browser"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:max="100"
+            android:layout_marginTop="-6.8dp"
+            android:layout_marginBottom="-6.8dp"/>
 
         <WebView
             android:id="@+id/web_view"

@@ -10,7 +10,9 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.webkit.CookieManager;
+import android.webkit.WebChromeClient;
 import android.webkit.WebView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.mgilangjanuar.dev.goscele.Presenters.InAppBrowserPresenter;
@@ -92,6 +94,7 @@ public class InAppBrowserActivity extends BaseActivity implements InAppBrowserPr
         webView.getSettings().setJavaScriptEnabled(true);
         webView.getSettings().setAppCacheEnabled(true);
         webView.setWebViewClient(presenter.buildWebViewClient(toolbar, webView));
+        webView.setWebChromeClient(presenter.buildWebChromeClient((ProgressBar) findViewById(R.id.progress_bar_browser)));
 
         webView.setDownloadListener(presenter.buildDownloadListener());
 

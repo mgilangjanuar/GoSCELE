@@ -12,6 +12,6 @@ public class DeepLinkActivity extends BaseActivity {
         Intent intent = getIntent();
         Uri data = intent.getData();
         forceRedirect(new Intent(DeepLinkActivity.this, SplashScreenActivity.class).putExtra("uri", data));
-        onBackPressed();
+        finish();
     }
 }
