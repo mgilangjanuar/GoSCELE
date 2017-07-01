@@ -23,6 +23,7 @@ import com.mgilangjanuar.dev.goscele.ForumActivity;
 import com.mgilangjanuar.dev.goscele.MainActivity;
 import com.mgilangjanuar.dev.goscele.Presenters.HomePresenter;
 import com.mgilangjanuar.dev.goscele.R;
+import com.mgilangjanuar.dev.goscele.SearchForumActivity;
 
 public class HomeFragment extends Fragment implements HomePresenter.HomeServicePresenter {
 
@@ -129,6 +130,9 @@ public class HomeFragment extends Fragment implements HomePresenter.HomeServiceP
     public boolean onOptionsItemSelected(MenuItem item) {
         String url = "";
         switch (item.getItemId()) {
+            case (R.id.item_search):
+                startActivity(new Intent(getActivity(), SearchForumActivity.class));
+                return super.onOptionsItemSelected(item);
             case (R.id.item_pengumuman_akademis):
                 url = "https://scele.cs.ui.ac.id/mod/forum/view.php?id=1";
                 break;

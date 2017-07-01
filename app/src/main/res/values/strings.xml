@@ -37,4 +37,5 @@
     <string name="title_activity_search_course">Search Course</string>
     <string name="hint_search">Search...</string>
     <string name="text_search">Search</string>
+    <string name="title_activity_search_forum">Search Forum</string>
 </resources>

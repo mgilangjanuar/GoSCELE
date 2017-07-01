@@ -47,8 +47,8 @@ public class AccountModel extends BaseRecord implements BaseRecord.BasicInterfac
         prefsEditor.putString(getAttributeTag("name"), null);
         prefsEditor.putString(getAttributeTag("username"), null);
         prefsEditor.putString(getAttributeTag("password"), null);
-        prefsEditor.putBoolean(getAttributeTag("isUsingInAppBrowser"), false);
-        prefsEditor.putBoolean(getAttributeTag("isSaveCredential"), false);
+        prefsEditor.putBoolean(getAttributeTag("isUsingInAppBrowser"), true);
+        prefsEditor.putBoolean(getAttributeTag("isSaveCredential"), true);
         prefsEditor.putString(getAttributeTag("cookies"), null);
         prefsEditor.commit();
     }

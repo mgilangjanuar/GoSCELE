@@ -5,7 +5,7 @@
 
     <item
         android:id="@+id/item_course_add"
-        android:icon="@drawable/ic_add_black_24dp"
-        android:title="Add"
+        android:icon="@drawable/ic_search_black_24dp"
+        android:title="Search"
         app:showAsAction="ifRoom" />
 </menu>

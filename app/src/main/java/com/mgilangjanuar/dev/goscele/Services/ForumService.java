@@ -8,6 +8,9 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URL;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -149,6 +152,30 @@ public class ForumService {
                 .get();
 
         deleteHelper(doc);
+    }
+
+    public Map<String, String> searchForumInfo(String keyword) throws IOException {
+        Map<String, String> result = new HashMap<>();
+        url = ConfigAppModel.urlTo("mod/forum/search.php?id=1&perpage=50&search=" + URLEncoder.encode(keyword, "UTF-8"));
+        result.put("url", url);
+        result.put("count", getElements("h3:contains(Search results: )").text().replace("Search results: ", ""));
+        return result;
+    }
+
+    public List<Map<String, String>> searchForum(String keyword) throws IOException {
+        List<Map<String, String>> results = new ArrayList<>();
+        url = ConfigAppModel.urlTo("mod/forum/search.php?id=1&perpage=30&search=" + URLEncoder.encode(keyword, "UTF-8"));
+
+        for (final Element e: getElements(".forumpost")) {
+            results.add(new HashMap<String, String>() {{
+                put("url", ConfigAppModel.urlTo("mod/forum/" + e.select(".subject a").get(1).attr("href")));
+                put("title", e.select(".subject a").get(1).text());
+                put("author", e.select(".author a").text());
+                put("repliesNumber", "0");
+                put("lastUpdate", e.select(".author").text().replace("by " + e.select(".author a").text() + " - ", ""));
+            }});
+        }
+        return results;
     }
 
 }

@@ -31,6 +31,7 @@ public class CourseDetailActivity extends AppCompatActivity {
         }
 
         url = bundle.getString("url");
+        presenter = new CourseDetailPresenter(this, url);
         final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_course_detail);
         toolbar.setTitle(getResources().getString(R.string.loading_text));
         setSupportActionBar(toolbar);
@@ -46,8 +47,6 @@ public class CourseDetailActivity extends AppCompatActivity {
     }
 
     private void setupCourseDetail() {
-        presenter = new CourseDetailPresenter(this, url);
-
         final ViewPager viewPager = (ViewPager) findViewById(R.id.view_pager_activity_course_detail);
         final BaseTabViewPagerAdapter fragmentPagerAdapter = new BaseTabViewPagerAdapter(getSupportFragmentManager());
         fragmentPagerAdapter.addFragment(DashboardFragment.newInstance(presenter), getResources().getString(R.string.title_course_dashboard));

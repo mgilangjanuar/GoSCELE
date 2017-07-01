@@ -44,12 +44,26 @@ public class ForumActivity extends AppCompatActivity implements ForumPresenter.F
             return;
         }
         url = bundle.getString("url");
+        forumPresenter = new ForumPresenter(this, url);
 
         final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_forum);
         toolbar.setTitle(getResources().getString(R.string.loading_text));
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+        (new Thread(new Runnable() {
+            @Override
+            public void run() {
+                final String title = forumPresenter.getTitle();
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        getSupportActionBar().setTitle(title);
+                    }
+                });
+            }
+        })).start();
 
         (new Thread(new Runnable() {
             @Override
@@ -61,18 +75,12 @@ public class ForumActivity extends AppCompatActivity implements ForumPresenter.F
 
     @Override
     public void setupForum() {
-        forumPresenter = new ForumPresenter(this, url);
-
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view_forum);
         final ForumAdapter adapter = forumPresenter.buildAdapter();
-        final String title = forumPresenter.getTitle();
         final TextView status = (TextView) findViewById(R.id.text_status_forum);
-
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                getSupportActionBar().setTitle(title);
-
                 recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
                 recyclerView.setItemAnimator(new DefaultItemAnimator());
                 recyclerView.setAdapter(adapter);

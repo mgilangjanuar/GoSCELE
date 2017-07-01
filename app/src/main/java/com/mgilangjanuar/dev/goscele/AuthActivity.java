@@ -29,6 +29,7 @@ public class AuthActivity extends BaseActivity implements AuthPresenter.AuthServ
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                hideKeyboard();
                 String username = ((EditText) findViewById(com.mgilangjanuar.dev.goscele.R.id.username)).getText().toString().trim();
                 String password = ((EditText) findViewById(com.mgilangjanuar.dev.goscele.R.id.password)).getText().toString().trim();
 

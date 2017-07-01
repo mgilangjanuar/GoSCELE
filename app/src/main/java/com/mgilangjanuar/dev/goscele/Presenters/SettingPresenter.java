@@ -16,6 +16,7 @@ import java.util.Map;
 
 import com.mgilangjanuar.dev.goscele.Adapters.SettingAdapter;
 import com.mgilangjanuar.dev.goscele.AuthActivity;
+import com.mgilangjanuar.dev.goscele.BaseActivity;
 import com.mgilangjanuar.dev.goscele.MainActivity;
 import com.mgilangjanuar.dev.goscele.Models.AccountModel;
 import com.mgilangjanuar.dev.goscele.R;
@@ -173,6 +174,7 @@ public class SettingPresenter {
                     ((MainActivity) activity).forceRedirect(new Intent(activity, AuthActivity.class));
                     toggle.setChecked(true);
                 } else {
+                    ((BaseActivity) activity).showToast("Password removed");
                     toggle.setChecked(false);
                 }
             }

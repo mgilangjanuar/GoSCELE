@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.mgilangjanuar.dev.goscele.Presenters.AuthPresenter;
+import com.mgilangjanuar.dev.goscele.Presenters.ForumPresenter;
 import com.mgilangjanuar.dev.goscele.Presenters.SchedulePresenter;
 
 public class MainActivity extends BaseActivity {

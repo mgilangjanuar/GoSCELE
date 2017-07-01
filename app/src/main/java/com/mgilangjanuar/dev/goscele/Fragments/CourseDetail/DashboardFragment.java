@@ -8,7 +8,6 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -56,6 +55,20 @@ public class DashboardFragment extends Fragment implements CourseDetailPresenter
         (new Thread(new Runnable() {
             @Override
             public void run() {
+                final CourseModel courseModel = courseDetailPresenter.getCourseModel();
+                if (getActivity() == null) { return; }
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        ((CourseDetailActivity) getActivity()).getSupportActionBar().setTitle(courseModel.name);
+                    }
+                });
+            }
+        })).start();
+
+        (new Thread(new Runnable() {
+            @Override
+            public void run() {
                 setupCourseDetail(view);
             }
         })).start();
@@ -66,17 +79,13 @@ public class DashboardFragment extends Fragment implements CourseDetailPresenter
         recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view_course_detail);
         final CourseDetailAdapter adapter = courseDetailPresenter.buildDashboardAdapter();
         final TextView status = (TextView) view.findViewById(R.id.text_status_course_dashboard);
-        final CourseModel courseModel = courseDetailPresenter.getCourseModel();
 
         if (getActivity() == null) { return; }
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                ((CourseDetailActivity) getActivity()).getSupportActionBar().setTitle(courseModel.name);
-
                 recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
                 recyclerView.setItemAnimator(new DefaultItemAnimator());
-                Log.e("ausnaisas", String.valueOf(recyclerView.getAdapter() == null));
                 if (recyclerView.getAdapter() == null || ! adapter.equals(recyclerView.getAdapter())) {
                     recyclerView.setAdapter(adapter);
                 }
