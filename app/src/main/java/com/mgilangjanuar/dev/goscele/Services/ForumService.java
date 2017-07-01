@@ -8,8 +8,6 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -23,6 +21,7 @@ import java.util.Map;
 public class ForumService {
 
     public String url;
+    private static String URL_SEARCH = ConfigAppModel.urlTo("mod/forum/search.php?id=1&perpage=50&search=");
 
     public ForumService(String url) {
         this.url = url;
@@ -156,7 +155,7 @@ public class ForumService {
 
     public Map<String, String> searchForumInfo(String keyword) throws IOException {
         Map<String, String> result = new HashMap<>();
-        url = ConfigAppModel.urlTo("mod/forum/search.php?id=1&perpage=50&search=" + URLEncoder.encode(keyword, "UTF-8"));
+        url = URL_SEARCH + URLEncoder.encode(keyword, "UTF-8");
         result.put("url", url);
         result.put("count", getElements("h3:contains(Search results: )").text().replace("Search results: ", ""));
         return result;
@@ -164,16 +163,20 @@ public class ForumService {
 
     public List<Map<String, String>> searchForum(String keyword) throws IOException {
         List<Map<String, String>> results = new ArrayList<>();
-        url = ConfigAppModel.urlTo("mod/forum/search.php?id=1&perpage=30&search=" + URLEncoder.encode(keyword, "UTF-8"));
-
-        for (final Element e: getElements(".forumpost")) {
-            results.add(new HashMap<String, String>() {{
-                put("url", ConfigAppModel.urlTo("mod/forum/" + e.select(".subject a").get(1).attr("href")));
-                put("title", e.select(".subject a").get(1).text());
-                put("author", e.select(".author a").text());
-                put("repliesNumber", "0");
-                put("lastUpdate", e.select(".author").text().replace("by " + e.select(".author a").text() + " - ", ""));
-            }});
+        List<String> urls = new ArrayList<>();
+        url = URL_SEARCH + URLEncoder.encode(keyword, "UTF-8");
+        for (final Element e: getElements("#region-main > div > .forumpost")) {
+            final String forumUrl = ConfigAppModel.urlTo("mod/forum/" + e.select(".subject a").get(1).attr("href"));
+            if (! urls.contains(forumUrl)) {
+                results.add(new HashMap<String, String>() {{
+                    put("url", forumUrl);
+                    put("title", e.select(".subject a").get(1).text());
+                    put("author", e.select(".author a").text());
+                    put("repliesNumber", "0");
+                    put("lastUpdate", e.select(".author").text().replace("by " + e.select(".author a").text() + " - ", ""));
+                }});
+            }
+            urls.add(forumUrl);
         }
         return results;
     }
