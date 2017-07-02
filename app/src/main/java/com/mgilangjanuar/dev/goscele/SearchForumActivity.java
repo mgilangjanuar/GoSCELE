@@ -28,7 +28,6 @@ public class SearchForumActivity extends BaseActivity {
         presenter = new ForumPresenter(this, null);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_search_forum);
-        toolbar.setTitle(getString(R.string.title_activity_search_forum));
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);

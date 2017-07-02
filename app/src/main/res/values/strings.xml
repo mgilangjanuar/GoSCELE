@@ -38,4 +38,6 @@
     <string name="hint_search">Search...</string>
     <string name="text_search">Search</string>
     <string name="title_activity_search_forum">Search Forum</string>
+    <string name="hint_search_forum">Search forum...</string>
+    <string name="hint_search_course">Search course...</string>
 </resources>
