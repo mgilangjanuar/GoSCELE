@@ -15,14 +15,17 @@ import com.mgilangjanuar.dev.goscele.R;
 
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /**
  * Created by muhammadgilangjanuar on 5/22/17.
  */
 
 public class CourseDetailEventAdapter extends RecyclerView.Adapter<CourseDetailEventAdapter.CourseDetailEventViewHolder> {
 
-    Context context;
-    List<CourseEventModel> list;
+    private Context context;
+    private List<CourseEventModel> list;
 
     public CourseDetailEventAdapter(Context context, List<CourseEventModel> list) {
         this.context = context;
@@ -39,12 +42,7 @@ public class CourseDetailEventAdapter extends RecyclerView.Adapter<CourseDetailE
         final CourseEventModel model = list.get(position);
         holder.title.setText(model.title);
         holder.info.setText(model.info);
-        holder.layout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                context.startActivity((new Intent(context, InAppBrowserActivity.class)).putExtra("url", model.url));
-            }
-        });
+        holder.layout.setOnClickListener(v -> context.startActivity((new Intent(context, InAppBrowserActivity.class)).putExtra("url", model.url)));
     }
 
     @Override
@@ -57,15 +55,13 @@ public class CourseDetailEventAdapter extends RecyclerView.Adapter<CourseDetailE
 
     public class CourseDetailEventViewHolder extends RecyclerView.ViewHolder {
 
-        public TextView title;
-        public TextView info;
-        public LinearLayout layout;
+        @BindView(R.id.title_course_detail_event) public TextView title;
+        @BindView(R.id.info_course_detail_event) public TextView info;
+        @BindView(R.id.layout_course_detail_event) public LinearLayout layout;
 
         public CourseDetailEventViewHolder(View itemView) {
             super(itemView);
-            title = (TextView) itemView.findViewById(R.id.title_course_detail_event);
-            info = (TextView) itemView.findViewById(R.id.info_course_detail_event);
-            layout = (LinearLayout) itemView.findViewById(R.id.layout_course_detail_event);
+            ButterKnife.bind(this, itemView);
         }
     }
 }

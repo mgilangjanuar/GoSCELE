@@ -15,14 +15,17 @@ import com.mgilangjanuar.dev.goscele.R;
 
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /**
  * Created by muhammadgilangjanuar on 5/23/17.
  */
 
 public class CourseDetailNewsAdapter extends RecyclerView.Adapter<CourseDetailNewsAdapter.CourseDetailNewsViewHolder> {
 
-    Context context;
-    List<CourseNewsModel> list;
+    private Context context;
+    private List<CourseNewsModel> list;
 
     public CourseDetailNewsAdapter(Context context, List<CourseNewsModel> list) {
         this.context = context;
@@ -39,12 +42,9 @@ public class CourseDetailNewsAdapter extends RecyclerView.Adapter<CourseDetailNe
         final CourseNewsModel model = list.get(position);
         holder.title.setText(model.title);
         holder.info.setText(model.info);
-        holder.layout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(context, ForumDetailActivity.class).putExtra("url", model.url);
-                context.startActivity(intent);
-            }
+        holder.layout.setOnClickListener(v -> {
+            Intent intent = new Intent(context, ForumDetailActivity.class).putExtra("url", model.url);
+            context.startActivity(intent);
         });
     }
 
@@ -55,15 +55,13 @@ public class CourseDetailNewsAdapter extends RecyclerView.Adapter<CourseDetailNe
 
     public class CourseDetailNewsViewHolder extends RecyclerView.ViewHolder {
 
-        public TextView title;
-        public TextView info;
-        public LinearLayout layout;
+        @BindView(R.id.title_course_detail_news) public TextView title;
+        @BindView(R.id.info_course_detail_news) public TextView info;
+        @BindView(R.id.layout_course_detail_news) public LinearLayout layout;
 
         public CourseDetailNewsViewHolder(View itemView) {
             super(itemView);
-            title = (TextView) itemView.findViewById(R.id.title_course_detail_news);
-            info = (TextView) itemView.findViewById(R.id.info_course_detail_news);
-            layout = (LinearLayout) itemView.findViewById(R.id.layout_course_detail_news);
+            ButterKnife.bind(this, itemView);
         }
     }
 }

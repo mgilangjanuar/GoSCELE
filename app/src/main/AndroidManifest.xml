@@ -55,7 +55,7 @@
                 <data android:host="scele.cs.ui.ac.id" />
             </intent-filter>
         </activity>
-        <activity android:name=".AlarmNotificationCancellation" />
+        <activity android:name=".AlarmNotificationCancellationActivity" />
 
         <receiver android:name=".Helpers.ScheduleBroadcastReceiver" />
 

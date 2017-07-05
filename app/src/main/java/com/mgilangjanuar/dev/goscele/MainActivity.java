@@ -8,16 +8,19 @@ import android.view.MenuItem;
 import com.mgilangjanuar.dev.goscele.Presenters.AuthPresenter;
 import com.mgilangjanuar.dev.goscele.Presenters.SchedulePresenter;
 
+import butterknife.BindView;
+
 public class MainActivity extends BaseActivity {
+
+    @BindView(R.id.bottom_navigation) BottomNavigationView bottomNavigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(com.mgilangjanuar.dev.goscele.R.layout.activity_main);
 
-        bottomNavigationView = (BottomNavigationView) findViewById(com.mgilangjanuar.dev.goscele.R.id.bottom_navigation);
         AuthPresenter.BottomNavigationViewHelper.disableShiftMode(bottomNavigationView);
-        onNavigationSelected();
+        onNavigationSelected(bottomNavigationView);
 
         MenuItem menuItem;
         if (savedInstanceState != null) {
@@ -32,12 +35,6 @@ public class MainActivity extends BaseActivity {
         } catch (Exception e) {
         }
 
-        final Activity activity = this;
-        (new Thread(new Runnable() {
-            @Override
-            public void run() {
-                (new SchedulePresenter(activity, null)).notifySchedule();
-            }
-        })).start();
+        (new Thread(() -> (new SchedulePresenter(this, null)).notifySchedule())).start();
     }
 }

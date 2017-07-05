@@ -1,7 +1,18 @@
 package com.mgilangjanuar.dev.goscele.Presenters;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.graphics.Color;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.mgilangjanuar.dev.goscele.Adapters.ForumAdapter;
 import com.mgilangjanuar.dev.goscele.BaseActivity;
@@ -19,11 +30,11 @@ import java.util.Map;
  */
 
 public class ForumPresenter {
-    Activity activity;
+    private Activity activity;
 
-    ListForumModel listForumModel;
-    ListForumModel listForumSearchModel;
-    ForumService forumService;
+    private ListForumModel listForumModel;
+    private ListForumModel listForumSearchModel;
+    private ForumService forumService;
 
     public String url;
 
@@ -123,5 +134,75 @@ public class ForumPresenter {
         } catch (IOException e) {
             Log.e("ForumPresenter", e.getMessage());
         }
+    }
+
+    public void buildAlertDialog(final RecyclerView recyclerView, final SwipeRefreshLayout swipeRefreshLayout) {
+        AlertDialog.Builder alert = new AlertDialog.Builder(activity);
+        alert.setTitle("Add New Thread");
+        alert.setMessage("Write your thread here:");
+
+        final EditText etTitle = new EditText(activity);
+        etTitle.setSingleLine(true);
+        etTitle.setHint("Subject");
+
+        final EditText etMessage = new EditText(activity);
+        etMessage.setSingleLine(false);
+        etMessage.setMaxLines(7);
+        etMessage.setHint("Content");
+
+        LinearLayout container = new LinearLayout(activity);
+        container.setOrientation(LinearLayout.VERTICAL);
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        params.leftMargin = activity.getResources().getDimensionPixelSize(R.dimen.dialog_margin);
+        params.rightMargin = activity.getResources().getDimensionPixelSize(R.dimen.dialog_margin);
+        etTitle.setLayoutParams(params);
+        container.addView(etTitle);
+        etMessage.setLayoutParams(params);
+        container.addView(etMessage);
+
+        alert.setView(container);
+
+        alert.setPositiveButton("Send", null);
+
+        alert.setNegativeButton("Cancel", (dialog, whichButton) -> dialog.dismiss());
+
+        final AlertDialog alertDialog = alert.create();
+
+        alertDialog.setOnShowListener(arg0 -> {
+            alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(Color.DKGRAY);
+            alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(Color.DKGRAY);
+
+            Button button = alertDialog.getButton(AlertDialog.BUTTON_POSITIVE);
+            button.setOnClickListener(view -> {
+                final String titleText = etTitle.getText().toString().trim();
+                final String messageText = etMessage.getText().toString().replaceAll("\\n", "<br />");
+                if (titleText.equals("") || messageText.equals("")) {
+                    Toast.makeText(activity, "Title and message are required fields", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(activity, "Please wait...", Toast.LENGTH_LONG).show();
+                    (new Thread(() -> {
+                        sendNews(titleText, messageText);
+                        refreshingForum(recyclerView, swipeRefreshLayout);
+                        activity.runOnUiThread(() -> Toast.makeText(activity, "Sent!", Toast.LENGTH_SHORT).show());
+                    })).start();
+                    alertDialog.dismiss();
+                }
+            });
+        });
+        alertDialog.show();
+    }
+
+    private void refreshingForum(final RecyclerView recyclerView, final SwipeRefreshLayout swipeRefreshLayout) {
+        swipeRefreshLayout.post(() -> {
+            swipeRefreshLayout.setRefreshing(true);
+            (new Thread(() -> {
+                clear();
+                final ForumAdapter adapter = buildAdapter();
+                activity.runOnUiThread(() -> {
+                    recyclerView.setAdapter(adapter);
+                    swipeRefreshLayout.setRefreshing(false);
+                });
+            })).start();
+        });
     }
 }

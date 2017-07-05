@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by muhammadgilangjanuar on 5/18/17.
@@ -36,7 +37,7 @@ public class CalendarMonthService {
 
     public List<String> getListDay(long time) throws IOException {
         List<String> results = new ArrayList<>();
-        for (Element e : getElements(".hasevent a", time)) {
+        for (Element e: getElements(".hasevent a", time)) {
             results.add(e.text());
         }
         return results;

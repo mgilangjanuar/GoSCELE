@@ -15,14 +15,17 @@ import com.mgilangjanuar.dev.goscele.R;
 
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /**
  * Created by muhammadgilangjanuar on 5/21/17.
  */
 
 public class InnerCourseDetailAdapter extends RecyclerView.Adapter<InnerCourseDetailAdapter.InnerCourseDetailViewHolder> {
 
-    Context context;
-    List<InnerCoursePostModel> list;
+    private Context context;
+    private List<InnerCoursePostModel> list;
 
     public InnerCourseDetailAdapter(Context context, List<InnerCoursePostModel> list) {
         this.context = context;
@@ -41,12 +44,7 @@ public class InnerCourseDetailAdapter extends RecyclerView.Adapter<InnerCourseDe
         if (!model.title.equals("")) {
             holder.title.setVisibility(TextView.VISIBLE);
             holder.title.setText(model.title);
-            holder.title.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    context.startActivity((new Intent(context, InAppBrowserActivity.class)).putExtra("url", model.url));
-                }
-            });
+            holder.title.setOnClickListener(v -> context.startActivity((new Intent(context, InAppBrowserActivity.class)).putExtra("url", model.url)));
         }
 
         if (!model.comment.equals("")) {
@@ -63,13 +61,12 @@ public class InnerCourseDetailAdapter extends RecyclerView.Adapter<InnerCourseDe
 
     public class InnerCourseDetailViewHolder extends RecyclerView.ViewHolder {
 
-        public TextView title;
-        public TextView comment;
+        @BindView(R.id.title_inner_course_post) public TextView title;
+        @BindView(R.id.comment_inner_course_post) public TextView comment;
 
         public InnerCourseDetailViewHolder(View itemView) {
             super(itemView);
-            title = (TextView) itemView.findViewById(R.id.title_inner_course_post);
-            comment = (TextView) itemView.findViewById(R.id.comment_inner_course_post);
+            ButterKnife.bind(this, itemView);
         }
     }
 }

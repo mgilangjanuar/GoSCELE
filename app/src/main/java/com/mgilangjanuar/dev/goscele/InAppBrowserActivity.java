@@ -14,25 +14,22 @@ import android.widget.ProgressBar;
 
 import com.mgilangjanuar.dev.goscele.Presenters.InAppBrowserPresenter;
 
+import butterknife.BindView;
+
 public class InAppBrowserActivity extends BaseActivity implements InAppBrowserPresenter.InAppBrowserServicePresenter {
 
-    WebView webView;
-    InAppBrowserPresenter presenter;
+    private InAppBrowserPresenter presenter;
+
+    @BindView(R.id.toolbar_app_browser) Toolbar toolbar;
+    @BindView(R.id.web_view) WebView webView;
+    @BindView(R.id.progress_bar_browser) ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_in_app_browser);
 
-        webView = (WebView) findViewById(R.id.web_view);
-
-        Bundle bundle = getIntent().getExtras();
-        if (bundle == null || bundle.getString("url") == null) {
-            showToast("Broken URL");
-            onBackPressed();
-            return;
-        }
-        presenter = new InAppBrowserPresenter(this, bundle.getString("url"));
+        presenter = new InAppBrowserPresenter(this, getIntent().getExtras().getString("url"));
         setupInAppBrowser();
     }
 
@@ -78,7 +75,6 @@ public class InAppBrowserActivity extends BaseActivity implements InAppBrowserPr
             return;
         }
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_app_browser);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -88,11 +84,12 @@ public class InAppBrowserActivity extends BaseActivity implements InAppBrowserPr
         }
 
         CookieManager.getInstance().setAcceptCookie(true);
+
         webView.getSettings().setJavaScriptEnabled(true);
         webView.getSettings().setAppCacheEnabled(true);
-        webView.setWebViewClient(presenter.buildWebViewClient(toolbar, webView));
-        webView.setWebChromeClient(presenter.buildWebChromeClient((ProgressBar) findViewById(R.id.progress_bar_browser)));
 
+        webView.setWebViewClient(presenter.buildWebViewClient(toolbar, webView));
+        webView.setWebChromeClient(presenter.buildWebChromeClient(progressBar));
         webView.setDownloadListener(presenter.buildDownloadListener());
 
         webView.clearCache(true);

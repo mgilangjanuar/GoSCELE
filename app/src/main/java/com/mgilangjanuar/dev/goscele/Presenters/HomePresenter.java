@@ -19,11 +19,11 @@ import java.util.Map;
 
 public class HomePresenter {
 
-    Activity activity;
-    View view;
+    private Activity activity;
+    private View view;
 
-    HomePostService homePostService;
-    ListHomePostModel listHomePostModel;
+    private HomePostService homePostService;
+    private ListHomePostModel listHomePostModel;
 
     public interface HomeServicePresenter {
         void setupHome(View view);

@@ -18,27 +18,28 @@ import com.mgilangjanuar.dev.goscele.R;
 
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /**
  * Created by muhammadgilangjanuar on 5/16/17.
  */
 
 public class CurrentCoursesViewAdapter extends RecyclerView.Adapter<CurrentCoursesViewAdapter.CurrentCoursesViewHolder> {
 
-    Context context;
-    List<CourseModel> list;
-    CoursePresenter coursePresenter;
+    private Context context;
+    private List<CourseModel> list;
+    private CoursePresenter coursePresenter;
 
     public class CurrentCoursesViewHolder extends RecyclerView.ViewHolder {
 
-        public RelativeLayout relativeLayout;
-        public TextView title;
-        public Button buttonAction;
+        @BindView(R.id.layout_course_list) public RelativeLayout relativeLayout;
+        @BindView(R.id.title_course_name) public TextView title;
+        @BindView(R.id.button_course) public Button buttonAction;
 
-        public CurrentCoursesViewHolder(final View itemView) {
+        public CurrentCoursesViewHolder(View itemView) {
             super(itemView);
-            title = (TextView) itemView.findViewById(R.id.title_course_name);
-            buttonAction = (Button) itemView.findViewById(R.id.button_course);
-            relativeLayout = (RelativeLayout) itemView.findViewById(R.id.layout_course_list);
+            ButterKnife.bind(this, itemView);
         }
     }
 

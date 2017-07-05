@@ -28,9 +28,9 @@ import java.net.URL;
 
 public class SplashScreenPresenter implements AuthPresenter.AuthServicePresenter {
 
-    public AuthPresenter authPresenter;
-    Activity activity;
-    static String QUOTE_URL = "https://api.forismatic.com/api/1.0/?method=getQuote&lang=en&format=json";
+    private AuthPresenter authPresenter;
+    private Activity activity;
+    private static String QUOTE_URL = "https://api.forismatic.com/api/1.0/?method=getQuote&lang=en&format=json";
 
     public interface SplashScreenServicePresenter {
         void setupSplashScreen();
@@ -43,28 +43,20 @@ public class SplashScreenPresenter implements AuthPresenter.AuthServicePresenter
 
     @Override
     public void authenticate() {
-        (new Thread(new Runnable() {
-            @Override
-            public void run() {
-                Bundle bundle = activity.getIntent().getExtras();
-                Uri data = bundle == null ? null : (Uri) bundle.get("uri");
-                try {
-                    if (!authPresenter.isUsernameAndPasswordExist() || !isAuthenticate()) {
-                        ((BaseActivity) activity).forceRedirect(new Intent(activity, AuthActivity.class));
-                    } else if (data != null && data.getPath() != null && !data.getPath().equals("") && !data.getPath().equals("/")) {
-                        ((BaseActivity) activity).forceRedirect(new Intent(activity, InAppBrowserActivity.class).putExtra("url", data.toString()));
-                    } else {
-                        ((BaseActivity) activity).forceRedirect(new Intent(activity, MainActivity.class));
-                    }
-                } catch (IOException e) {
-                    activity.runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            ((BaseActivity) activity).showToast("Whoops! Please check your internet connection");
-                        }
-                    });
-                    authenticate();
+        (new Thread(() -> {
+            Bundle bundle = activity.getIntent().getExtras();
+            Uri data = bundle == null ? null : (Uri) bundle.get("uri");
+            try {
+                if (!authPresenter.isUsernameAndPasswordExist() || !isAuthenticate()) {
+                    ((BaseActivity) activity).forceRedirect(new Intent(activity, AuthActivity.class));
+                } else if (data != null && data.getPath() != null && !data.getPath().equals("") && !data.getPath().equals("/")) {
+                    ((BaseActivity) activity).forceRedirect(new Intent(activity, InAppBrowserActivity.class).putExtra("url", data.toString()));
+                } else {
+                    ((BaseActivity) activity).forceRedirect(new Intent(activity, MainActivity.class));
                 }
+            } catch (IOException e) {
+                activity.runOnUiThread(() -> ((BaseActivity) activity).showToast("Whoops! Please check your internet connection"));
+                authenticate();
             }
         })).start();
     }

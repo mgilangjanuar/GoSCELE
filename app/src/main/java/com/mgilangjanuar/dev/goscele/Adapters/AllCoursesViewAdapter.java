@@ -18,27 +18,28 @@ import com.mgilangjanuar.dev.goscele.R;
 
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /**
  * Created by muhammadgilangjanuar on 5/16/17.
  */
 
 public class AllCoursesViewAdapter extends RecyclerView.Adapter<AllCoursesViewAdapter.AllCoursesViewHolder> {
 
-    List<CourseModel> list;
-    Context context;
-    CoursePresenter coursePresenter;
+    private List<CourseModel> list;
+    private Context context;
+    private CoursePresenter coursePresenter;
 
     public class AllCoursesViewHolder extends RecyclerView.ViewHolder {
 
-        public RelativeLayout relativeLayout;
-        public TextView title;
-        public Button buttonAction;
+        @BindView(R.id.layout_course_list) public RelativeLayout relativeLayout;
+        @BindView(R.id.title_course_name) public TextView title;
+        @BindView(R.id.button_course) public Button buttonAction;
 
-        public AllCoursesViewHolder(final View itemView) {
+        public AllCoursesViewHolder(View itemView) {
             super(itemView);
-            title = (TextView) itemView.findViewById(R.id.title_course_name);
-            buttonAction = (Button) itemView.findViewById(R.id.button_course);
-            relativeLayout = (RelativeLayout) itemView.findViewById(R.id.layout_course_list);
+            ButterKnife.bind(this, itemView);
         }
 
         public void enableButton() {
@@ -68,21 +69,13 @@ public class AllCoursesViewAdapter extends RecyclerView.Adapter<AllCoursesViewAd
         final CourseModel courseModel = list.get(position);
         holder.title.setText(courseModel.name);
         holder.buttonAction.setText("Add To Current");
-        holder.buttonAction.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                coursePresenter.addToCurrent(courseModel);
-                holder.disableButton();
-                coursePresenter.isDataCurrentCoursesViewAdapterChanged = true;
-            }
+        holder.buttonAction.setOnClickListener(v -> {
+            coursePresenter.addToCurrent(courseModel);
+            holder.disableButton();
+            CoursePresenter.isDataCurrentCoursesViewAdapterChanged = true;
         });
 
-        holder.relativeLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                context.startActivity((new Intent(context, CourseDetailActivity.class)).putExtra("url", courseModel.url));
-            }
-        });
+        holder.relativeLayout.setOnClickListener(v -> context.startActivity((new Intent(context, CourseDetailActivity.class)).putExtra("url", courseModel.url)));
 
         if (coursePresenter.alreadyExistInCurrent(courseModel)) {
             holder.disableButton();

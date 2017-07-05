@@ -15,14 +15,17 @@ import com.mgilangjanuar.dev.goscele.R;
 
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /**
  * Created by muhammadgilangjanuar on 5/31/17.
  */
 
 public class ForumAdapter extends RecyclerView.Adapter<ForumAdapter.ForumViewHolder> {
 
-    Context context;
-    List<ForumModel> list;
+    private Context context;
+    private List<ForumModel> list;
 
     public ForumAdapter(Context context, List<ForumModel> list) {
         this.context = context;
@@ -40,12 +43,9 @@ public class ForumAdapter extends RecyclerView.Adapter<ForumAdapter.ForumViewHol
         holder.title.setText(model.title);
         holder.author.setText(model.author);
         holder.lastUpdate.setText("Last update: " + model.lastUpdate);
-        holder.layout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(context, ForumDetailActivity.class).putExtra("url", model.url);
-                context.startActivity(intent);
-            }
+        holder.layout.setOnClickListener(v -> {
+            Intent intent = new Intent(context, ForumDetailActivity.class).putExtra("url", model.url);
+            context.startActivity(intent);
         });
     }
 
@@ -56,17 +56,14 @@ public class ForumAdapter extends RecyclerView.Adapter<ForumAdapter.ForumViewHol
 
     public class ForumViewHolder extends RecyclerView.ViewHolder {
 
-        public TextView title;
-        public TextView author;
-        public TextView lastUpdate;
-        public LinearLayout layout;
+        @BindView(R.id.title_forum) public TextView title;
+        @BindView(R.id.author_forum) public TextView author;
+        @BindView(R.id.last_update_forum) public TextView lastUpdate;
+        @BindView(R.id.layout_forum) public LinearLayout layout;
 
         public ForumViewHolder(View itemView) {
             super(itemView);
-            title = (TextView) itemView.findViewById(R.id.title_forum);
-            author = (TextView) itemView.findViewById(R.id.author_forum);
-            lastUpdate = (TextView) itemView.findViewById(R.id.last_update_forum);
-            layout = (LinearLayout) itemView.findViewById(R.id.layout_forum);
+            ButterKnife.bind(this, itemView);
         }
     }
 

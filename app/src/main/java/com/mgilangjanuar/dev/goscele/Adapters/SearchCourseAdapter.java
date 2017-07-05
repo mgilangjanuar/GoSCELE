@@ -15,13 +15,16 @@ import com.mgilangjanuar.dev.goscele.R;
 
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /**
  * Created by mjanuar on 26/06/17.
  */
 
 public class SearchCourseAdapter extends RecyclerView.Adapter<SearchCourseAdapter.SearchCourseViewHolder> {
-    Context context;
-    List<CourseModel> list;
+    private Context context;
+    private List<CourseModel> list;
 
     public SearchCourseAdapter(Context context, List<CourseModel> list) {
         this.context = context;
@@ -37,12 +40,7 @@ public class SearchCourseAdapter extends RecyclerView.Adapter<SearchCourseAdapte
     public void onBindViewHolder(SearchCourseViewHolder holder, int position) {
         final CourseModel model = list.get(position);
         holder.title.setText(model.name);
-        holder.layout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                context.startActivity(new Intent(context, InAppBrowserActivity.class).putExtra("url", model.url));
-            }
-        });
+        holder.layout.setOnClickListener(v -> context.startActivity(new Intent(context, InAppBrowserActivity.class).putExtra("url", model.url)));
     }
 
     @Override
@@ -52,13 +50,12 @@ public class SearchCourseAdapter extends RecyclerView.Adapter<SearchCourseAdapte
 
     public class SearchCourseViewHolder extends RecyclerView.ViewHolder {
 
-        public TextView title;
-        public LinearLayout layout;
+        @BindView(R.id.title_course_name_search) public TextView title;
+        @BindView(R.id.layout_course_search) public LinearLayout layout;
 
         public SearchCourseViewHolder(View itemView) {
             super(itemView);
-            title = (TextView) itemView.findViewById(R.id.title_course_name_search);
-            layout = (LinearLayout) itemView.findViewById(R.id.layout_course_search);
+            ButterKnife.bind(this, itemView);
         }
     }
 

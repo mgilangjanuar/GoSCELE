@@ -1,7 +1,6 @@
 package com.mgilangjanuar.dev.goscele.Fragments.ForumDetail;
 
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
@@ -19,13 +18,18 @@ import com.mgilangjanuar.dev.goscele.Helpers.HtmlHandlerHelper;
 import com.mgilangjanuar.dev.goscele.Presenters.ForumDetailPresenter;
 import com.mgilangjanuar.dev.goscele.R;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class Post extends Fragment implements ForumDetailPresenter.ForumDetailServicePresenter {
 
-    ForumDetailPresenter forumDetailPresenter;
+    private ForumDetailPresenter forumDetailPresenter;
 
-    public Post() {
-        // Required empty public constructor
-    }
+    @BindView(R.id.title_forum_detail) TextView tvTitle;
+    @BindView(R.id.date_forum_detail) TextView tvDate;
+    @BindView(R.id.author_forum_detail) TextView tvAuthor;
+    @BindView(R.id.content_forum_detail) TextView tvContent;
+    @BindView(R.id.button_delete_post) Button btnDelete;
 
     public static Post newInstance(ForumDetailPresenter forumDetailPresenter) {
         Post fragment = new Post();
@@ -43,97 +47,63 @@ public class Post extends Fragment implements ForumDetailPresenter.ForumDetailSe
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_forum_post, container, false);
+        View view = inflater.inflate(R.layout.fragment_forum_post, container, false);
+        ButterKnife.bind(this, view);
+        return view;
     }
 
     @Override
     public void onViewCreated(final View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-        (new Thread(new Runnable() {
-            @Override
-            public void run() {
-                setupForumDetail(view);
-            }
-        })).start();
+        (new Thread(() -> setupForumDetail(view))).start();
     }
 
     @Override
     public void setupForumDetail(View view) {
-
         forumDetailPresenter.buildPostModel();
 
-        final TextView title = (TextView) view.findViewById(R.id.title_forum_detail);
-        final TextView date = (TextView) view.findViewById(R.id.date_forum_detail);
-        final TextView author = (TextView) view.findViewById(R.id.author_forum_detail);
-        final TextView content = (TextView) view.findViewById(R.id.content_forum_detail);
-        final Button button = (Button) view.findViewById(R.id.button_delete_post);
         final HtmlHandlerHelper helper = new HtmlHandlerHelper(getActivity(), forumDetailPresenter.getForumDetailModel().getSavedContent());
 
-        if (getActivity() == null) {
-            return;
-        }
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                ((ForumDetailActivity) getActivity()).getSupportActionBar().setTitle(forumDetailPresenter.getForumDetailModel().getSavedTitle());
-                title.setText(forumDetailPresenter.getForumDetailModel().getSavedTitle());
-                date.setText(forumDetailPresenter.getForumDetailModel().getSavedDate());
-                author.setText(forumDetailPresenter.getForumDetailModel().getSavedAuthor());
-                helper.setTextViewHTML(content);
-                if (!forumDetailPresenter.getForumDetailModel().getSavedDeleteUrl().equals("")) {
-                    button.setVisibility(Button.VISIBLE);
-                    button.getBackground().setColorFilter(getContext().getResources().getColor(android.R.color.holo_red_light), PorterDuff.Mode.MULTIPLY);
-                    button.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-                            builder.setCancelable(false);
-                            builder.setTitle("Delete Thread");
-                            builder.setMessage("Are you sure want to delete this?");
-                            builder.setInverseBackgroundForced(true);
-                            builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int which) {
-                                    button.setClickable(false);
-                                    Toast.makeText(getContext(), "Please wait...", Toast.LENGTH_LONG).show();
+        if (getActivity() == null) { return; }
+        getActivity().runOnUiThread(() -> {
+            ((ForumDetailActivity) getActivity()).getSupportActionBar().setTitle(forumDetailPresenter.getForumDetailModel().getSavedTitle());
+            tvTitle.setText(forumDetailPresenter.getForumDetailModel().getSavedTitle());
+            tvDate.setText(forumDetailPresenter.getForumDetailModel().getSavedDate());
+            tvAuthor.setText(forumDetailPresenter.getForumDetailModel().getSavedAuthor());
+            helper.setTextViewHTML(tvContent);
+            if (!forumDetailPresenter.getForumDetailModel().getSavedDeleteUrl().equals("")) {
+                btnDelete.setVisibility(Button.VISIBLE);
+                btnDelete.getBackground().setColorFilter(getContext().getResources().getColor(android.R.color.holo_red_light), PorterDuff.Mode.MULTIPLY);
+                btnDelete.setOnClickListener(v -> {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                    builder.setCancelable(false);
+                    builder.setTitle("Delete Thread");
+                    builder.setMessage("Are you sure want to delete this?");
+                    builder.setInverseBackgroundForced(true);
+                    builder.setPositiveButton("Yes", (dialog, which) -> {
+                        btnDelete.setClickable(false);
+                        Toast.makeText(getContext(), "Please wait...", Toast.LENGTH_LONG).show();
 
-                                    (new Thread(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            forumDetailPresenter.deletePost();
-                                            if (getActivity() == null) {
-                                                return;
-                                            }
-                                            getActivity().runOnUiThread(new Runnable() {
-                                                @Override
-                                                public void run() {
-                                                    getActivity().onBackPressed();
-                                                    Toast.makeText(getContext(), "Deleted! Please refresh the forum", Toast.LENGTH_SHORT).show();
-                                                }
-                                            });
-                                        }
-                                    })).start();
-                                }
+                        (new Thread(() -> {
+                            forumDetailPresenter.deletePost();
+                            if (getActivity() == null) {
+                                return;
+                            }
+                            getActivity().runOnUiThread(() -> {
+                                getActivity().onBackPressed();
+                                Toast.makeText(getContext(), "Deleted! Please refresh the forum", Toast.LENGTH_SHORT).show();
                             });
-                            builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int which) {
-                                    dialog.dismiss();
-                                }
-                            });
-                            final AlertDialog alert = builder.create();
-
-                            alert.setOnShowListener(new DialogInterface.OnShowListener() {
-                                @Override
-                                public void onShow(DialogInterface arg0) {
-                                    alert.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(Color.DKGRAY);
-                                    alert.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(Color.DKGRAY);
-                                }
-                            });
-                            alert.show();
-                        }
+                        })).start();
                     });
-                }
+                    builder.setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss());
+                    final AlertDialog alert = builder.create();
+
+                    alert.setOnShowListener(arg0 -> {
+                        alert.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(Color.DKGRAY);
+                        alert.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(Color.DKGRAY);
+                    });
+                    alert.show();
+                });
             }
         });
     }

@@ -13,48 +13,39 @@ import com.mgilangjanuar.dev.goscele.Fragments.CourseDetail.EventFragment;
 import com.mgilangjanuar.dev.goscele.Fragments.CourseDetail.NewsFragment;
 import com.mgilangjanuar.dev.goscele.Presenters.CourseDetailPresenter;
 
-public class CourseDetailActivity extends AppCompatActivity {
+import butterknife.BindView;
 
-    String url;
-    CourseDetailPresenter presenter;
+public class CourseDetailActivity extends BaseActivity {
+
+    private String url;
+    private CourseDetailPresenter presenter;
+
+    @BindView(R.id.toolbar_course_detail) Toolbar toolbar;
+    @BindView(R.id.view_pager_activity_course_detail) ViewPager viewPager;
+    @BindView(R.id.tab_course_detail) TabLayout tabLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_course_detail);
 
-        Bundle bundle = getIntent().getExtras();
-        if (bundle == null || bundle.getString("url") == null) {
-            Toast.makeText(this, "Broken URL", Toast.LENGTH_SHORT).show();
-            onBackPressed();
-            return;
-        }
-
-        url = bundle.getString("url");
+        url = getIntent().getExtras().getString("url");
         presenter = new CourseDetailPresenter(this, url);
-        final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_course_detail);
         toolbar.setTitle(getResources().getString(R.string.loading_text));
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
-        (new Thread(new Runnable() {
-            @Override
-            public void run() {
-                setupCourseDetail();
-            }
-        })).start();
+        (new Thread(() -> setupCourseDetail())).start();
     }
 
     private void setupCourseDetail() {
-        final ViewPager viewPager = (ViewPager) findViewById(R.id.view_pager_activity_course_detail);
         final BaseTabViewPagerAdapter fragmentPagerAdapter = new BaseTabViewPagerAdapter(getSupportFragmentManager());
         fragmentPagerAdapter.addFragment(DashboardFragment.newInstance(presenter), getResources().getString(R.string.title_course_dashboard));
         fragmentPagerAdapter.addFragment(NewsFragment.newInstance(presenter), getResources().getString(R.string.title_course_news));
         fragmentPagerAdapter.addFragment(EventFragment.newInstance(presenter), getResources().getString(R.string.title_course_event));
         viewPager.setAdapter(fragmentPagerAdapter);
 
-        final TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_course_detail);
         tabLayout.setupWithViewPager(viewPager);
     }
 

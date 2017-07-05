@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * Created by muhammadgilangjanuar on 5/21/17.
@@ -59,8 +60,8 @@ public class CourseDetailService {
     }
 
     public List<Map<String, String>> getEvents(final String url) throws IOException {
-        final List<Map<String, String>> results = new ArrayList<>();
-        for (final Element e : getDetailsHelper(".block_calendar_upcoming .content .event", url)) {
+        List<Map<String, String>> results = new ArrayList<>();
+        for (Element e: getDetailsHelper(".block_calendar_upcoming .content .event", url)) {
             results.add(new HashMap<String, String>() {{
                 put("url", e.select("a").get(0).attr("href"));
                 put("title", e.select("a").get(0).text());
@@ -71,8 +72,8 @@ public class CourseDetailService {
     }
 
     public List<Map<String, String>> getNews(final String url) throws IOException {
-        final List<Map<String, String>> results = new ArrayList<>();
-        for (final Element e : getDetailsHelper(".block_news_items .content .post", url)) {
+        List<Map<String, String>> results = new ArrayList<>();
+        for (Element e: getDetailsHelper(".block_news_items .content .post", url)) {
             results.add(new HashMap<String, String>() {{
                 put("url", e.select(".info a").attr("href"));
                 put("title", e.select(".info").text());

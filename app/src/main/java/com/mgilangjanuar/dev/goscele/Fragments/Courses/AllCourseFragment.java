@@ -18,14 +18,16 @@ import com.mgilangjanuar.dev.goscele.Adapters.AllCoursesViewAdapter;
 import com.mgilangjanuar.dev.goscele.Presenters.CoursePresenter;
 import com.mgilangjanuar.dev.goscele.R;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class AllCourseFragment extends Fragment implements CoursePresenter.CourseServicePresenter {
 
-    CoursePresenter coursePresenter;
-    RecyclerView recyclerView;
+    private CoursePresenter coursePresenter;
 
-    public AllCourseFragment() {
-        // Required empty public constructor
-    }
+    @BindView(R.id.recycler_view_all_course) RecyclerView recyclerView;
+    @BindView(R.id.swipe_refresh_course) SwipeRefreshLayout refreshLayout;
+    @BindView(R.id.text_status_all_course) TextView tvStatus;
 
     public static AllCourseFragment newInstance() {
         AllCourseFragment fragment = new AllCourseFragment();
@@ -48,73 +50,48 @@ public class AllCourseFragment extends Fragment implements CoursePresenter.Cours
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_all_course, container, false);
+        View view = inflater.inflate(R.layout.fragment_all_course, container, false);
+        ButterKnife.bind(this, view);
+        return view;
     }
 
     @Override
     public void setupCourses(final View view) {
         coursePresenter = new CoursePresenter(getActivity(), view);
-        recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view_all_course);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
 
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.addItemDecoration(new DividerItemDecoration(this.getContext(), LinearLayoutManager.VERTICAL));
 
-        updateAdapter(view);
+        updateAdapter();
 
-        final SwipeRefreshLayout refreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipe_refresh_course);
-        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        (new Thread(new Runnable() {
-                            @Override
-                            public void run() {
-                                coursePresenter.clear();
-                                updateAdapter(view);
-                                if (getActivity() == null) {
-                                    return;
-                                }
-                                getActivity().runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        refreshLayout.setRefreshing(false);
-                                    }
-                                });
-                            }
-                        })).start();
-                    }
-                }, 1000);
+        refreshLayout.setOnRefreshListener(() -> new Handler().postDelayed(() -> (new Thread(() -> {
+            coursePresenter.clear();
+            updateAdapter();
+            if (getActivity() == null) {
+                return;
             }
-        });
+            getActivity().runOnUiThread(() -> refreshLayout.setRefreshing(false));
+        })).start(), 1000));
     }
 
-    private void updateAdapter(final View view) {
-        (new Thread(new Runnable() {
-            @Override
-            public void run() {
-                final AllCoursesViewAdapter adapter = coursePresenter.getAllCoursesViewAdapter();
-                final TextView status = (TextView) view.findViewById(R.id.text_status_all_course);
+    private void updateAdapter() {
+        (new Thread(() -> {
+            final AllCoursesViewAdapter adapter = coursePresenter.getAllCoursesViewAdapter();
 
-                if (getActivity() == null) {
-                    return;
-                }
-                getActivity().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        recyclerView.setAdapter(adapter);
-                        if (adapter.getItemCount() == 0) {
-                            status.setText(getActivity().getResources().getString(R.string.empty_text));
-                            status.setTextColor(getActivity().getResources().getColor(R.color.color_accent));
-                        } else {
-                            status.setVisibility(TextView.GONE);
-                        }
-                    }
-                });
+            if (getActivity() == null) {
+                return;
             }
+            getActivity().runOnUiThread(() -> {
+                recyclerView.setAdapter(adapter);
+                if (adapter.getItemCount() == 0) {
+                    tvStatus.setText(getActivity().getResources().getString(R.string.empty_text));
+                    tvStatus.setTextColor(getActivity().getResources().getColor(R.color.color_accent));
+                } else {
+                    tvStatus.setVisibility(TextView.GONE);
+                }
+            });
         })).start();
     }
 }

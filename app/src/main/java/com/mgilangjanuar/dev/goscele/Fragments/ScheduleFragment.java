@@ -2,7 +2,6 @@ package com.mgilangjanuar.dev.goscele.Fragments;
 
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
@@ -28,20 +27,26 @@ import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.prolificinteractive.materialcalendarview.DayViewDecorator;
 import com.prolificinteractive.materialcalendarview.DayViewFacade;
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
-import com.prolificinteractive.materialcalendarview.OnDateSelectedListener;
-import com.prolificinteractive.materialcalendarview.OnMonthChangedListener;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
 import java.text.SimpleDateFormat;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class ScheduleFragment extends Fragment implements SettingPresenter.SettingServicePresenter {
 
-    SchedulePresenter schedulePresenter;
-    MaterialCalendarView materialCalendarView;
-    boolean isCannotChangeMonth;
+    private SchedulePresenter schedulePresenter;
+    private boolean isCannotChangeMonth;
 
-    public ScheduleFragment() {
-    }
+    @BindView(R.id.calendar_view) MaterialCalendarView materialCalendarView;
+    @BindView(R.id.toolbar_schedule) Toolbar toolbar;
+    @BindView(R.id.recycler_view_schedule) RecyclerView recyclerView;
+    @BindView(R.id.title_slidingup_panel_schedule) TextView tvTitleSlidingUpPanel;
+    @BindView(R.id.text_status_schedule) TextView tvStatus;
+    @BindView(R.id.swipe_refresh_schedule) SwipeRefreshLayout swipeRefreshLayout;
+    @BindView(R.id.sliding_layout) SlidingUpPanelLayout slidingUpPanelLayout;
+    @BindView(R.id.img_detail_description) ImageView iViewDetailDescription;
 
     public static ScheduleFragment newInstance() {
         ScheduleFragment fragment = new ScheduleFragment();
@@ -58,23 +63,19 @@ public class ScheduleFragment extends Fragment implements SettingPresenter.Setti
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_schedule, container, false);
+        View view = inflater.inflate(R.layout.fragment_schedule, container, false);
+        ButterKnife.bind(this, view);
+        return view;
     }
 
     @Override
     public void onViewCreated(final View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar_schedule);
         toolbar.setTitle(getActivity().getResources().getString(R.string.title_fragment_schedule));
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
 
-        (new Thread(new Runnable() {
-            @Override
-            public void run() {
-                setupContents(view);
-            }
-        })).start();
+        (new Thread(() -> setupContents(view))).start();
     }
 
     @Override
@@ -84,8 +85,6 @@ public class ScheduleFragment extends Fragment implements SettingPresenter.Setti
         }
         schedulePresenter = new SchedulePresenter(getActivity(), view);
 
-        final RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view_schedule);
-
         final ScheduleAdapter adapter = schedulePresenter.buildScheduleAdapterForce();
         final TextView status = (TextView) view.findViewById(R.id.text_status_schedule);
 
@@ -93,25 +92,22 @@ public class ScheduleFragment extends Fragment implements SettingPresenter.Setti
             if (getActivity() == null) {
                 return;
             }
-            getActivity().runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    recyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
-                    recyclerView.setItemAnimator(new DefaultItemAnimator());
-                    recyclerView.setAdapter(adapter);
-                    setDate(view, schedulePresenter.getDate());
-                    if (adapter.getItemCount() == 0) {
-                        status.setText(getActivity().getResources().getString(R.string.empty_text));
-                        status.setTextColor(getActivity().getResources().getColor(R.color.color_accent));
-                    } else {
-                        status.setVisibility(TextView.GONE);
-                    }
+            getActivity().runOnUiThread(() -> {
+                recyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
+                recyclerView.setItemAnimator(new DefaultItemAnimator());
+                recyclerView.setAdapter(adapter);
+                setDate(schedulePresenter.getDate());
+                if (adapter.getItemCount() == 0) {
+                    status.setText(getActivity().getResources().getString(R.string.empty_text));
+                    status.setTextColor(getActivity().getResources().getColor(R.color.color_accent));
+                } else {
+                    status.setVisibility(TextView.GONE);
                 }
             });
         } catch (NullPointerException e) {
         }
 
-        SlidingUpPanelLayout slidingUpPanelLayout = setupSlidingUpPanelLayout(view);
+        SlidingUpPanelLayout slidingUpPanelLayout = setupSlidingUpPanelLayout();
         setupMaterialCalendarView(view, recyclerView, slidingUpPanelLayout);
     }
 
@@ -146,161 +142,111 @@ public class ScheduleFragment extends Fragment implements SettingPresenter.Setti
         });
     }
 
-    private void setDate(View view, String date) {
-        Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar_schedule);
+    private void setDate(String date) {
         toolbar.setTitle(date);
-        TextView title = (TextView) view.findViewById(R.id.title_slidingup_panel_schedule);
-        title.setText("Schedules (" + schedulePresenter.getListScheduleModel().scheduleModelList.size() + ")");
+        tvTitleSlidingUpPanel.setText("Schedules (" + schedulePresenter.getListScheduleModel().scheduleModelList.size() + ")");
     }
 
-    private void updateAdapterHelper(final View view, final RecyclerView recyclerView, long time, final SlidingUpPanelLayout slidingUpPanelLayout, final boolean isShowDialog) {
+    private void updateAdapterHelper(final RecyclerView recyclerView, long time, final SlidingUpPanelLayout slidingUpPanelLayout, final boolean isShowDialog) {
         if (isShowDialog) {
             schedulePresenter.showProgressDialog();
         }
-        final TextView status = (TextView) view.findViewById(R.id.text_status_schedule);
-        status.setVisibility(TextView.VISIBLE);
+        tvStatus.setVisibility(TextView.VISIBLE);
 
         schedulePresenter.time = time;
-        (new Thread(new Runnable() {
-            @Override
-            public void run() {
-                final ScheduleAdapter scheduleAdapter = schedulePresenter.buildScheduleAdapterForce();
-                if (getActivity() == null) {
-                    return;
-                }
-                getActivity().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        setDate(view, schedulePresenter.getDateForce());
-                        recyclerView.setAdapter(scheduleAdapter);
-                        if (scheduleAdapter.getItemCount() == 0) {
-                            status.setText(getActivity().getResources().getString(R.string.empty_text));
-                            status.setTextColor(getActivity().getResources().getColor(R.color.color_accent));
-                        } else {
-                            status.setVisibility(TextView.GONE);
-                        }
-                        if (isShowDialog) {
-                            schedulePresenter.dismissProgressDialog();
-                        }
-                        slidingUpPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);
-                    }
-                });
+        (new Thread(() -> {
+            final ScheduleAdapter scheduleAdapter = schedulePresenter.buildScheduleAdapterForce();
+            if (getActivity() == null) {
+                return;
             }
+            getActivity().runOnUiThread(() -> {
+                setDate(schedulePresenter.getDateForce());
+                recyclerView.setAdapter(scheduleAdapter);
+                if (scheduleAdapter.getItemCount() == 0) {
+                    tvStatus.setText(getActivity().getResources().getString(R.string.empty_text));
+                    tvStatus.setTextColor(getActivity().getResources().getColor(R.color.color_accent));
+                } else {
+                    tvStatus.setVisibility(TextView.GONE);
+                }
+                if (isShowDialog) {
+                    schedulePresenter.dismissProgressDialog();
+                }
+                slidingUpPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);
+            });
         })).start();
     }
 
-    private void updateAdapter(final View view, final RecyclerView recyclerView, long time, SlidingUpPanelLayout slidingUpPanelLayout) {
-        updateAdapterHelper(view, recyclerView, time, slidingUpPanelLayout, true);
+    private void updateAdapter(final RecyclerView recyclerView, long time, SlidingUpPanelLayout slidingUpPanelLayout) {
+        updateAdapterHelper(recyclerView, time, slidingUpPanelLayout, true);
     }
 
     private void setupMaterialCalendarView(final View view, final RecyclerView recyclerView, final SlidingUpPanelLayout slidingUpPanelLayout) {
-        materialCalendarView = (MaterialCalendarView) view.findViewById(R.id.calendar_view);
         materialCalendarView.setDynamicHeightEnabled(true);
-        materialCalendarView.setOnDateChangedListener(new OnDateSelectedListener() {
-            @Override
-            public void onDateSelected(@NonNull MaterialCalendarView widget, @NonNull CalendarDay date, boolean selected) {
-                updateAdapter(view, recyclerView, date.getDate().getTime() / 1000, slidingUpPanelLayout);
-            }
-        });
+        materialCalendarView.setOnDateChangedListener((widget, date, selected) -> updateAdapter(recyclerView, date.getDate().getTime() / 1000, slidingUpPanelLayout));
 
         schedulePresenter.buildCalendarEventModel();
         try {
             if (getActivity() == null) {
                 return;
             }
-            getActivity().runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    addDecoratorMaterialCalendarView();
-                }
-            });
+            getActivity().runOnUiThread(() -> addDecoratorMaterialCalendarView());
         } catch (NullPointerException e) {
         }
 
 
         final String titleToolbar = ((MainActivity) getActivity()).getSupportActionBar().getTitle().toString();
-        materialCalendarView.setOnMonthChangedListener(new OnMonthChangedListener() {
-            @Override
-            public void onMonthChanged(MaterialCalendarView widget, final CalendarDay date) {
-                schedulePresenter.time2 = date.getDate().getTime() / 1000;
-                materialCalendarView.removeDecorators();
-                ((MainActivity) getActivity()).getSupportActionBar().setTitle("Please wait...");
+        materialCalendarView.setOnMonthChangedListener((widget, date) -> {
+            schedulePresenter.time2 = date.getDate().getTime() / 1000;
+            materialCalendarView.removeDecorators();
+            ((MainActivity) getActivity()).getSupportActionBar().setTitle("Please wait...");
 
-                if (isCannotChangeMonth) {
-                    return;
-                }
-                isCannotChangeMonth = true;
-
-                (new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        schedulePresenter.buildCalendarEventModel();
-                        if (getActivity() == null) {
-                            return;
-                        }
-                        getActivity().runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                addDecoratorMaterialCalendarView();
-                                ((MainActivity) getActivity()).getSupportActionBar().setTitle(titleToolbar);
-                                isCannotChangeMonth = false;
-                            }
-                        });
-                    }
-                })).start();
+            if (isCannotChangeMonth) {
+                return;
             }
-        });
+            isCannotChangeMonth = true;
 
-        final SwipeRefreshLayout swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipe_refresh_schedule);
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                materialCalendarView.removeDecorators();
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        (new Thread(new Runnable() {
-                            @Override
-                            public void run() {
-                                schedulePresenter.buildCalendarEventModel();
-                                if (getActivity() == null) {
-                                    return;
-                                }
-                                getActivity().runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        addDecoratorMaterialCalendarView();
-                                        swipeRefreshLayout.setRefreshing(false);
-                                    }
-                                });
-                            }
-                        })).start();
-                    }
-                }, 1000);
-            }
-        });
-    }
-
-    private SlidingUpPanelLayout setupSlidingUpPanelLayout(final View view) {
-        final SlidingUpPanelLayout slidingUpPanelLayout = (SlidingUpPanelLayout) view.findViewById(R.id.sliding_layout);
-        slidingUpPanelLayout.addPanelSlideListener(new SlidingUpPanelLayout.PanelSlideListener() {
-            @Override
-            public void onPanelSlide(View panel, final float slideOffset) {
-                final ImageView imageView = (ImageView) view.findViewById(R.id.img_detail_description);
-                final TextView title = (TextView) view.findViewById(R.id.title_slidingup_panel_schedule);
+            (new Thread(() -> {
+                schedulePresenter.buildCalendarEventModel();
                 if (getActivity() == null) {
                     return;
                 }
-                getActivity().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (slideOffset > 0.5) {
-                            imageView.setImageResource(R.drawable.ic_sliding_down);
-                            title.setText(schedulePresenter.getDate());
-                        } else {
-                            imageView.setImageResource(R.drawable.ic_sliding_up);
-                            title.setText("Schedules (" + schedulePresenter.getListScheduleModel().scheduleModelList.size() + ")");
-                        }
+                getActivity().runOnUiThread(() -> {
+                    addDecoratorMaterialCalendarView();
+                    ((MainActivity) getActivity()).getSupportActionBar().setTitle(titleToolbar);
+                    isCannotChangeMonth = false;
+                });
+            })).start();
+        });
+
+        swipeRefreshLayout.setOnRefreshListener(() -> {
+            materialCalendarView.removeDecorators();
+            new Handler().postDelayed(() -> (new Thread(() -> {
+                schedulePresenter.buildCalendarEventModel();
+                if (getActivity() == null) {
+                    return;
+                }
+                getActivity().runOnUiThread(() -> {
+                    addDecoratorMaterialCalendarView();
+                    swipeRefreshLayout.setRefreshing(false);
+                });
+            })).start(), 1000);
+        });
+    }
+
+    private SlidingUpPanelLayout setupSlidingUpPanelLayout() {
+        slidingUpPanelLayout.addPanelSlideListener(new SlidingUpPanelLayout.PanelSlideListener() {
+            @Override
+            public void onPanelSlide(View panel, final float slideOffset) {
+                if (getActivity() == null) {
+                    return;
+                }
+                getActivity().runOnUiThread(() -> {
+                    if (slideOffset > 0.5) {
+                        iViewDetailDescription.setImageResource(R.drawable.ic_sliding_down);
+                        tvTitleSlidingUpPanel.setText(schedulePresenter.getDate());
+                    } else {
+                        iViewDetailDescription.setImageResource(R.drawable.ic_sliding_up);
+                        tvTitleSlidingUpPanel.setText("Schedules (" + schedulePresenter.getListScheduleModel().scheduleModelList.size() + ")");
                     }
                 });
             }

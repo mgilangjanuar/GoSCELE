@@ -15,14 +15,17 @@ import com.mgilangjanuar.dev.goscele.R;
 
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /**
  * Created by muhammadgilangjanuar on 5/21/17.
  */
 
 public class CourseDetailAdapter extends RecyclerView.Adapter<CourseDetailAdapter.CourseDetailViewHolder> {
 
-    Context context;
-    List<CoursePostModel> list;
+    private Context context;
+    private List<CoursePostModel> list;
 
     public CourseDetailAdapter(Context context, List<CoursePostModel> list) {
         this.context = context;
@@ -54,15 +57,13 @@ public class CourseDetailAdapter extends RecyclerView.Adapter<CourseDetailAdapte
     }
 
     public class CourseDetailViewHolder extends RecyclerView.ViewHolder {
-        public TextView title;
-        public TextView summary;
-        public RecyclerView content;
+        @BindView(R.id.title_course_detail) public TextView title;
+        @BindView(R.id.summary_course_detail) public TextView summary;
+        @BindView(R.id.content_course_detail) public RecyclerView content;
 
         public CourseDetailViewHolder(View itemView) {
             super(itemView);
-            title = (TextView) itemView.findViewById(R.id.title_course_detail);
-            summary = (TextView) itemView.findViewById(R.id.summary_course_detail);
-            content = (RecyclerView) itemView.findViewById(R.id.content_course_detail);
+            ButterKnife.bind(this, itemView);
         }
     }
 }

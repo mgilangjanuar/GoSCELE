@@ -20,11 +20,11 @@ import java.lang.reflect.Field;
  */
 
 public class AuthPresenter {
-    Activity activity;
-    AuthService authService;
-    AccountModel accountModel;
+    private Activity activity;
+    private AuthService authService;
+    private AccountModel accountModel;
 
-    ProgressDialog progress;
+    private ProgressDialog progress;
 
     public interface AuthServicePresenter {
         void authenticate();
@@ -137,7 +137,7 @@ public class AuthPresenter {
 
     public String getCookies() {
         try {
-            return "MoodleSession=" + authService.getCookies().get("MoodleSession");
+            return "MoodleSession=" + AuthService.getCookies().get("MoodleSession");
         } catch (IOException e) {
             e.printStackTrace();
         }

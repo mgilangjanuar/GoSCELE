@@ -19,20 +19,22 @@ import com.mgilangjanuar.dev.goscele.Models.CourseModel;
 import com.mgilangjanuar.dev.goscele.Presenters.CourseDetailPresenter;
 import com.mgilangjanuar.dev.goscele.R;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class DashboardFragment extends Fragment implements CourseDetailPresenter.CourseDetailServicePresenter {
 
-    RecyclerView recyclerView;
-    CourseDetailPresenter courseDetailPresenter;
+    private CourseDetailPresenter presenter;
 
-    public DashboardFragment() {
-        // Required empty public constructor
-    }
+    @BindView(R.id.recycler_view_course_detail) RecyclerView recyclerView;
+    @BindView(R.id.text_status_course_dashboard) TextView tvStatus;
+    @BindView(R.id.swipe_refresh_course_detail) SwipeRefreshLayout swipeRefreshLayout;
 
     public static DashboardFragment newInstance(CourseDetailPresenter courseDetailPresenter) {
         DashboardFragment fragment = new DashboardFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
-        fragment.courseDetailPresenter = courseDetailPresenter;
+        fragment.presenter = courseDetailPresenter;
         return fragment;
     }
 
@@ -44,91 +46,53 @@ public class DashboardFragment extends Fragment implements CourseDetailPresenter
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_course_detail_dashboard, container, false);
+        View view = inflater.inflate(R.layout.fragment_course_detail_dashboard, container, false);
+        ButterKnife.bind(this, view);
+        return view;
     }
 
     @Override
     public void onViewCreated(final View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        (new Thread(new Runnable() {
-            @Override
-            public void run() {
-                final CourseModel courseModel = courseDetailPresenter.getCourseModel();
-                if (getActivity() == null) {
-                    return;
-                }
-                getActivity().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        ((CourseDetailActivity) getActivity()).getSupportActionBar().setTitle(courseModel.name);
-                    }
-                });
+        (new Thread(() -> {
+            final CourseModel courseModel = presenter.getCourseModel();
+            if (getActivity() == null) {
+                return;
             }
+            getActivity().runOnUiThread(() -> ((CourseDetailActivity) getActivity()).getSupportActionBar().setTitle(courseModel.name));
         })).start();
 
-        (new Thread(new Runnable() {
-            @Override
-            public void run() {
-                setupCourseDetail(view);
-            }
-        })).start();
+        (new Thread(() -> setupCourseDetail(view))).start();
     }
 
     @Override
     public void setupCourseDetail(final View view) {
-        recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view_course_detail);
-        final CourseDetailAdapter adapter = courseDetailPresenter.buildDashboardAdapter();
-        final TextView status = (TextView) view.findViewById(R.id.text_status_course_dashboard);
+        final CourseDetailAdapter adapter = presenter.buildDashboardAdapter();
 
-        if (getActivity() == null) {
-            return;
-        }
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-                recyclerView.setItemAnimator(new DefaultItemAnimator());
-                if (recyclerView.getAdapter() == null || !adapter.equals(recyclerView.getAdapter())) {
-                    recyclerView.setAdapter(adapter);
-                }
-                if (adapter.getItemCount() == 0) {
-                    status.setText(getActivity().getResources().getString(R.string.empty_text));
-                    status.setTextColor(getActivity().getResources().getColor(R.color.color_accent));
-                } else {
-                    status.setVisibility(TextView.GONE);
-                }
+        if (getActivity() == null) { return; }
+        getActivity().runOnUiThread(() -> {
+            recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+            recyclerView.setItemAnimator(new DefaultItemAnimator());
+            if (recyclerView.getAdapter() == null || !adapter.equals(recyclerView.getAdapter())) {
+                recyclerView.setAdapter(adapter);
+            }
+            if (adapter.getItemCount() == 0) {
+                tvStatus.setText(getActivity().getResources().getString(R.string.empty_text));
+                tvStatus.setTextColor(getActivity().getResources().getColor(R.color.color_accent));
+            } else {
+                tvStatus.setVisibility(TextView.GONE);
             }
         });
 
-        final SwipeRefreshLayout swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipe_refresh_course_detail);
-        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        (new Thread(new Runnable() {
-                            @Override
-                            public void run() {
-                                courseDetailPresenter.clearDashboard();
-                                final CourseDetailAdapter adapter = courseDetailPresenter.buildDashboardAdapter();
-                                if (getActivity() == null) {
-                                    return;
-                                }
-                                getActivity().runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        recyclerView.setAdapter(adapter);
-                                        swipeRefreshLayout.setRefreshing(false);
-                                    }
-                                });
-                            }
-                        })).start();
-                    }
-                }, 1000);
-            }
-        });
+        swipeRefreshLayout.setOnRefreshListener(() -> new Handler().postDelayed(() -> (new Thread(() -> {
+            presenter.clearDashboard();
+            final CourseDetailAdapter adapter1 = presenter.buildDashboardAdapter();
+            if (getActivity() == null) { return; }
+            getActivity().runOnUiThread(() -> {
+                recyclerView.setAdapter(adapter1);
+                swipeRefreshLayout.setRefreshing(false);
+            });
+        })).start(), 1000));
     }
 }

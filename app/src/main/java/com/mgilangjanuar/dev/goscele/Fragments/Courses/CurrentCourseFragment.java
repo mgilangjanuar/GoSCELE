@@ -14,13 +14,14 @@ import android.view.ViewGroup;
 import com.mgilangjanuar.dev.goscele.Presenters.CoursePresenter;
 import com.mgilangjanuar.dev.goscele.R;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class CurrentCourseFragment extends Fragment implements CoursePresenter.CourseServicePresenter {
 
-    CoursePresenter coursePresenter;
+    private CoursePresenter coursePresenter;
 
-    public CurrentCourseFragment() {
-        // Required empty public constructor
-    }
+    @BindView(R.id.recycler_view_current_course) RecyclerView recyclerView;
 
     public static CurrentCourseFragment newInstance() {
         CurrentCourseFragment fragment = new CurrentCourseFragment();
@@ -43,14 +44,14 @@ public class CurrentCourseFragment extends Fragment implements CoursePresenter.C
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_current_course, container, false);
+        View view = inflater.inflate(R.layout.fragment_current_course, container, false);
+        ButterKnife.bind(this, view);
+        return view;
     }
 
     @Override
     public void setupCourses(View view) {
         coursePresenter = new CoursePresenter(getActivity(), view);
-        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view_current_course);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity().getApplicationContext());
 
         recyclerView.setLayoutManager(layoutManager);

@@ -12,7 +12,7 @@ import android.util.Log;
 import android.view.View;
 
 import com.mgilangjanuar.dev.goscele.Adapters.ScheduleAdapter;
-import com.mgilangjanuar.dev.goscele.AlarmNotificationCancellation;
+import com.mgilangjanuar.dev.goscele.AlarmNotificationCancellationActivity;
 import com.mgilangjanuar.dev.goscele.Helpers.ScheduleBroadcastReceiver;
 import com.mgilangjanuar.dev.goscele.Models.CalendarEventModel;
 import com.mgilangjanuar.dev.goscele.Models.CourseModel;
@@ -30,6 +30,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * Created by muhammadgilangjanuar on 5/17/17.
@@ -37,16 +38,16 @@ import java.util.Map;
 
 public class SchedulePresenter {
 
-    Activity activity;
-    View view;
+    private Activity activity;
+    private View view;
 
-    ProgressDialog progress;
+    private ProgressDialog progress;
 
-    ScheduleService scheduleService;
-    CalendarMonthService calendarMonthService;
+    private ScheduleService scheduleService;
+    private CalendarMonthService calendarMonthService;
 
-    ListScheduleModel listScheduleModel;
-    CalendarEventModel calendarEventModel;
+    private ListScheduleModel listScheduleModel;
+    private CalendarEventModel calendarEventModel;
 
     public long time;
     public long time2;
@@ -85,7 +86,7 @@ public class SchedulePresenter {
             calendarEventModel.clear();
             calendarEventModel.date = calendarMonthService.getMonth(time2);
             calendarEventModel.listEvent = new ArrayList<>();
-            for (String e : calendarMonthService.getListDay(time2)) {
+            for (String e: calendarMonthService.getListDay(time2)) {
                 calendarEventModel.listEvent.add(Integer.parseInt(e));
             }
             calendarEventModel.save();
@@ -240,7 +241,7 @@ public class SchedulePresenter {
         builder.setContentText(content);
         builder.setSmallIcon(R.mipmap.ic_launcher);
         builder.setAutoCancel(true);
-        Intent notificationIntent = new Intent(activity, AlarmNotificationCancellation.class);
+        Intent notificationIntent = new Intent(activity, AlarmNotificationCancellationActivity.class);
         PendingIntent contentIntent = PendingIntent.getActivity(activity, 0, notificationIntent,
                 PendingIntent.FLAG_UPDATE_CURRENT);
         builder.setContentIntent(contentIntent);

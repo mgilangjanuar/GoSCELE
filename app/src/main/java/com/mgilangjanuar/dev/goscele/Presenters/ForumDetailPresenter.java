@@ -1,12 +1,20 @@
 package com.mgilangjanuar.dev.goscele.Presenters;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.graphics.Color;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.FrameLayout;
+import android.widget.Toast;
 
 import com.mgilangjanuar.dev.goscele.Adapters.ForumDetailCommentAdapter;
 import com.mgilangjanuar.dev.goscele.Models.ForumCommentModel;
 import com.mgilangjanuar.dev.goscele.Models.ForumDetailModel;
+import com.mgilangjanuar.dev.goscele.R;
 import com.mgilangjanuar.dev.goscele.Services.ForumService;
 
 import java.io.IOException;
@@ -19,11 +27,11 @@ import java.util.Map;
  */
 
 public class ForumDetailPresenter {
-    Activity activity;
-    String url;
+    private Activity activity;
+    private String url;
 
-    ForumDetailModel forumDetailModel;
-    ForumService forumService;
+    private ForumDetailModel forumDetailModel;
+    private ForumService forumService;
 
     public interface ForumDetailServicePresenter {
         void setupForumDetail(View view);
@@ -113,5 +121,48 @@ public class ForumDetailPresenter {
         } catch (IOException e) {
             Log.e("ForumDetailPresenter", e.getMessage());
         }
+    }
+
+    public void buildAlertDialog() {
+        AlertDialog.Builder alert = new AlertDialog.Builder(activity);
+        alert.setTitle("Reply ForumActivity");
+        alert.setMessage("Write your reply here:");
+
+        final EditText edittext = new EditText(activity);
+        edittext.setSingleLine(false);
+        edittext.setMaxLines(7);
+
+        FrameLayout container = new FrameLayout(activity);
+        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        params.leftMargin = activity.getResources().getDimensionPixelSize(R.dimen.dialog_margin);
+        params.rightMargin = activity.getResources().getDimensionPixelSize(R.dimen.dialog_margin);
+        edittext.setLayoutParams(params);
+        container.addView(edittext);
+
+        alert.setView(container);
+
+        alert.setPositiveButton("Send", null);
+        alert.setNegativeButton("Cancel", (dialog, whichButton) -> dialog.dismiss());
+
+        final AlertDialog alertDialog = alert.create();
+        alertDialog.setOnShowListener(arg0 -> {
+            alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(Color.DKGRAY);
+            alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(Color.DKGRAY);
+
+            Button button = alertDialog.getButton(AlertDialog.BUTTON_POSITIVE);
+            button.setOnClickListener(view -> {
+                final String message = edittext.getText().toString().replaceAll("\\n", "<br />");
+                if (message.equals("")) {
+                    Toast.makeText(activity, "Message couldn't be blank", Toast.LENGTH_SHORT).show();
+                } else {
+                    (new Thread(() -> {
+                        sendComment(message);
+                        activity.runOnUiThread(() -> Toast.makeText(activity, "Sent!", Toast.LENGTH_SHORT).show());
+                    })).start();
+                    alertDialog.dismiss();
+                }
+            });
+        });
+        alertDialog.show();
     }
 }

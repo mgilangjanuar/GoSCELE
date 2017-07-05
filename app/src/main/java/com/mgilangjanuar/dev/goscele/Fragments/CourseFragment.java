@@ -26,12 +26,16 @@ import com.mgilangjanuar.dev.goscele.Presenters.CoursePresenter;
 import com.mgilangjanuar.dev.goscele.R;
 import com.mgilangjanuar.dev.goscele.SearchCourseActivity;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class CourseFragment extends Fragment {
 
-    CoursePresenter presenter;
+    private CoursePresenter presenter;
 
-    public CourseFragment() {
-    }
+    @BindView(R.id.toolbar_course) Toolbar toolbar;
+    @BindView(R.id.view_pager_fragment_course) ViewPager viewPager;
+    @BindView(R.id.tab_fragment_course) TabLayout tabLayout;
 
     public static CourseFragment newInstance() {
         CourseFragment fragment = new CourseFragment();
@@ -48,7 +52,6 @@ public class CourseFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar_course);
         toolbar.setTitle(getActivity().getResources().getString(R.string.title_fragment_course));
         ((MainActivity) getActivity()).setSupportActionBar(toolbar);
         buildTabLayout(view);
@@ -58,6 +61,7 @@ public class CourseFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_course, container, false);
+        ButterKnife.bind(this, view);
         setHasOptionsMenu(true);
         return view;
     }
@@ -77,13 +81,11 @@ public class CourseFragment extends Fragment {
     }
 
     private void buildTabLayout(final View view) {
-        ViewPager viewPager = (ViewPager) view.findViewById(R.id.view_pager_fragment_course);
         BaseTabViewPagerAdapter fragmentPagerAdapter = new BaseTabViewPagerAdapter(getChildFragmentManager());
         fragmentPagerAdapter.addFragment(CurrentCourseFragment.newInstance(), getResources().getString(R.string.title_fragment_current_course));
         fragmentPagerAdapter.addFragment(AllCourseFragment.newInstance(), getResources().getString(R.string.title_fragment_all_course));
         viewPager.setAdapter(fragmentPagerAdapter);
 
-        TabLayout tabLayout = (TabLayout) view.findViewById(R.id.tab_fragment_course);
         tabLayout.setupWithViewPager(viewPager);
 
         tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
@@ -105,41 +107,25 @@ public class CourseFragment extends Fragment {
     public void updateRecyclerViewAdapter(View view, String param) {
         presenter = new CoursePresenter(getActivity(), view);
 
-        if (param.equalsIgnoreCase(getResources().getString(R.string.title_fragment_all_course)) && presenter.isDataAllCoursesViewAdapterChanged) {
-            final RecyclerView recyclerView = (RecyclerView) presenter.getView().findViewById(R.id.recycler_view_all_course);
-            presenter.isDataAllCoursesViewAdapterChanged = false;
-            (new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    final AllCoursesViewAdapter adapter = presenter.getAllCoursesViewAdapter();
-                    if (getActivity() == null) {
-                        return;
-                    }
-                    getActivity().runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            recyclerView.setAdapter(adapter);
-                        }
-                    });
+        if (param.equalsIgnoreCase(getResources().getString(R.string.title_fragment_all_course)) && CoursePresenter.isDataAllCoursesViewAdapterChanged) {
+            CoursePresenter.isDataAllCoursesViewAdapterChanged = false;
+            (new Thread(() -> {
+                final AllCoursesViewAdapter adapter = presenter.getAllCoursesViewAdapter();
+                if (getActivity() == null) {
+                    return;
                 }
+                RecyclerView rvAllCourses = (RecyclerView) view.findViewById(R.id.recycler_view_all_course);
+                getActivity().runOnUiThread(() -> rvAllCourses.setAdapter(adapter));
             })).start();
-        } else if (param.equalsIgnoreCase(getResources().getString(R.string.title_fragment_current_course)) && presenter.isDataCurrentCoursesViewAdapterChanged) {
-            final RecyclerView recyclerView = (RecyclerView) presenter.getView().findViewById(R.id.recycler_view_current_course);
-            presenter.isDataCurrentCoursesViewAdapterChanged = false;
-            (new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    final CurrentCoursesViewAdapter adapter = presenter.getCurrentCoursesViewAdapter();
-                    if (getActivity() == null) {
-                        return;
-                    }
-                    getActivity().runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            recyclerView.setAdapter(adapter);
-                        }
-                    });
+        } else if (param.equalsIgnoreCase(getResources().getString(R.string.title_fragment_current_course)) && CoursePresenter.isDataCurrentCoursesViewAdapterChanged) {
+            CoursePresenter.isDataCurrentCoursesViewAdapterChanged = false;
+            (new Thread(() -> {
+                final CurrentCoursesViewAdapter adapter = presenter.getCurrentCoursesViewAdapter();
+                if (getActivity() == null) {
+                    return;
                 }
+                RecyclerView rvCurrentCourses = (RecyclerView) view.findViewById(R.id.recycler_view_current_course);
+                getActivity().runOnUiThread(() -> rvCurrentCourses.setAdapter(adapter));
             })).start();
         }
     }

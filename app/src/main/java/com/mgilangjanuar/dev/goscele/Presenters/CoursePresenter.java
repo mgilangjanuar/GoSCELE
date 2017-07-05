@@ -22,17 +22,17 @@ import java.util.Map;
 
 public class CoursePresenter {
 
-    Activity activity;
-    View view;
+    private Activity activity;
+    private View view;
 
-    CourseService courseService;
+    private CourseService courseService;
 
-    CurrentCoursesViewAdapter currentCoursesViewAdapter;
-    AllCoursesViewAdapter allCoursesViewAdapter;
+    private CurrentCoursesViewAdapter currentCoursesViewAdapter;
+    private AllCoursesViewAdapter allCoursesViewAdapter;
 
-    ListCourseModel listCourseModel;
-    ListCurrentCourseModel listCurrentCourseModel;
-    ListCourseModel listSearchCourseModel;
+    private ListCourseModel listCourseModel;
+    private ListCurrentCourseModel listCurrentCourseModel;
+    private ListCourseModel listSearchCourseModel;
 
     public static boolean isDataCurrentCoursesViewAdapterChanged;
     public static boolean isDataAllCoursesViewAdapterChanged;

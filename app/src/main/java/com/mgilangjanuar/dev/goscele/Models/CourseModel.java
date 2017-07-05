@@ -17,7 +17,7 @@ public class CourseModel {
 
     @Override
     public boolean equals(Object o) {
-        return this.toString().equals(((CourseModel) o).toString());
+        return this.toString().equals(o.toString());
 
     }
 }

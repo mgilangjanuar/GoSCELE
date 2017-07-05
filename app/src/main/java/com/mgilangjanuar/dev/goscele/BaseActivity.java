@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
@@ -21,15 +22,27 @@ import com.mgilangjanuar.dev.goscele.Fragments.HomeFragment;
 import com.mgilangjanuar.dev.goscele.Fragments.ScheduleFragment;
 import com.mgilangjanuar.dev.goscele.Fragments.SettingFragment;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /**
  * Created by muhammadgilangjanuar on 5/14/17.
  */
 
 public class BaseActivity extends AppCompatActivity {
 
-    BottomNavigationView bottomNavigationView;
+    private MenuItem currentItem;
 
-    MenuItem currentItem;
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    public void setContentView(@LayoutRes int layoutResID) {
+        super.setContentView(layoutResID);
+        ButterKnife.bind(this);
+    }
 
     public void redirect(Intent intent) {
         startActivity(intent);
@@ -48,18 +61,10 @@ public class BaseActivity extends AppCompatActivity {
         snack.show();
     }
 
-    @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
-    protected void onNavigationSelected() {
-        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                selectMenu(item);
-                return true;
-            }
+    protected void onNavigationSelected(BottomNavigationView bottomNavigationView) {
+        bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
+            selectMenu(item);
+            return true;
         });
     }
 

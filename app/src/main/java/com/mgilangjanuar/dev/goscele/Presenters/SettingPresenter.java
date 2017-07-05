@@ -27,10 +27,10 @@ import java.util.Map;
 
 public class SettingPresenter {
 
-    public ArrayList<Map<String, String>> listContent;
+    private ArrayList<Map<String, String>> listContent;
 
-    Activity activity;
-    View view;
+    private Activity activity;
+    private View view;
 
     public interface SettingServicePresenter {
         void setupContents(View view);
@@ -125,31 +125,17 @@ public class SettingPresenter {
         builder.setTitle("Logout");
         builder.setMessage("Are you sure want to logout?");
         builder.setInverseBackgroundForced(true);
-        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                (new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        ((MainActivity) activity).forceRedirect(new Intent(activity, AuthActivity.class));
-                        AuthPresenter authPresenter = new AuthPresenter(activity);
-                        authPresenter.logout();
-                    }
-                })).start();
-            }
-        });
-        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-            }
-        });
+        builder.setPositiveButton("Yes", (dialog, which) -> (new Thread(() -> {
+            ((MainActivity) activity).forceRedirect(new Intent(activity, AuthActivity.class));
+            AuthPresenter authPresenter = new AuthPresenter(activity);
+            authPresenter.logout();
+        })).start());
+        builder.setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss());
         final AlertDialog alert = builder.create();
 
-        alert.setOnShowListener(new DialogInterface.OnShowListener() {
-            @Override
-            public void onShow(DialogInterface arg0) {
-                alert.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(Color.DKGRAY);
-                alert.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(Color.DKGRAY);
-            }
+        alert.setOnShowListener(arg0 -> {
+            alert.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(Color.DKGRAY);
+            alert.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(Color.DKGRAY);
         });
         alert.show();
     }
@@ -168,31 +154,22 @@ public class SettingPresenter {
         builder.setTitle("Save Password");
         builder.setMessage(message);
         builder.setInverseBackgroundForced(true);
-        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                accountModel.toggleSaveCredential();
-                if (accountModel.isSaveCredential()) {
-                    ((MainActivity) activity).forceRedirect(new Intent(activity, AuthActivity.class));
-                    toggle.setChecked(true);
-                } else {
-                    ((BaseActivity) activity).showToast("Password removed");
-                    toggle.setChecked(false);
-                }
+        builder.setPositiveButton("Yes", (dialog, which) -> {
+            accountModel.toggleSaveCredential();
+            if (accountModel.isSaveCredential()) {
+                ((MainActivity) activity).forceRedirect(new Intent(activity, AuthActivity.class));
+                toggle.setChecked(true);
+            } else {
+                ((BaseActivity) activity).showToast("Password removed");
+                toggle.setChecked(false);
             }
         });
-        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-            }
-        });
+        builder.setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss());
         final AlertDialog alert = builder.create();
 
-        alert.setOnShowListener(new DialogInterface.OnShowListener() {
-            @Override
-            public void onShow(DialogInterface arg0) {
-                alert.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(Color.DKGRAY);
-                alert.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(Color.DKGRAY);
-            }
+        alert.setOnShowListener(arg0 -> {
+            alert.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(Color.DKGRAY);
+            alert.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(Color.DKGRAY);
         });
         alert.show();
     }

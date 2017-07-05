@@ -10,9 +10,16 @@ import com.mgilangjanuar.dev.goscele.Presenters.AuthPresenter;
 
 import java.io.IOException;
 
+import butterknife.BindView;
+
 public class AuthActivity extends BaseActivity implements AuthPresenter.AuthServicePresenter {
 
-    AuthPresenter authPresenter;
+    private AuthPresenter authPresenter;
+
+    @BindView(R.id.login_button) Button btnLogin;
+    @BindView(R.id.username) EditText etUsername;
+    @BindView(R.id.password) EditText etPassword;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,20 +32,16 @@ public class AuthActivity extends BaseActivity implements AuthPresenter.AuthServ
 
     @Override
     public void authenticate() {
-        final Button loginButton = (Button) findViewById(com.mgilangjanuar.dev.goscele.R.id.login_button);
-        loginButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                hideKeyboard();
-                String username = ((EditText) findViewById(com.mgilangjanuar.dev.goscele.R.id.username)).getText().toString().trim();
-                String password = ((EditText) findViewById(com.mgilangjanuar.dev.goscele.R.id.password)).getText().toString().trim();
+        btnLogin.setOnClickListener(v -> {
+            hideKeyboard();
+            String username = etUsername.getText().toString().trim();
+            String password = etPassword.getText().toString().trim();
 
-                if (username.trim().equals("") || password.trim().equals("")) {
-                    showToast("Username and password are required field");
-                } else {
-                    authPresenter.showProgressDialog();
-                    validate(username, password);
-                }
+            if (username.trim().equals("") || password.trim().equals("")) {
+                showToast("Username and password are required field");
+            } else {
+                authPresenter.showProgressDialog();
+                validate(username, password);
             }
         });
     }
@@ -50,30 +53,17 @@ public class AuthActivity extends BaseActivity implements AuthPresenter.AuthServ
     }
 
     private void validate(final String username, final String password) {
-        (new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    if (authPresenter.login(username, password)) {
-                        forceRedirect(new Intent(AuthActivity.this, MainActivity.class));
-                    } else {
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                showToast("Username or password wrong");
-                            }
-                        });
-                    }
-                } catch (IOException e) {
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            showToast("Whoops! Please check your internet connection");
-                        }
-                    });
+        (new Thread(() -> {
+            try {
+                if (authPresenter.login(username, password)) {
+                    forceRedirect(new Intent(AuthActivity.this, MainActivity.class));
+                } else {
+                    runOnUiThread(() -> showToast("Username or password wrong"));
                 }
-                authPresenter.dismissProgressDialog();
+            } catch (IOException e) {
+                runOnUiThread(() -> showToast("Whoops! Please check your internet connection"));
             }
+            authPresenter.dismissProgressDialog();
         })).start();
     }
 }

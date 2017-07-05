@@ -5,7 +5,7 @@ import android.os.Bundle;
 
 import com.mgilangjanuar.dev.goscele.Models.EventNotificationModel;
 
-public class AlarmNotificationCancellation extends BaseActivity {
+public class AlarmNotificationCancellationActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -16,6 +16,6 @@ public class AlarmNotificationCancellation extends BaseActivity {
         model.isEnableAlarm = false;
         model.save();
 
-        forceRedirect(new Intent(AlarmNotificationCancellation.this, MainActivity.class));
+        forceRedirect(new Intent(AlarmNotificationCancellationActivity.this, MainActivity.class));
     }
 }

@@ -29,19 +29,15 @@ import java.util.Map;
 
 public class CourseDetailPresenter {
 
-    Activity activity;
+    private Activity activity;
 
-    ListCoursePostModel listCoursePostModel;
-    ListCourseEventModel listCourseEventModel;
-    ListCourseNewsModel listCourseNewsModel;
+    private ListCoursePostModel listCoursePostModel;
+    private ListCourseEventModel listCourseEventModel;
+    private ListCourseNewsModel listCourseNewsModel;
 
-    CourseDetailAdapter courseDetailAdapter;
-    CourseDetailEventAdapter courseDetailEventAdapter;
-    CourseDetailNewsAdapter courseDetailNewsAdapter;
+    private CourseDetailService courseDetailService;
 
-    CourseDetailService courseDetailService;
-
-    CourseModel courseModel;
+    private CourseModel courseModel;
 
     public String url;
 
@@ -64,10 +60,7 @@ public class CourseDetailPresenter {
                 || listCoursePostModel.getSavedCoursePostModels() == null) {
             buildDashboardModel();
         }
-        if (courseDetailAdapter == null) {
-            courseDetailAdapter = new CourseDetailAdapter(activity, listCoursePostModel.getSavedCoursePostModels());
-        }
-        return courseDetailAdapter;
+        return new CourseDetailAdapter(activity, listCoursePostModel.coursePostModelList);
     }
 
     private void buildDashboardModel() {
@@ -102,13 +95,10 @@ public class CourseDetailPresenter {
                 || !listCourseEventModel.getSavedCourseModel().url.equals(url)) {
             buildEventModel();
         }
-        if (courseDetailEventAdapter == null) {
-            courseDetailEventAdapter = new CourseDetailEventAdapter(activity, listCourseEventModel.getSavedCourseEventModelList());
-        }
-        return courseDetailEventAdapter;
+        return new CourseDetailEventAdapter(activity, listCourseEventModel.getSavedCourseEventModelList());
     }
 
-    public void buildEventModel() {
+    private void buildEventModel() {
         try {
             listCourseEventModel.clear();
             listCourseEventModel.courseModel = getCourseModel();
@@ -148,13 +138,10 @@ public class CourseDetailPresenter {
                 || !listCourseNewsModel.getSavedCourseModel().url.equals(url)) {
             buildNewsModel();
         }
-        if (courseDetailNewsAdapter == null) {
-            courseDetailNewsAdapter = new CourseDetailNewsAdapter(activity, listCourseNewsModel.getSavedCourseNewsModelList());
-        }
-        return courseDetailNewsAdapter;
+        return new CourseDetailNewsAdapter(activity, listCourseNewsModel.getSavedCourseNewsModelList());
     }
 
-    public void buildNewsModel() {
+    private void buildNewsModel() {
         try {
             listCourseNewsModel.clear();
             listCourseNewsModel.courseModel = getCourseModel();

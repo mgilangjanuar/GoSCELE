@@ -16,13 +16,16 @@ import com.mgilangjanuar.dev.goscele.R;
 
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /**
  * Created by muhammadgilangjanuar on 5/21/17.
  */
 
 public class HomePostAdapter extends RecyclerView.Adapter<HomePostAdapter.HomePostViewHolder> {
-    Context context;
-    List<HomePostModel> list;
+    private Context context;
+    private List<HomePostModel> list;
 
     public HomePostAdapter(Context context, List<HomePostModel> list) {
         this.context = context;
@@ -44,12 +47,9 @@ public class HomePostAdapter extends RecyclerView.Adapter<HomePostAdapter.HomePo
         HtmlHandlerHelper helper = new HtmlHandlerHelper(context, model.content);
         helper.setTextViewHTML(holder.content);
 
-        holder.layout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(context, ForumDetailActivity.class).putExtra("url", model.url);
-                context.startActivity(intent);
-            }
+        holder.layout.setOnClickListener(v -> {
+            Intent intent = new Intent(context, ForumDetailActivity.class).putExtra("url", model.url);
+            context.startActivity(intent);
         });
     }
 
@@ -60,19 +60,15 @@ public class HomePostAdapter extends RecyclerView.Adapter<HomePostAdapter.HomePo
 
     public class HomePostViewHolder extends RecyclerView.ViewHolder {
 
-        public TextView title;
-        public TextView author;
-        public TextView info;
-        public TextView content;
-        public LinearLayout layout;
+        @BindView(R.id.title_home) public TextView title;
+        @BindView(R.id.author_home) public TextView author;
+        @BindView(R.id.info_home) public TextView info;
+        @BindView(R.id.content_home) public TextView content;
+        @BindView(R.id.main_layout_home) public LinearLayout layout;
 
         public HomePostViewHolder(View itemView) {
             super(itemView);
-            title = (TextView) itemView.findViewById(R.id.title_home);
-            author = (TextView) itemView.findViewById(R.id.author_home);
-            info = (TextView) itemView.findViewById(R.id.info_home);
-            content = (TextView) itemView.findViewById(R.id.content_home);
-            layout = (LinearLayout) itemView.findViewById(R.id.main_layout_home);
+            ButterKnife.bind(this, itemView);
         }
     }
 

@@ -42,7 +42,7 @@ import java.util.List;
 public class InAppBrowserPresenter {
     public String url;
     public AuthPresenter authPresenter;
-    Activity activity;
+    private Activity activity;
 
     public interface InAppBrowserServicePresenter {
         void setupInAppBrowser();
@@ -61,19 +61,13 @@ public class InAppBrowserPresenter {
         builder.setMessage(Html.fromHtml("Please enable your storage permission for GoSCELE." +
                 "<br><br>Go to <i>Permission Manager</i> -> <i>Storage</i> -> <i>Accept</i>"));
         builder.setInverseBackgroundForced(true);
-        builder.setPositiveButton("Enable", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                Intent intent = new Intent();
-                intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-                intent.setData(Uri.fromParts("package", activity.getPackageName(), null));
-                activity.startActivity(intent);
-            }
+        builder.setPositiveButton("Enable", (dialog, which) -> {
+            Intent intent = new Intent();
+            intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+            intent.setData(Uri.fromParts("package", activity.getPackageName(), null));
+            activity.startActivity(intent);
         });
-        builder.setNegativeButton("Ignore", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-            }
-        });
+        builder.setNegativeButton("Ignore", (dialog, which) -> dialog.dismiss());
         builder.create().show();
     }
 
@@ -183,20 +177,10 @@ public class InAppBrowserPresenter {
                 AccountModel accountModel = new AccountModel(activity);
                 if (accountModel.isSaveCredential()) {
                     webView.evaluateJavascript("(function() {document.getElementsByName('username')[0].value='" + authPresenter.getUsername() + "';document.getElementsByName('password')[0].value='" + authPresenter.getPassword() + "';document.getElementById('login').submit(); " +
-                            "return { var1: \"variable1\", var2: \"variable2\" }; })();", new ValueCallback<String>() {
-                        @Override
-                        public void onReceiveValue(String s) {
-                            Log.d("Authentication", "success");
-                        }
-                    });
+                            "return { var1: \"variable1\", var2: \"variable2\" }; })();", s -> Log.d("Authentication", "success"));
                 } else {
                     webView.evaluateJavascript("(function() {document.getElementsByName('username')[0].value='" + authPresenter.getUsername() + "';" +
-                            "return { var1: \"variable1\", var2: \"variable2\" }; })();", new ValueCallback<String>() {
-                        @Override
-                        public void onReceiveValue(String s) {
-                            Log.d("Authentication", "without password");
-                        }
-                    });
+                            "return { var1: \"variable1\", var2: \"variable2\" }; })();", s -> Log.d("Authentication", "without password"));
                 }
             }
         }

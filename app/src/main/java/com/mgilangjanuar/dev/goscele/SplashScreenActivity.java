@@ -6,9 +6,14 @@ import android.widget.TextView;
 
 import com.mgilangjanuar.dev.goscele.Presenters.SplashScreenPresenter;
 
+import butterknife.BindView;
+
 public class SplashScreenActivity extends BaseActivity implements SplashScreenPresenter.SplashScreenServicePresenter {
 
-    SplashScreenPresenter presenter;
+    private SplashScreenPresenter presenter;
+
+    @BindView(R.id.progress_bar_splash_screen) ProgressBar progressBar;
+    @BindView(R.id.text_quote) TextView textView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,26 +27,16 @@ public class SplashScreenActivity extends BaseActivity implements SplashScreenPr
     public void setupSplashScreen() {
         presenter.setupThreadPolicy();
 
-        ProgressBar progressBar = (ProgressBar) findViewById(R.id.progress_bar_splash_screen);
         progressBar.getIndeterminateDrawable().setColorFilter(0xFFFFFFFF, android.graphics.PorterDuff.Mode.MULTIPLY);
 
-        final TextView textView = (TextView) findViewById(R.id.text_quote);
         if (!presenter.isNetworkAvailable()) {
             textView.setText("\"Oh Snap! Please check your internet connection.\"\n\u2014 A Panda");
             return;
         }
 
-        (new Thread(new Runnable() {
-            @Override
-            public void run() {
-                final String quote = presenter.getQuote();
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        textView.setText(quote);
-                    }
-                });
-            }
+        (new Thread(() -> {
+            final String quote = presenter.getQuote();
+            runOnUiThread(() -> textView.setText(quote));
         })).start();
 
         presenter.authenticate();

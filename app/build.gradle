@@ -10,12 +10,19 @@ android {
         versionCode 14
         versionName "ORION 0.10.1"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        jackOptions {
+            enabled true
+        }
     }
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+    }
+    compileOptions {
+        targetCompatibility 1.8
+        sourceCompatibility 1.8
     }
 }
 
@@ -35,5 +42,7 @@ dependencies {
     compile 'com.prolificinteractive:material-calendarview:1.4.3'
     compile 'com.sothree.slidinguppanel:library:3.3.1'
     compile 'jp.wasabeef:richeditor-android:1.2.2'
+    compile 'com.jakewharton:butterknife:8.6.0'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.6.0'
     testCompile 'junit:junit:4.12'
 }
