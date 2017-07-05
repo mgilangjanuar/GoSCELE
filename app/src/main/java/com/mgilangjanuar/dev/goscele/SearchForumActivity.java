@@ -6,7 +6,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
-import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -20,11 +19,16 @@ public class SearchForumActivity extends BaseActivity {
 
     private ForumPresenter presenter;
 
-    @BindView(R.id.toolbar_search_forum) Toolbar toolbar;
-    @BindView(R.id.recycler_view_search_forum) RecyclerView recyclerView;
-    @BindView(R.id.button_search_forum) ImageButton iBtnSearch;
-    @BindView(R.id.text_status_search_forum) TextView tvStatus;
-    @BindView(R.id.edit_search_forum) EditText etSearch;
+    @BindView(R.id.toolbar_search_forum)
+    Toolbar toolbar;
+    @BindView(R.id.recycler_view_search_forum)
+    RecyclerView recyclerView;
+    @BindView(R.id.button_search_forum)
+    ImageButton iBtnSearch;
+    @BindView(R.id.text_status_search_forum)
+    TextView tvStatus;
+    @BindView(R.id.edit_search_forum)
+    EditText etSearch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

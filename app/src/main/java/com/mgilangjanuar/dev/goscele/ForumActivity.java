@@ -8,7 +8,6 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.widget.TextView;
 
 import com.mgilangjanuar.dev.goscele.Adapters.ForumAdapter;
@@ -21,10 +20,14 @@ public class ForumActivity extends BaseActivity implements ForumPresenter.ForumS
     private ForumPresenter presenter;
     private String url;
 
-    @BindView(R.id.toolbar_forum) Toolbar toolbar;
-    @BindView(R.id.recycler_view_forum) RecyclerView recyclerView;
-    @BindView(R.id.text_status_forum) TextView status;
-    @BindView(R.id.swipe_refresh_forum) SwipeRefreshLayout swipeRefreshLayout;
+    @BindView(R.id.toolbar_forum)
+    Toolbar toolbar;
+    @BindView(R.id.recycler_view_forum)
+    RecyclerView recyclerView;
+    @BindView(R.id.text_status_forum)
+    TextView status;
+    @BindView(R.id.swipe_refresh_forum)
+    SwipeRefreshLayout swipeRefreshLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

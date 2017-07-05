@@ -21,7 +21,8 @@ public class CurrentCourseFragment extends Fragment implements CoursePresenter.C
 
     private CoursePresenter coursePresenter;
 
-    @BindView(R.id.recycler_view_current_course) RecyclerView recyclerView;
+    @BindView(R.id.recycler_view_current_course)
+    RecyclerView recyclerView;
 
     public static CurrentCourseFragment newInstance() {
         CurrentCourseFragment fragment = new CurrentCourseFragment();

@@ -24,9 +24,12 @@ public class EventFragment extends Fragment implements CourseDetailPresenter.Cou
 
     private CourseDetailPresenter presenter;
 
-    @BindView(R.id.recycler_view_course_detail_event) RecyclerView recyclerView;
-    @BindView(R.id.text_status_course_event) TextView tvStatus;
-    @BindView(R.id.swipe_refresh_course_detail_event) SwipeRefreshLayout swipeRefreshLayout;
+    @BindView(R.id.recycler_view_course_detail_event)
+    RecyclerView recyclerView;
+    @BindView(R.id.text_status_course_event)
+    TextView tvStatus;
+    @BindView(R.id.swipe_refresh_course_detail_event)
+    SwipeRefreshLayout swipeRefreshLayout;
 
     public static EventFragment newInstance(CourseDetailPresenter courseDetailPresenter) {
         EventFragment fragment = new EventFragment();
@@ -60,7 +63,9 @@ public class EventFragment extends Fragment implements CourseDetailPresenter.Cou
     public void setupCourseDetail(View view) {
         final CourseDetailEventAdapter adapter = presenter.buildEventAdapter();
 
-        if (getActivity() == null) { return; }
+        if (getActivity() == null) {
+            return;
+        }
         getActivity().runOnUiThread(() -> {
             recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
             recyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -78,7 +83,9 @@ public class EventFragment extends Fragment implements CourseDetailPresenter.Cou
         swipeRefreshLayout.setOnRefreshListener(() -> new Handler().postDelayed(() -> (new Thread(() -> {
             presenter.clearEvent();
             final CourseDetailEventAdapter adapter1 = presenter.buildEventAdapter();
-            if (getActivity() == null) { return; }
+            if (getActivity() == null) {
+                return;
+            }
             getActivity().runOnUiThread(() -> {
                 recyclerView.setAdapter(adapter1);
                 swipeRefreshLayout.setRefreshing(false);

@@ -6,7 +6,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
-import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -20,11 +19,16 @@ public class SearchCourseActivity extends BaseActivity {
 
     private CoursePresenter presenter;
 
-    @BindView(R.id.toolbar_search_course) Toolbar toolbar;
-    @BindView(R.id.recycler_view_search_course) RecyclerView recyclerView;
-    @BindView(R.id.button_search_course) ImageButton iBtnSearch;
-    @BindView(R.id.text_status_search_course) TextView tvStatus;
-    @BindView(R.id.edit_search_course) EditText etSearch;
+    @BindView(R.id.toolbar_search_course)
+    Toolbar toolbar;
+    @BindView(R.id.recycler_view_search_course)
+    RecyclerView recyclerView;
+    @BindView(R.id.button_search_course)
+    ImageButton iBtnSearch;
+    @BindView(R.id.text_status_search_course)
+    TextView tvStatus;
+    @BindView(R.id.edit_search_course)
+    EditText etSearch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

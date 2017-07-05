@@ -39,14 +39,22 @@ public class ScheduleFragment extends Fragment implements SettingPresenter.Setti
     private SchedulePresenter schedulePresenter;
     private boolean isCannotChangeMonth;
 
-    @BindView(R.id.calendar_view) MaterialCalendarView materialCalendarView;
-    @BindView(R.id.toolbar_schedule) Toolbar toolbar;
-    @BindView(R.id.recycler_view_schedule) RecyclerView recyclerView;
-    @BindView(R.id.title_slidingup_panel_schedule) TextView tvTitleSlidingUpPanel;
-    @BindView(R.id.text_status_schedule) TextView tvStatus;
-    @BindView(R.id.swipe_refresh_schedule) SwipeRefreshLayout swipeRefreshLayout;
-    @BindView(R.id.sliding_layout) SlidingUpPanelLayout slidingUpPanelLayout;
-    @BindView(R.id.img_detail_description) ImageView iViewDetailDescription;
+    @BindView(R.id.calendar_view)
+    MaterialCalendarView materialCalendarView;
+    @BindView(R.id.toolbar_schedule)
+    Toolbar toolbar;
+    @BindView(R.id.recycler_view_schedule)
+    RecyclerView recyclerView;
+    @BindView(R.id.title_slidingup_panel_schedule)
+    TextView tvTitleSlidingUpPanel;
+    @BindView(R.id.text_status_schedule)
+    TextView tvStatus;
+    @BindView(R.id.swipe_refresh_schedule)
+    SwipeRefreshLayout swipeRefreshLayout;
+    @BindView(R.id.sliding_layout)
+    SlidingUpPanelLayout slidingUpPanelLayout;
+    @BindView(R.id.img_detail_description)
+    ImageView iViewDetailDescription;
 
     public static ScheduleFragment newInstance() {
         ScheduleFragment fragment = new ScheduleFragment();

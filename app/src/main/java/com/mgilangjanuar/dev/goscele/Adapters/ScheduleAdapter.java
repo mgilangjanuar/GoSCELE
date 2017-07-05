@@ -32,13 +32,20 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.Schedu
 
     public class ScheduleViewHolder extends RecyclerView.ViewHolder {
 
-        @BindView(R.id.title_schedule) public TextView title;
-        @BindView(R.id.subtitle_schedule) public TextView subTitle;
-        @BindView(R.id.description_schedule) public TextView description;
-        @BindView(R.id.time_schedule) public TextView time;
-        @BindView(R.id.button_share_schedule) public Button share;
-        @BindView(R.id.button_view_course_in_schedule) public Button course;
-        @BindView(R.id.title_card) public LinearLayout layout;
+        @BindView(R.id.title_schedule)
+        public TextView title;
+        @BindView(R.id.subtitle_schedule)
+        public TextView subTitle;
+        @BindView(R.id.description_schedule)
+        public TextView description;
+        @BindView(R.id.time_schedule)
+        public TextView time;
+        @BindView(R.id.button_share_schedule)
+        public Button share;
+        @BindView(R.id.button_view_course_in_schedule)
+        public Button course;
+        @BindView(R.id.title_card)
+        public LinearLayout layout;
 
         public ScheduleViewHolder(View itemView) {
             super(itemView);

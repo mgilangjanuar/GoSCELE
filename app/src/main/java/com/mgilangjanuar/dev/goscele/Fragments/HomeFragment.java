@@ -32,10 +32,14 @@ public class HomeFragment extends Fragment implements HomePresenter.HomeServiceP
 
     private HomePresenter homePresenter;
 
-    @BindView(R.id.recycler_view_home) RecyclerView recyclerView;
-    @BindView(R.id.toolbar_home) Toolbar toolbar;
-    @BindView(R.id.text_status_home) TextView status;
-    @BindView(R.id.swipe_refresh_home) SwipeRefreshLayout refreshLayout;
+    @BindView(R.id.recycler_view_home)
+    RecyclerView recyclerView;
+    @BindView(R.id.toolbar_home)
+    Toolbar toolbar;
+    @BindView(R.id.text_status_home)
+    TextView status;
+    @BindView(R.id.swipe_refresh_home)
+    SwipeRefreshLayout refreshLayout;
 
     public static HomeFragment newInstance() {
         HomeFragment fragment = new HomeFragment();

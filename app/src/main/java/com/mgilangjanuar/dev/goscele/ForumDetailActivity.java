@@ -18,10 +18,14 @@ public class ForumDetailActivity extends BaseActivity {
     private String url;
     private ForumDetailPresenter presenter;
 
-    @BindView(R.id.toolbar_forum_detail) Toolbar toolbar;
-    @BindView(R.id.fab_forum_comment) FloatingActionButton actionButton;
-    @BindView(R.id.view_pager_activity_forum_detail) ViewPager viewPager;
-    @BindView(R.id.tab_forum_detail) TabLayout tabLayout;
+    @BindView(R.id.toolbar_forum_detail)
+    Toolbar toolbar;
+    @BindView(R.id.fab_forum_comment)
+    FloatingActionButton actionButton;
+    @BindView(R.id.view_pager_activity_forum_detail)
+    ViewPager viewPager;
+    @BindView(R.id.tab_forum_detail)
+    TabLayout tabLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

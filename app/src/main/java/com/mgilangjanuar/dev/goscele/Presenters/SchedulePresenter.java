@@ -30,7 +30,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 /**
  * Created by muhammadgilangjanuar on 5/17/17.
@@ -86,7 +85,7 @@ public class SchedulePresenter {
             calendarEventModel.clear();
             calendarEventModel.date = calendarMonthService.getMonth(time2);
             calendarEventModel.listEvent = new ArrayList<>();
-            for (String e: calendarMonthService.getListDay(time2)) {
+            for (String e : calendarMonthService.getListDay(time2)) {
                 calendarEventModel.listEvent.add(Integer.parseInt(e));
             }
             calendarEventModel.save();

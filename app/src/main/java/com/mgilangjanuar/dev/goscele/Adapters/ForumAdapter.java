@@ -56,10 +56,14 @@ public class ForumAdapter extends RecyclerView.Adapter<ForumAdapter.ForumViewHol
 
     public class ForumViewHolder extends RecyclerView.ViewHolder {
 
-        @BindView(R.id.title_forum) public TextView title;
-        @BindView(R.id.author_forum) public TextView author;
-        @BindView(R.id.last_update_forum) public TextView lastUpdate;
-        @BindView(R.id.layout_forum) public LinearLayout layout;
+        @BindView(R.id.title_forum)
+        public TextView title;
+        @BindView(R.id.author_forum)
+        public TextView author;
+        @BindView(R.id.last_update_forum)
+        public TextView lastUpdate;
+        @BindView(R.id.layout_forum)
+        public LinearLayout layout;
 
         public ForumViewHolder(View itemView) {
             super(itemView);

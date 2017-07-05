@@ -33,9 +33,12 @@ public class CurrentCoursesViewAdapter extends RecyclerView.Adapter<CurrentCours
 
     public class CurrentCoursesViewHolder extends RecyclerView.ViewHolder {
 
-        @BindView(R.id.layout_course_list) public RelativeLayout relativeLayout;
-        @BindView(R.id.title_course_name) public TextView title;
-        @BindView(R.id.button_course) public Button buttonAction;
+        @BindView(R.id.layout_course_list)
+        public RelativeLayout relativeLayout;
+        @BindView(R.id.title_course_name)
+        public TextView title;
+        @BindView(R.id.button_course)
+        public Button buttonAction;
 
         public CurrentCoursesViewHolder(View itemView) {
             super(itemView);

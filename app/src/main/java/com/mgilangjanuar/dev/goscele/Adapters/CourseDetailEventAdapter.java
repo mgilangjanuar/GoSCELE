@@ -55,9 +55,12 @@ public class CourseDetailEventAdapter extends RecyclerView.Adapter<CourseDetailE
 
     public class CourseDetailEventViewHolder extends RecyclerView.ViewHolder {
 
-        @BindView(R.id.title_course_detail_event) public TextView title;
-        @BindView(R.id.info_course_detail_event) public TextView info;
-        @BindView(R.id.layout_course_detail_event) public LinearLayout layout;
+        @BindView(R.id.title_course_detail_event)
+        public TextView title;
+        @BindView(R.id.info_course_detail_event)
+        public TextView info;
+        @BindView(R.id.layout_course_detail_event)
+        public LinearLayout layout;
 
         public CourseDetailEventViewHolder(View itemView) {
             super(itemView);

@@ -61,8 +61,10 @@ public class InnerCourseDetailAdapter extends RecyclerView.Adapter<InnerCourseDe
 
     public class InnerCourseDetailViewHolder extends RecyclerView.ViewHolder {
 
-        @BindView(R.id.title_inner_course_post) public TextView title;
-        @BindView(R.id.comment_inner_course_post) public TextView comment;
+        @BindView(R.id.title_inner_course_post)
+        public TextView title;
+        @BindView(R.id.comment_inner_course_post)
+        public TextView comment;
 
         public InnerCourseDetailViewHolder(View itemView) {
             super(itemView);

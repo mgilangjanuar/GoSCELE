@@ -50,8 +50,10 @@ public class SearchCourseAdapter extends RecyclerView.Adapter<SearchCourseAdapte
 
     public class SearchCourseViewHolder extends RecyclerView.ViewHolder {
 
-        @BindView(R.id.title_course_name_search) public TextView title;
-        @BindView(R.id.layout_course_search) public LinearLayout layout;
+        @BindView(R.id.title_course_name_search)
+        public TextView title;
+        @BindView(R.id.layout_course_search)
+        public LinearLayout layout;
 
         public SearchCourseViewHolder(View itemView) {
             super(itemView);

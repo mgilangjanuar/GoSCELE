@@ -60,11 +60,16 @@ public class HomePostAdapter extends RecyclerView.Adapter<HomePostAdapter.HomePo
 
     public class HomePostViewHolder extends RecyclerView.ViewHolder {
 
-        @BindView(R.id.title_home) public TextView title;
-        @BindView(R.id.author_home) public TextView author;
-        @BindView(R.id.info_home) public TextView info;
-        @BindView(R.id.content_home) public TextView content;
-        @BindView(R.id.main_layout_home) public LinearLayout layout;
+        @BindView(R.id.title_home)
+        public TextView title;
+        @BindView(R.id.author_home)
+        public TextView author;
+        @BindView(R.id.info_home)
+        public TextView info;
+        @BindView(R.id.content_home)
+        public TextView content;
+        @BindView(R.id.main_layout_home)
+        public LinearLayout layout;
 
         public HomePostViewHolder(View itemView) {
             super(itemView);

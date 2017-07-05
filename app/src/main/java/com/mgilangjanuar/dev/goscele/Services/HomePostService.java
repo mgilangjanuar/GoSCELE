@@ -12,7 +12,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 /**
  * Created by muhammadgilangjanuar on 5/14/17.
@@ -30,7 +29,7 @@ public class HomePostService {
 
     public List<Map<String, String>> getPosts() throws IOException {
         List<Map<String, String>> results = new ArrayList<>();
-        for (Element e: getElements(".forumpost")) {
+        for (Element e : getElements(".forumpost")) {
             results.add(new HashMap<String, String>() {{
                 put("url", e.select(".link > a").attr("href"));
                 put("title", e.select(".subject").text());

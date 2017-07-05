@@ -25,11 +25,16 @@ public class Post extends Fragment implements ForumDetailPresenter.ForumDetailSe
 
     private ForumDetailPresenter forumDetailPresenter;
 
-    @BindView(R.id.title_forum_detail) TextView tvTitle;
-    @BindView(R.id.date_forum_detail) TextView tvDate;
-    @BindView(R.id.author_forum_detail) TextView tvAuthor;
-    @BindView(R.id.content_forum_detail) TextView tvContent;
-    @BindView(R.id.button_delete_post) Button btnDelete;
+    @BindView(R.id.title_forum_detail)
+    TextView tvTitle;
+    @BindView(R.id.date_forum_detail)
+    TextView tvDate;
+    @BindView(R.id.author_forum_detail)
+    TextView tvAuthor;
+    @BindView(R.id.content_forum_detail)
+    TextView tvContent;
+    @BindView(R.id.button_delete_post)
+    Button btnDelete;
 
     public static Post newInstance(ForumDetailPresenter forumDetailPresenter) {
         Post fragment = new Post();
@@ -64,7 +69,9 @@ public class Post extends Fragment implements ForumDetailPresenter.ForumDetailSe
 
         final HtmlHandlerHelper helper = new HtmlHandlerHelper(getActivity(), forumDetailPresenter.getForumDetailModel().getSavedContent());
 
-        if (getActivity() == null) { return; }
+        if (getActivity() == null) {
+            return;
+        }
         getActivity().runOnUiThread(() -> {
             ((ForumDetailActivity) getActivity()).getSupportActionBar().setTitle(forumDetailPresenter.getForumDetailModel().getSavedTitle());
             tvTitle.setText(forumDetailPresenter.getForumDetailModel().getSavedTitle());

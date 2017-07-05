@@ -2,7 +2,6 @@ package com.mgilangjanuar.dev.goscele.Adapters;
 
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
@@ -124,10 +123,14 @@ public class SettingAdapter extends RecyclerView.Adapter<SettingAdapter.SettingV
 
     public class SettingViewHolder extends RecyclerView.ViewHolder {
 
-        @BindView(R.id.title_setting) public TextView title;
-        @BindView(R.id.subtitle_setting) public TextView subtitle;
-        @BindView(R.id.toggle_button_setting) public ToggleButton toggle;
-        @BindView(R.id.relative_layout_setting) RelativeLayout relativeLayout;
+        @BindView(R.id.title_setting)
+        public TextView title;
+        @BindView(R.id.subtitle_setting)
+        public TextView subtitle;
+        @BindView(R.id.toggle_button_setting)
+        public ToggleButton toggle;
+        @BindView(R.id.relative_layout_setting)
+        RelativeLayout relativeLayout;
 
         public SettingViewHolder(View itemView) {
             super(itemView);

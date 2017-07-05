@@ -13,7 +13,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 /**
  * Created by muhammadgilangjanuar on 5/24/17.
@@ -40,7 +39,7 @@ public class ForumService {
         Map<String, Object> results = new HashMap<>();
 
         List<Map<String, String>> subResults = new ArrayList<>();
-        for (Element e: getElements(".indent")) {
+        for (Element e : getElements(".indent")) {
             subResults.add(new HashMap<String, String>() {{
                 put("author", e.select(".author a").get(0).text());
                 put("date", e.select(".author").get(0).text().replace("by " + e.select(".author a").get(0).text() + " - ", ""));
@@ -62,7 +61,7 @@ public class ForumService {
 
     public List<Map<String, String>> getForums() throws IOException {
         List<Map<String, String>> results = new ArrayList<>();
-        for (Element e: getElements(".discussion")) {
+        for (Element e : getElements(".discussion")) {
             results.add(new HashMap<String, String>() {{
                 put("url", e.select(".topic.starter a").attr("href"));
                 put("title", e.select(".topic.starter").text());

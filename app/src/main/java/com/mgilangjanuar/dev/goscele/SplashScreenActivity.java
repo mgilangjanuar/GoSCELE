@@ -12,8 +12,10 @@ public class SplashScreenActivity extends BaseActivity implements SplashScreenPr
 
     private SplashScreenPresenter presenter;
 
-    @BindView(R.id.progress_bar_splash_screen) ProgressBar progressBar;
-    @BindView(R.id.text_quote) TextView textView;
+    @BindView(R.id.progress_bar_splash_screen)
+    ProgressBar progressBar;
+    @BindView(R.id.text_quote)
+    TextView textView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

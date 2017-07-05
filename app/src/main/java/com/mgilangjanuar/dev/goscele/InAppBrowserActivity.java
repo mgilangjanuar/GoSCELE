@@ -20,9 +20,12 @@ public class InAppBrowserActivity extends BaseActivity implements InAppBrowserPr
 
     private InAppBrowserPresenter presenter;
 
-    @BindView(R.id.toolbar_app_browser) Toolbar toolbar;
-    @BindView(R.id.web_view) WebView webView;
-    @BindView(R.id.progress_bar_browser) ProgressBar progressBar;
+    @BindView(R.id.toolbar_app_browser)
+    Toolbar toolbar;
+    @BindView(R.id.web_view)
+    WebView webView;
+    @BindView(R.id.progress_bar_browser)
+    ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

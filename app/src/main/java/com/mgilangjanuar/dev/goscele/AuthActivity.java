@@ -2,7 +2,6 @@ package com.mgilangjanuar.dev.goscele;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -16,9 +15,12 @@ public class AuthActivity extends BaseActivity implements AuthPresenter.AuthServ
 
     private AuthPresenter authPresenter;
 
-    @BindView(R.id.login_button) Button btnLogin;
-    @BindView(R.id.username) EditText etUsername;
-    @BindView(R.id.password) EditText etPassword;
+    @BindView(R.id.login_button)
+    Button btnLogin;
+    @BindView(R.id.username)
+    EditText etUsername;
+    @BindView(R.id.password)
+    EditText etPassword;
 
 
     @Override

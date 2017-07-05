@@ -3,9 +3,7 @@ package com.mgilangjanuar.dev.goscele;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.widget.Toast;
 
 import com.mgilangjanuar.dev.goscele.Adapters.BaseTabViewPagerAdapter;
 import com.mgilangjanuar.dev.goscele.Fragments.CourseDetail.DashboardFragment;
@@ -20,9 +18,12 @@ public class CourseDetailActivity extends BaseActivity {
     private String url;
     private CourseDetailPresenter presenter;
 
-    @BindView(R.id.toolbar_course_detail) Toolbar toolbar;
-    @BindView(R.id.view_pager_activity_course_detail) ViewPager viewPager;
-    @BindView(R.id.tab_course_detail) TabLayout tabLayout;
+    @BindView(R.id.toolbar_course_detail)
+    Toolbar toolbar;
+    @BindView(R.id.view_pager_activity_course_detail)
+    ViewPager viewPager;
+    @BindView(R.id.tab_course_detail)
+    TabLayout tabLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

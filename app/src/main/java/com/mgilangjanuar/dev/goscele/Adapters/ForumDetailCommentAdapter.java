@@ -2,7 +2,6 @@ package com.mgilangjanuar.dev.goscele.Adapters;
 
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.support.v7.widget.RecyclerView;
@@ -101,10 +100,14 @@ public class ForumDetailCommentAdapter extends RecyclerView.Adapter<ForumDetailC
 
     public class ForumDetailCommentViewHolder extends RecyclerView.ViewHolder {
 
-        @BindView(R.id.author_forum_comment) public TextView author;
-        @BindView(R.id.date_forum_comment) public TextView date;
-        @BindView(R.id.content_forum_comment) public TextView content;
-        @BindView(R.id.button_delete_comment) public Button delete;
+        @BindView(R.id.author_forum_comment)
+        public TextView author;
+        @BindView(R.id.date_forum_comment)
+        public TextView date;
+        @BindView(R.id.content_forum_comment)
+        public TextView content;
+        @BindView(R.id.button_delete_comment)
+        public Button delete;
 
         public ForumDetailCommentViewHolder(View itemView) {
             super(itemView);

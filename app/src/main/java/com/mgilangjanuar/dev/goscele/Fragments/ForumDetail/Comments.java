@@ -26,9 +26,12 @@ public class Comments extends Fragment implements ForumDetailPresenter.ForumDeta
     private ForumDetailPresenter forumDetailPresenter;
     private FloatingActionButton actionButton;
 
-    @BindView(R.id.recycler_view_forum_detail) RecyclerView recyclerView;
-    @BindView(R.id.text_status_forum_comments) TextView status;
-    @BindView(R.id.swipe_refresh_forum_detail) SwipeRefreshLayout swipeRefreshLayout;
+    @BindView(R.id.recycler_view_forum_detail)
+    RecyclerView recyclerView;
+    @BindView(R.id.text_status_forum_comments)
+    TextView status;
+    @BindView(R.id.swipe_refresh_forum_detail)
+    SwipeRefreshLayout swipeRefreshLayout;
 
     public static Comments newInstance(ForumDetailPresenter forumDetailPresenter, FloatingActionButton actionButton) {
         Comments fragment = new Comments();

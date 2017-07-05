@@ -33,9 +33,12 @@ public class CourseFragment extends Fragment {
 
     private CoursePresenter presenter;
 
-    @BindView(R.id.toolbar_course) Toolbar toolbar;
-    @BindView(R.id.view_pager_fragment_course) ViewPager viewPager;
-    @BindView(R.id.tab_fragment_course) TabLayout tabLayout;
+    @BindView(R.id.toolbar_course)
+    Toolbar toolbar;
+    @BindView(R.id.view_pager_fragment_course)
+    ViewPager viewPager;
+    @BindView(R.id.tab_fragment_course)
+    TabLayout tabLayout;
 
     public static CourseFragment newInstance() {
         CourseFragment fragment = new CourseFragment();
