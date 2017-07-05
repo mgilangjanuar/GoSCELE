@@ -26,7 +26,6 @@ public class SearchCourseActivity extends BaseActivity {
         presenter = new CoursePresenter(this, null);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_search_course);
-        toolbar.setTitle(getString(R.string.title_activity_search_course));
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
