@@ -41,13 +41,14 @@ public class ListCourseEventModel extends BaseRecord implements BaseRecord.Basic
 
     public List<CourseEventModel> getSavedCourseEventModelList() {
         Gson gson = new Gson();
-        courseEventModelList =  gson.fromJson(sharedPreferences.getString(getAttributeTag("courseEventModelList"), null), new TypeToken<ArrayList<CourseEventModel>>() {}.getType());
+        courseEventModelList = gson.fromJson(sharedPreferences.getString(getAttributeTag("courseEventModelList"), null), new TypeToken<ArrayList<CourseEventModel>>() {
+        }.getType());
         return courseEventModelList;
     }
 
     public CourseModel getSavedCourseModel() {
         Gson gson = new Gson();
-        courseModel =  gson.fromJson(sharedPreferences.getString(getAttributeTag("courseModel"), null), CourseModel.class);
+        courseModel = gson.fromJson(sharedPreferences.getString(getAttributeTag("courseModel"), null), CourseModel.class);
         return courseModel;
     }
 }

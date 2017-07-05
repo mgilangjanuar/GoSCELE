@@ -4,16 +4,13 @@ import android.Manifest;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.webkit.CookieManager;
-import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import com.mgilangjanuar.dev.goscele.Presenters.InAppBrowserPresenter;
 
@@ -41,7 +38,7 @@ public class InAppBrowserActivity extends BaseActivity implements InAppBrowserPr
 
     @Override
     public void onBackPressed() {
-        if(webView.canGoBack()) {
+        if (webView.canGoBack()) {
             webView.goBack();
         } else {
             super.onBackPressed();
@@ -76,7 +73,7 @@ public class InAppBrowserActivity extends BaseActivity implements InAppBrowserPr
 
     @Override
     public void setupInAppBrowser() {
-        if (! presenter.isContinueOpenWebView()) {
+        if (!presenter.isContinueOpenWebView()) {
             super.onBackPressed();
             return;
         }

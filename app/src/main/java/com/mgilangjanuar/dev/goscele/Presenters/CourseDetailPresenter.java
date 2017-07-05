@@ -60,7 +60,7 @@ public class CourseDetailPresenter {
 
     public CourseDetailAdapter buildDashboardAdapter() {
         if (listCoursePostModel.getSavedCourseModel() == null
-                || ! listCoursePostModel.getSavedCourseModel().url.equals(url)
+                || !listCoursePostModel.getSavedCourseModel().url.equals(url)
                 || listCoursePostModel.getSavedCoursePostModels() == null) {
             buildDashboardModel();
         }
@@ -76,13 +76,14 @@ public class CourseDetailPresenter {
             listCoursePostModel.courseModel = getCourseModel();
             Gson gson = new Gson();
             listCoursePostModel.coursePostModelList = new ArrayList<>();
-            for (Map<String, String> e: courseDetailService.getCourseDetails(url)) {
+            for (Map<String, String> e : courseDetailService.getCourseDetails(url)) {
                 CoursePostModel model = new CoursePostModel();
                 model.url = e.get("url");
                 model.title = e.get("title");
                 model.summary = e.get("summary");
-                model.innerCoursePostModelList = gson.fromJson(e.get("innerCoursePostModelList"), new TypeToken<ArrayList<InnerCoursePostModel>>() {}.getType());
-                if (! model.summary.equals("") || ! model.innerCoursePostModelList.isEmpty()) {
+                model.innerCoursePostModelList = gson.fromJson(e.get("innerCoursePostModelList"), new TypeToken<ArrayList<InnerCoursePostModel>>() {
+                }.getType());
+                if (!model.summary.equals("") || !model.innerCoursePostModelList.isEmpty()) {
                     listCoursePostModel.coursePostModelList.add(model);
                 }
             }
@@ -98,7 +99,7 @@ public class CourseDetailPresenter {
 
     public CourseDetailEventAdapter buildEventAdapter() {
         if (listCourseEventModel.getSavedCourseEventModelList() == null
-                || ! listCourseEventModel.getSavedCourseModel().url.equals(url)) {
+                || !listCourseEventModel.getSavedCourseModel().url.equals(url)) {
             buildEventModel();
         }
         if (courseDetailEventAdapter == null) {
@@ -112,7 +113,7 @@ public class CourseDetailPresenter {
             listCourseEventModel.clear();
             listCourseEventModel.courseModel = getCourseModel();
             listCourseEventModel.courseEventModelList = new ArrayList<>();
-            for (Map<String, String> e: courseDetailService.getEvents(url)) {
+            for (Map<String, String> e : courseDetailService.getEvents(url)) {
                 CourseEventModel model = new CourseEventModel();
                 model.url = e.get("url");
                 model.title = e.get("title");
@@ -144,7 +145,7 @@ public class CourseDetailPresenter {
 
     public CourseDetailNewsAdapter buildNewsAdapter() {
         if (listCourseNewsModel.getSavedCourseNewsModelList() == null
-                || ! listCourseNewsModel.getSavedCourseModel().url.equals(url)) {
+                || !listCourseNewsModel.getSavedCourseModel().url.equals(url)) {
             buildNewsModel();
         }
         if (courseDetailNewsAdapter == null) {
@@ -158,7 +159,7 @@ public class CourseDetailPresenter {
             listCourseNewsModel.clear();
             listCourseNewsModel.courseModel = getCourseModel();
             listCourseNewsModel.courseNewsModelList = new ArrayList<>();
-            for (Map<String, String> e: courseDetailService.getNews(url)) {
+            for (Map<String, String> e : courseDetailService.getNews(url)) {
                 CourseNewsModel model = new CourseNewsModel();
                 model.url = e.get("url");
                 model.title = e.get("title");

@@ -20,7 +20,8 @@ public class SettingFragment extends Fragment implements SettingPresenter.Settin
 
     private SettingPresenter settingPresenter;
 
-    public SettingFragment() {}
+    public SettingFragment() {
+    }
 
     public static SettingFragment newInstance() {
         SettingFragment fragment = new SettingFragment();
@@ -55,7 +56,9 @@ public class SettingFragment extends Fragment implements SettingPresenter.Settin
 
         final RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view_setting);
         final SettingAdapter adapter = settingPresenter.buildAdapter();
-        if (getActivity() == null) { return; }
+        if (getActivity() == null) {
+            return;
+        }
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {

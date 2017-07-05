@@ -11,14 +11,6 @@ import android.os.SystemClock;
 import android.util.Log;
 import android.view.View;
 
-import java.io.IOException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-
 import com.mgilangjanuar.dev.goscele.Adapters.ScheduleAdapter;
 import com.mgilangjanuar.dev.goscele.AlarmNotificationCancellation;
 import com.mgilangjanuar.dev.goscele.Helpers.ScheduleBroadcastReceiver;
@@ -30,6 +22,14 @@ import com.mgilangjanuar.dev.goscele.Models.ScheduleModel;
 import com.mgilangjanuar.dev.goscele.R;
 import com.mgilangjanuar.dev.goscele.Services.CalendarMonthService;
 import com.mgilangjanuar.dev.goscele.Services.ScheduleService;
+
+import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by muhammadgilangjanuar on 5/17/17.
@@ -85,7 +85,7 @@ public class SchedulePresenter {
             calendarEventModel.clear();
             calendarEventModel.date = calendarMonthService.getMonth(time2);
             calendarEventModel.listEvent = new ArrayList<>();
-            for (String e: calendarMonthService.getListDay(time2)) {
+            for (String e : calendarMonthService.getListDay(time2)) {
                 calendarEventModel.listEvent.add(Integer.parseInt(e));
             }
             calendarEventModel.save();
@@ -100,7 +100,7 @@ public class SchedulePresenter {
             listScheduleModel.scheduleModelList = new ArrayList<>();
             List<Map<String, String>> models = scheduleService.getSchedules(time);
             if (models != null) {
-                for (Map<String, String> e: models) {
+                for (Map<String, String> e : models) {
                     ScheduleModel scheduleModel = new ScheduleModel();
                     scheduleModel.title = e.get("title");
                     scheduleModel.date = e.get("date");
@@ -192,11 +192,11 @@ public class SchedulePresenter {
 
     public void notifySchedule() {
         EventNotificationModel model = new EventNotificationModel(activity);
-        if (! model.getSavedIsEnableAlarm()) {
+        if (!model.getSavedIsEnableAlarm()) {
             String dayToday = (new SimpleDateFormat("dd")).format(time2 * 1000);
             try {
                 for (String e : calendarMonthService.getListDay(time2)) {
-                    if (model.getSavedDate() == null || ! model.getSavedDate().equals(e)) {
+                    if (model.getSavedDate() == null || !model.getSavedDate().equals(e)) {
                         String monthYear = (new SimpleDateFormat("MMM yyyy")).format(time2 * 1000);
                         int eventTime = (int) ((new SimpleDateFormat("dd MMM yyyy")).parse(e + " " + monthYear).getTime() / 1000);
                         if (Integer.parseInt(dayToday) <= Integer.parseInt(e)) {

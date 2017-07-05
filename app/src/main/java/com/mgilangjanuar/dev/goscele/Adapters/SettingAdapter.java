@@ -90,10 +90,10 @@ public class SettingAdapter extends RecyclerView.Adapter<SettingAdapter.SettingV
             holder.relativeLayout.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
-                    LayoutInflater inflater= LayoutInflater.from(context);
-                    View view=inflater.inflate(R.layout.layout_credits, null);
+                    LayoutInflater inflater = LayoutInflater.from(context);
+                    View view = inflater.inflate(R.layout.layout_credits, null);
 
-                    TextView textview=(TextView)view.findViewById(R.id.content_credits);
+                    TextView textview = (TextView) view.findViewById(R.id.content_credits);
                     textview.setText(Html.fromHtml("" +
                             "<h3>Main Developer</h3>" +
                             "<p>M Gilang Januar</p>" +
@@ -127,7 +127,7 @@ public class SettingAdapter extends RecyclerView.Adapter<SettingAdapter.SettingV
                     alertDialog.setView(view);
                     alertDialog.setPositiveButton("Close", null);
                     final AlertDialog alert = alertDialog.create();
-                    alert.setOnShowListener( new DialogInterface.OnShowListener() {
+                    alert.setOnShowListener(new DialogInterface.OnShowListener() {
                         @Override
                         public void onShow(DialogInterface arg0) {
                             alert.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(Color.DKGRAY);

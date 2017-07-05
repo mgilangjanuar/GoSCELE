@@ -39,7 +39,7 @@ public class ForumService {
         Map<String, Object> results = new HashMap<>();
 
         final List<Map<String, String>> subResults = new ArrayList<>();
-        for(final Element e: getElements(".indent")) {
+        for (final Element e : getElements(".indent")) {
             subResults.add(new HashMap<String, String>() {{
                 put("author", e.select(".author a").get(0).text());
                 put("date", e.select(".author").get(0).text().replace("by " + e.select(".author a").get(0).text() + " - ", ""));
@@ -61,7 +61,7 @@ public class ForumService {
 
     public List<Map<String, String>> getForums() throws IOException {
         List<Map<String, String>> results = new ArrayList<>();
-        for (final Element e: getElements(".discussion")) {
+        for (final Element e : getElements(".discussion")) {
             results.add(new HashMap<String, String>() {{
                 put("url", e.select(".topic.starter a").attr("href"));
                 put("title", e.select(".topic.starter").text());
@@ -165,9 +165,9 @@ public class ForumService {
         List<Map<String, String>> results = new ArrayList<>();
         List<String> urls = new ArrayList<>();
         url = URL_SEARCH + URLEncoder.encode(keyword, "UTF-8");
-        for (final Element e: getElements("#region-main > div > .forumpost")) {
+        for (final Element e : getElements("#region-main > div > .forumpost")) {
             final String forumUrl = ConfigAppModel.urlTo("mod/forum/" + e.select(".subject a").get(1).attr("href"));
-            if (! urls.contains(forumUrl)) {
+            if (!urls.contains(forumUrl)) {
                 results.add(new HashMap<String, String>() {{
                     put("url", forumUrl);
                     put("title", e.select(".subject a").get(1).text());

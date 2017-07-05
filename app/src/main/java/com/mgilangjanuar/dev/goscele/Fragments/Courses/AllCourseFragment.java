@@ -75,7 +75,9 @@ public class AllCourseFragment extends Fragment implements CoursePresenter.Cours
                             public void run() {
                                 coursePresenter.clear();
                                 updateAdapter(view);
-                                if (getActivity() == null) { return; }
+                                if (getActivity() == null) {
+                                    return;
+                                }
                                 getActivity().runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {
@@ -97,7 +99,9 @@ public class AllCourseFragment extends Fragment implements CoursePresenter.Cours
                 final AllCoursesViewAdapter adapter = coursePresenter.getAllCoursesViewAdapter();
                 final TextView status = (TextView) view.findViewById(R.id.text_status_all_course);
 
-                if (getActivity() == null) { return; }
+                if (getActivity() == null) {
+                    return;
+                }
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {

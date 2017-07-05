@@ -86,7 +86,8 @@ public class ForumDetailModel extends BaseRecord implements BaseRecord.BasicInte
 
     public List<ForumCommentModel> getSavedForumCommentModelList() {
         Gson gson = new Gson();
-        forumCommentModelList = gson.fromJson(sharedPreferences.getString(getAttributeTag("forumCommentModelList"), null), new TypeToken<ArrayList<ForumCommentModel>>() {}.getType());
+        forumCommentModelList = gson.fromJson(sharedPreferences.getString(getAttributeTag("forumCommentModelList"), null), new TypeToken<ArrayList<ForumCommentModel>>() {
+        }.getType());
         return forumCommentModelList;
     }
 }

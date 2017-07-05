@@ -1,7 +1,6 @@
 package com.mgilangjanuar.dev.goscele.Presenters;
 
 import android.app.Activity;
-import android.support.design.widget.Snackbar;
 import android.util.Log;
 
 import com.mgilangjanuar.dev.goscele.Adapters.ForumAdapter;
@@ -54,7 +53,7 @@ public class ForumPresenter {
             listForumModel.clear();
             listForumModel.url = url;
             listForumModel.forumModelList = new ArrayList<>();
-            for (Map<String, String> e: forumService.getForums()) {
+            for (Map<String, String> e : forumService.getForums()) {
                 ForumModel model = new ForumModel();
                 model.url = e.get("url");
                 model.title = e.get("title");
@@ -107,7 +106,7 @@ public class ForumPresenter {
     public void buildSearchModel(String keyword) {
         try {
             listForumSearchModel.forumModelList = new ArrayList<>();
-            for (Map<String, String> e: forumService.searchForum(keyword)) {
+            for (Map<String, String> e : forumService.searchForum(keyword)) {
                 ForumModel model = new ForumModel();
                 model.url = e.get("url");
                 model.title = e.get("title");
@@ -118,7 +117,7 @@ public class ForumPresenter {
             }
 
             String count = forumService.searchForumInfo(keyword).get("count");
-            if (! count.equals("") && Integer.parseInt(count) > 50) {
+            if (!count.equals("") && Integer.parseInt(count) > 50) {
                 ((BaseActivity) activity).showToast("Please try to be more specific");
             }
         } catch (IOException e) {

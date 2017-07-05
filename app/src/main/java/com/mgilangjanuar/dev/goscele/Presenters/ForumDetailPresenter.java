@@ -38,7 +38,7 @@ public class ForumDetailPresenter {
 
     public ForumDetailCommentAdapter buildCommentAdapter() {
         if (forumDetailModel.getSavedUrl() == null
-                || ! forumDetailModel.getSavedUrl().equals(url)
+                || !forumDetailModel.getSavedUrl().equals(url)
                 || forumDetailModel.getSavedForumCommentModelList() == null) {
             buildModel();
         }
@@ -69,7 +69,7 @@ public class ForumDetailPresenter {
         try {
             Map<String, Object> data = forumService.getForumDetails();
             forumDetailModel.forumCommentModelList = new ArrayList<>();
-            for (Map<String, String> e: (List<Map<String, String>>) data.get("forumCommentModelList")) {
+            for (Map<String, String> e : (List<Map<String, String>>) data.get("forumCommentModelList")) {
                 ForumCommentModel forumCommentModel = new ForumCommentModel();
                 forumCommentModel.author = e.get("author");
                 forumCommentModel.date = e.get("date");

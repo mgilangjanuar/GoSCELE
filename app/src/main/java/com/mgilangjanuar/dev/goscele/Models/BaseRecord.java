@@ -2,7 +2,6 @@ package com.mgilangjanuar.dev.goscele.Models;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
 
 /**
  * Created by muhammadgilangjanuar on 5/14/17.
@@ -12,6 +11,7 @@ public class BaseRecord {
 
     public interface BasicInterface {
         void save();
+
         void clear();
     }
 

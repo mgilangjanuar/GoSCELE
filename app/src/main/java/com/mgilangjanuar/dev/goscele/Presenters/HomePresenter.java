@@ -47,7 +47,7 @@ public class HomePresenter {
         try {
             listHomePostModel.clear();
             listHomePostModel.homePostModelList = new ArrayList<>();
-            for (Map<String, String> e: homePostService.getPosts()) {
+            for (Map<String, String> e : homePostService.getPosts()) {
                 HomePostModel model = new HomePostModel();
                 model.url = e.get("url");
                 model.title = e.get("title");

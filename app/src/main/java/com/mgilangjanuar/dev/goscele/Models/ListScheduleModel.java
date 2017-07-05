@@ -39,7 +39,8 @@ public class ListScheduleModel extends BaseRecord implements BaseRecord.BasicInt
 
     public List<ScheduleModel> getSavedScheduleModelList() {
         Gson gson = new Gson();
-        scheduleModelList =  gson.fromJson(sharedPreferences.getString(getAttributeTag("scheduleModelList"), null), new TypeToken<ArrayList<ScheduleModel>>() {}.getType());
+        scheduleModelList = gson.fromJson(sharedPreferences.getString(getAttributeTag("scheduleModelList"), null), new TypeToken<ArrayList<ScheduleModel>>() {
+        }.getType());
         return scheduleModelList;
     }
 

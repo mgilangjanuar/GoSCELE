@@ -37,7 +37,8 @@ public class ListCurrentCourseModel extends BaseRecord implements BaseRecord.Bas
 
     public List<CourseModel> getSavedCourseModelList() {
         Gson gson = new Gson();
-        courseModelList =  gson.fromJson(sharedPreferences.getString(getAttributeTag("courseModelList"), null), new TypeToken<ArrayList<CourseModel>>() {}.getType());
+        courseModelList = gson.fromJson(sharedPreferences.getString(getAttributeTag("courseModelList"), null), new TypeToken<ArrayList<CourseModel>>() {
+        }.getType());
         return courseModelList;
     }
 }

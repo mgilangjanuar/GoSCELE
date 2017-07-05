@@ -1,5 +1,7 @@
 package com.mgilangjanuar.dev.goscele.Services;
 
+import com.mgilangjanuar.dev.goscele.Models.ConfigAppModel;
+
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -12,8 +14,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import com.mgilangjanuar.dev.goscele.Models.ConfigAppModel;
 
 /**
  * Created by muhammadgilangjanuar on 5/17/17.
@@ -40,7 +40,7 @@ public class ScheduleService {
     public List<Map<String, String>> getSchedules(long time) throws IOException {
         List<Map<String, String>> results = new ArrayList<>();
         final String date = (new SimpleDateFormat("EEEE, dd MMM yyyy")).format(time * 1000);
-        for (final Element e: getElements(".event", time)) {
+        for (final Element e : getElements(".event", time)) {
             results.add(new HashMap<String, String>() {{
                 put("date", date);
                 put("title", e.select(".referer a").text());

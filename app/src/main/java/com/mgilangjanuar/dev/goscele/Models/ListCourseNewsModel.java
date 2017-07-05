@@ -41,13 +41,14 @@ public class ListCourseNewsModel extends BaseRecord implements BaseRecord.BasicI
 
     public List<CourseNewsModel> getSavedCourseNewsModelList() {
         Gson gson = new Gson();
-        courseNewsModelList =  gson.fromJson(sharedPreferences.getString(getAttributeTag("courseNewsModelList"), null), new TypeToken<ArrayList<CourseNewsModel>>() {}.getType());
+        courseNewsModelList = gson.fromJson(sharedPreferences.getString(getAttributeTag("courseNewsModelList"), null), new TypeToken<ArrayList<CourseNewsModel>>() {
+        }.getType());
         return courseNewsModelList;
     }
 
     public CourseModel getSavedCourseModel() {
         Gson gson = new Gson();
-        courseModel =  gson.fromJson(sharedPreferences.getString(getAttributeTag("courseModel"), null), CourseModel.class);
+        courseModel = gson.fromJson(sharedPreferences.getString(getAttributeTag("courseModel"), null), CourseModel.class);
         return courseModel;
     }
 }

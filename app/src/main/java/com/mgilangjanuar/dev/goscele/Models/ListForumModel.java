@@ -40,7 +40,8 @@ public class ListForumModel extends BaseRecord implements BaseRecord.BasicInterf
 
     public List<ForumModel> getSavedForumModelList() {
         Gson gson = new Gson();
-        forumModelList =  gson.fromJson(sharedPreferences.getString(getAttributeTag("forumModelList"), null), new TypeToken<ArrayList<ForumModel>>() {}.getType());
+        forumModelList = gson.fromJson(sharedPreferences.getString(getAttributeTag("forumModelList"), null), new TypeToken<ArrayList<ForumModel>>() {
+        }.getType());
         return forumModelList;
     }
 

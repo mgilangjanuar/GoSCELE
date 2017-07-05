@@ -1,7 +1,5 @@
 package com.mgilangjanuar.dev.goscele.Services;
 
-import android.util.Log;
-
 import com.google.gson.Gson;
 
 import org.jsoup.Jsoup;
@@ -32,10 +30,10 @@ public class CourseDetailService {
     public List<Map<String, String>> getCourseDetails(final String url) throws IOException {
         List<Map<String, String>> results = new ArrayList<>();
         final Gson gson = new Gson();
-        for (final Element e: getDetailsHelper(".section.main", url)) {
+        for (final Element e : getDetailsHelper(".section.main", url)) {
 
             final List<Map<String, String>> inner = new ArrayList<>();
-            for (final Element f: e.select("ul.section > li")) {
+            for (final Element f : e.select("ul.section > li")) {
                 Map<String, String> map = new HashMap<>();
                 map.put("url", f.select(".activityinstance a").attr("href"));
                 map.put("title", f.select(".activityinstance a .instancename").text());
@@ -62,7 +60,7 @@ public class CourseDetailService {
 
     public List<Map<String, String>> getEvents(final String url) throws IOException {
         final List<Map<String, String>> results = new ArrayList<>();
-        for (final Element e: getDetailsHelper(".block_calendar_upcoming .content .event", url)) {
+        for (final Element e : getDetailsHelper(".block_calendar_upcoming .content .event", url)) {
             results.add(new HashMap<String, String>() {{
                 put("url", e.select("a").get(0).attr("href"));
                 put("title", e.select("a").get(0).text());
@@ -74,7 +72,7 @@ public class CourseDetailService {
 
     public List<Map<String, String>> getNews(final String url) throws IOException {
         final List<Map<String, String>> results = new ArrayList<>();
-        for (final Element e: getDetailsHelper(".block_news_items .content .post", url)) {
+        for (final Element e : getDetailsHelper(".block_news_items .content .post", url)) {
             results.add(new HashMap<String, String>() {{
                 put("url", e.select(".info a").attr("href"));
                 put("title", e.select(".info").text());

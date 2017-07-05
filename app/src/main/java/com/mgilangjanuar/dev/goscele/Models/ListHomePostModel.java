@@ -37,7 +37,8 @@ public class ListHomePostModel extends BaseRecord implements BaseRecord.BasicInt
 
     public List<HomePostModel> getSavedHomePostModelList() {
         Gson gson = new Gson();
-        homePostModelList =  gson.fromJson(sharedPreferences.getString(getAttributeTag("homePostModelList"), null), new TypeToken<ArrayList<HomePostModel>>() {}.getType());
+        homePostModelList = gson.fromJson(sharedPreferences.getString(getAttributeTag("homePostModelList"), null), new TypeToken<ArrayList<HomePostModel>>() {
+        }.getType());
         return homePostModelList;
     }
 }

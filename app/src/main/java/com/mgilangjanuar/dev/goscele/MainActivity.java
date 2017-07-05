@@ -1,20 +1,11 @@
 package com.mgilangjanuar.dev.goscele;
 
 import android.app.Activity;
-import android.content.Intent;
-import android.graphics.Color;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.BottomNavigationView;
-import android.support.design.widget.Snackbar;
-import android.util.Log;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.mgilangjanuar.dev.goscele.Presenters.AuthPresenter;
-import com.mgilangjanuar.dev.goscele.Presenters.ForumPresenter;
 import com.mgilangjanuar.dev.goscele.Presenters.SchedulePresenter;
 
 public class MainActivity extends BaseActivity {

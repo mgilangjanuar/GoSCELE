@@ -49,7 +49,9 @@ public class CourseDetailEventAdapter extends RecyclerView.Adapter<CourseDetailE
 
     @Override
     public int getItemCount() {
-        if (list == null) { return 0; }
+        if (list == null) {
+            return 0;
+        }
         return list.size();
     }
 

@@ -19,7 +19,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.mgilangjanuar.dev.goscele.Adapters.ScheduleAdapter;
 import com.mgilangjanuar.dev.goscele.MainActivity;
+import com.mgilangjanuar.dev.goscele.Presenters.SchedulePresenter;
+import com.mgilangjanuar.dev.goscele.Presenters.SettingPresenter;
+import com.mgilangjanuar.dev.goscele.R;
 import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.prolificinteractive.materialcalendarview.DayViewDecorator;
 import com.prolificinteractive.materialcalendarview.DayViewFacade;
@@ -30,18 +34,14 @@ import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
 import java.text.SimpleDateFormat;
 
-import com.mgilangjanuar.dev.goscele.Adapters.ScheduleAdapter;
-import com.mgilangjanuar.dev.goscele.Presenters.SchedulePresenter;
-import com.mgilangjanuar.dev.goscele.Presenters.SettingPresenter;
-import com.mgilangjanuar.dev.goscele.R;
-
 public class ScheduleFragment extends Fragment implements SettingPresenter.SettingServicePresenter {
 
     SchedulePresenter schedulePresenter;
     MaterialCalendarView materialCalendarView;
     boolean isCannotChangeMonth;
 
-    public ScheduleFragment() {}
+    public ScheduleFragment() {
+    }
 
     public static ScheduleFragment newInstance() {
         ScheduleFragment fragment = new ScheduleFragment();
@@ -79,7 +79,9 @@ public class ScheduleFragment extends Fragment implements SettingPresenter.Setti
 
     @Override
     public void setupContents(final View view) {
-        if (getActivity() == null) { return; }
+        if (getActivity() == null) {
+            return;
+        }
         schedulePresenter = new SchedulePresenter(getActivity(), view);
 
         final RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view_schedule);
@@ -88,7 +90,9 @@ public class ScheduleFragment extends Fragment implements SettingPresenter.Setti
         final TextView status = (TextView) view.findViewById(R.id.text_status_schedule);
 
         try {
-            if (getActivity() == null) { return; }
+            if (getActivity() == null) {
+                return;
+            }
             getActivity().runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
@@ -104,7 +108,8 @@ public class ScheduleFragment extends Fragment implements SettingPresenter.Setti
                     }
                 }
             });
-        } catch (NullPointerException e) {}
+        } catch (NullPointerException e) {
+        }
 
         SlidingUpPanelLayout slidingUpPanelLayout = setupSlidingUpPanelLayout(view);
         setupMaterialCalendarView(view, recyclerView, slidingUpPanelLayout);
@@ -116,7 +121,7 @@ public class ScheduleFragment extends Fragment implements SettingPresenter.Setti
             public boolean shouldDecorate(CalendarDay day) {
                 return schedulePresenter.isCurrentMonth(day.getDate().getTime() / 1000)
                         && schedulePresenter.getCalendarEventModel().listEvent.contains(day.getDay())
-                        && ! schedulePresenter.convertTimeToString(schedulePresenter.getCurrentTime())
+                        && !schedulePresenter.convertTimeToString(schedulePresenter.getCurrentTime())
                         .equals((new SimpleDateFormat("EEEE, dd MMM yyyy")).format(day.getDate().getTime()));
             }
 
@@ -149,7 +154,9 @@ public class ScheduleFragment extends Fragment implements SettingPresenter.Setti
     }
 
     private void updateAdapterHelper(final View view, final RecyclerView recyclerView, long time, final SlidingUpPanelLayout slidingUpPanelLayout, final boolean isShowDialog) {
-        if (isShowDialog) {schedulePresenter.showProgressDialog();}
+        if (isShowDialog) {
+            schedulePresenter.showProgressDialog();
+        }
         final TextView status = (TextView) view.findViewById(R.id.text_status_schedule);
         status.setVisibility(TextView.VISIBLE);
 
@@ -158,7 +165,9 @@ public class ScheduleFragment extends Fragment implements SettingPresenter.Setti
             @Override
             public void run() {
                 final ScheduleAdapter scheduleAdapter = schedulePresenter.buildScheduleAdapterForce();
-                if (getActivity() == null) { return; }
+                if (getActivity() == null) {
+                    return;
+                }
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -170,7 +179,9 @@ public class ScheduleFragment extends Fragment implements SettingPresenter.Setti
                         } else {
                             status.setVisibility(TextView.GONE);
                         }
-                        if (isShowDialog) {schedulePresenter.dismissProgressDialog();}
+                        if (isShowDialog) {
+                            schedulePresenter.dismissProgressDialog();
+                        }
                         slidingUpPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);
                     }
                 });
@@ -194,14 +205,17 @@ public class ScheduleFragment extends Fragment implements SettingPresenter.Setti
 
         schedulePresenter.buildCalendarEventModel();
         try {
-            if (getActivity() == null) { return; }
+            if (getActivity() == null) {
+                return;
+            }
             getActivity().runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
                     addDecoratorMaterialCalendarView();
                 }
             });
-        } catch (NullPointerException e) {}
+        } catch (NullPointerException e) {
+        }
 
 
         final String titleToolbar = ((MainActivity) getActivity()).getSupportActionBar().getTitle().toString();
@@ -212,14 +226,18 @@ public class ScheduleFragment extends Fragment implements SettingPresenter.Setti
                 materialCalendarView.removeDecorators();
                 ((MainActivity) getActivity()).getSupportActionBar().setTitle("Please wait...");
 
-                if (isCannotChangeMonth) { return; }
+                if (isCannotChangeMonth) {
+                    return;
+                }
                 isCannotChangeMonth = true;
 
                 (new Thread(new Runnable() {
                     @Override
                     public void run() {
                         schedulePresenter.buildCalendarEventModel();
-                        if (getActivity() == null) { return; }
+                        if (getActivity() == null) {
+                            return;
+                        }
                         getActivity().runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
@@ -245,7 +263,9 @@ public class ScheduleFragment extends Fragment implements SettingPresenter.Setti
                             @Override
                             public void run() {
                                 schedulePresenter.buildCalendarEventModel();
-                                if (getActivity() == null) { return; }
+                                if (getActivity() == null) {
+                                    return;
+                                }
                                 getActivity().runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {
@@ -268,7 +288,9 @@ public class ScheduleFragment extends Fragment implements SettingPresenter.Setti
             public void onPanelSlide(View panel, final float slideOffset) {
                 final ImageView imageView = (ImageView) view.findViewById(R.id.img_detail_description);
                 final TextView title = (TextView) view.findViewById(R.id.title_slidingup_panel_schedule);
-                if (getActivity() == null) { return; }
+                if (getActivity() == null) {
+                    return;
+                }
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {

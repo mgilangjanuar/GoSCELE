@@ -71,7 +71,9 @@ public class Post extends Fragment implements ForumDetailPresenter.ForumDetailSe
         final Button button = (Button) view.findViewById(R.id.button_delete_post);
         final HtmlHandlerHelper helper = new HtmlHandlerHelper(getActivity(), forumDetailPresenter.getForumDetailModel().getSavedContent());
 
-        if (getActivity() == null) { return; }
+        if (getActivity() == null) {
+            return;
+        }
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -80,7 +82,7 @@ public class Post extends Fragment implements ForumDetailPresenter.ForumDetailSe
                 date.setText(forumDetailPresenter.getForumDetailModel().getSavedDate());
                 author.setText(forumDetailPresenter.getForumDetailModel().getSavedAuthor());
                 helper.setTextViewHTML(content);
-                if (! forumDetailPresenter.getForumDetailModel().getSavedDeleteUrl().equals("")) {
+                if (!forumDetailPresenter.getForumDetailModel().getSavedDeleteUrl().equals("")) {
                     button.setVisibility(Button.VISIBLE);
                     button.getBackground().setColorFilter(getContext().getResources().getColor(android.R.color.holo_red_light), PorterDuff.Mode.MULTIPLY);
                     button.setOnClickListener(new View.OnClickListener() {
@@ -100,7 +102,9 @@ public class Post extends Fragment implements ForumDetailPresenter.ForumDetailSe
                                         @Override
                                         public void run() {
                                             forumDetailPresenter.deletePost();
-                                            if (getActivity() == null) { return; }
+                                            if (getActivity() == null) {
+                                                return;
+                                            }
                                             getActivity().runOnUiThread(new Runnable() {
                                                 @Override
                                                 public void run() {
@@ -119,7 +123,7 @@ public class Post extends Fragment implements ForumDetailPresenter.ForumDetailSe
                             });
                             final AlertDialog alert = builder.create();
 
-                            alert.setOnShowListener( new DialogInterface.OnShowListener() {
+                            alert.setOnShowListener(new DialogInterface.OnShowListener() {
                                 @Override
                                 public void onShow(DialogInterface arg0) {
                                     alert.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(Color.DKGRAY);

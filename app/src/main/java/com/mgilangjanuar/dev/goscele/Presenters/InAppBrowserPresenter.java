@@ -31,7 +31,6 @@ import com.mgilangjanuar.dev.goscele.ForumDetailActivity;
 import com.mgilangjanuar.dev.goscele.Models.AccountModel;
 import com.mgilangjanuar.dev.goscele.Models.CourseModel;
 import com.mgilangjanuar.dev.goscele.Models.ListCourseModel;
-import com.mgilangjanuar.dev.goscele.R;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -101,7 +100,7 @@ public class InAppBrowserPresenter {
             return false;
         }
 
-        if (! (new AccountModel(activity)).isUsingInAppBrowser()) {
+        if (!(new AccountModel(activity)).isUsingInAppBrowser()) {
             openOtherApp();
             return false;
         }
@@ -118,7 +117,7 @@ public class InAppBrowserPresenter {
         } else {
             CookieSyncManager cookieSyncMngr = CookieSyncManager.createInstance(context);
             cookieSyncMngr.startSync();
-            CookieManager cookieManager=CookieManager.getInstance();
+            CookieManager cookieManager = CookieManager.getInstance();
             cookieManager.removeAllCookie();
             cookieManager.removeSessionCookie();
             cookieSyncMngr.stopSync();
@@ -152,7 +151,7 @@ public class InAppBrowserPresenter {
             }
         }
         Intent chooserIntent = Intent.createChooser(targetIntents.remove(0), "Open with");
-        chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, targetIntents.toArray(new Parcelable[] {}));
+        chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, targetIntents.toArray(new Parcelable[]{}));
         activity.startActivity(chooserIntent);
     }
 
@@ -255,9 +254,11 @@ public class InAppBrowserPresenter {
     private boolean isAlreadyEnrollCourse() {
         ListCourseModel listCourseModel = new ListCourseModel(activity);
         List<CourseModel> savedCourseModelList = listCourseModel.getSavedCourseModelList();
-        if (savedCourseModelList == null) { return false; }
+        if (savedCourseModelList == null) {
+            return false;
+        }
 
-        for (CourseModel model: savedCourseModelList) {
+        for (CourseModel model : savedCourseModelList) {
             if (model.url.equals(url)) {
                 return true;
             }

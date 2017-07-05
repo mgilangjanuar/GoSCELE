@@ -11,12 +11,12 @@ import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import java.util.List;
-
 import com.mgilangjanuar.dev.goscele.CourseDetailActivity;
 import com.mgilangjanuar.dev.goscele.Models.CourseModel;
 import com.mgilangjanuar.dev.goscele.Presenters.CoursePresenter;
 import com.mgilangjanuar.dev.goscele.R;
+
+import java.util.List;
 
 /**
  * Created by muhammadgilangjanuar on 5/16/17.

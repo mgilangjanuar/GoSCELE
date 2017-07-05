@@ -28,9 +28,8 @@ import com.mgilangjanuar.dev.goscele.InAppBrowserActivity;
 import org.xml.sax.XMLReader;
 
 import java.io.InputStream;
-import java.util.Vector;
-
 import java.net.URL;
+import java.util.Vector;
 
 /**
  * Created by muhammadgilangjanuar on 5/20/17.
@@ -64,11 +63,11 @@ public class HtmlHandlerHelper implements Html.TagHandler {
             listItemCount = 0;
         } else if (tag.equals("li") && !opening) {
             handleListTag(output);
-        } else if(tag.equalsIgnoreCase("code")) {
-            if(opening) {
+        } else if (tag.equalsIgnoreCase("code")) {
+            if (opening) {
                 output.setSpan(new TypefaceSpan("monospace"), output.length(), output.length(), Spannable.SPAN_MARK_MARK);
             } else {
-                Log.d("COde Tag","Code tag encountered");
+                Log.d("COde Tag", "Code tag encountered");
                 Object obj = getLast(output, TypefaceSpan.class);
                 int where = output.getSpanStart(obj);
 
@@ -79,12 +78,12 @@ public class HtmlHandlerHelper implements Html.TagHandler {
 
     private Object getLast(Editable text, Class kind) {
         Object[] objs = text.getSpans(0, text.length(), kind);
-        if(objs.length == 0) {
+        if (objs.length == 0) {
             return null;
         } else {
-            for (int i=objs.length; i > 0; i--) {
-                if(text.getSpanFlags(objs[i-1]) == Spannable.SPAN_MARK_MARK) {
-                    return objs[i-1];
+            for (int i = objs.length; i > 0; i--) {
+                if (text.getSpanFlags(objs[i - 1]) == Spannable.SPAN_MARK_MARK) {
+                    return objs[i - 1];
                 }
             }
             return null;
@@ -117,25 +116,24 @@ public class HtmlHandlerHelper implements Html.TagHandler {
 
     private CharSequence trimTrailingWhitespace(CharSequence source) {
 
-        if(source == null)
+        if (source == null)
             return "";
 
         int i = source.length();
 
         // loop back to the first non-whitespace character
-        while(--i >= 0 && Character.isWhitespace(source.charAt(i))) {
+        while (--i >= 0 && Character.isWhitespace(source.charAt(i))) {
         }
 
         int j = 0;
         while (++j < source.length() && Character.isWhitespace(source.charAt(j))) {
         }
 
-        return source.subSequence(j - 1, i+1);
+        return source.subSequence(j - 1, i + 1);
     }
 
 
-    private void makeLinkClickable(SpannableStringBuilder strBuilder, final URLSpan span)
-    {
+    private void makeLinkClickable(SpannableStringBuilder strBuilder, final URLSpan span) {
         int start = strBuilder.getSpanStart(span);
         int end = strBuilder.getSpanEnd(span);
         int flags = strBuilder.getSpanFlags(span);
@@ -148,9 +146,10 @@ public class HtmlHandlerHelper implements Html.TagHandler {
         strBuilder.removeSpan(span);
     }
 
-    public void setTextViewHTML(final TextView text)
-    {
-        if (html == null) { return; }
+    public void setTextViewHTML(final TextView text) {
+        if (html == null) {
+            return;
+        }
         CharSequence sequence;
         try {
             sequence = trimTrailingWhitespace(Html.fromHtml(html, new URLImageParser(text, context), this));
@@ -160,7 +159,7 @@ public class HtmlHandlerHelper implements Html.TagHandler {
         }
         SpannableStringBuilder strBuilder = new SpannableStringBuilder(sequence);
         URLSpan[] urls = strBuilder.getSpans(0, sequence.length(), URLSpan.class);
-        for(URLSpan span : urls) {
+        for (URLSpan span : urls) {
             makeLinkClickable(strBuilder, span);
         }
         text.setText(strBuilder);
@@ -177,7 +176,7 @@ public class HtmlHandlerHelper implements Html.TagHandler {
         }
 
         public Drawable getDrawable(String source) {
-            if(source.matches("data:image.*base64.*")) {
+            if (source.matches("data:image.*base64.*")) {
                 String base_64_source = source.replaceAll("data:image.*base64", "");
                 byte[] data = Base64.decode(base_64_source, Base64.DEFAULT);
                 Bitmap bitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
@@ -207,7 +206,9 @@ public class HtmlHandlerHelper implements Html.TagHandler {
 
             @Override
             protected void onPostExecute(Drawable result) {
-                if (result == null) { return; }
+                if (result == null) {
+                    return;
+                }
                 urlDrawable.setBounds(0, 0, 0 + result.getIntrinsicWidth(), 0 + result.getIntrinsicHeight()); //set the correct bound according to the result from HTTP call
                 urlDrawable.drawable = result; //change the reference of the current drawable to the result from the HTTP call
                 URLImageParser.this.container.invalidate(); //redraw the image by invalidating the container
@@ -234,7 +235,7 @@ public class HtmlHandlerHelper implements Html.TagHandler {
         @Override
         public void draw(Canvas canvas) {
             // override the draw to facilitate refresh function later
-            if(drawable != null) {
+            if (drawable != null) {
                 drawable.draw(canvas);
             }
         }

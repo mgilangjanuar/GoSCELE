@@ -23,7 +23,7 @@ public class AccountModel extends BaseRecord implements BaseRecord.BasicInterfac
 
     public Map<String, String> cookies;
 
-    public  AccountModel(Context context) {
+    public AccountModel(Context context) {
         super(context);
         tag = "AccountModel";
     }
@@ -80,12 +80,13 @@ public class AccountModel extends BaseRecord implements BaseRecord.BasicInterfac
 
     public Map<String, String> getSavedCookies() {
         Gson gson = new Gson();
-        cookies = gson.fromJson(sharedPreferences.getString(getAttributeTag("cookies"), null), new TypeToken<Map<String, String>>() {}.getType());
+        cookies = gson.fromJson(sharedPreferences.getString(getAttributeTag("cookies"), null), new TypeToken<Map<String, String>>() {
+        }.getType());
         return cookies;
     }
 
     public void toggleInAppBrowser() {
-        isUsingInAppBrowser = ! isUsingInAppBrowser();
+        isUsingInAppBrowser = !isUsingInAppBrowser();
         name = getSavedName();
         username = getSavedUsername();
         password = getSavedPassword();
@@ -99,7 +100,7 @@ public class AccountModel extends BaseRecord implements BaseRecord.BasicInterfac
     }
 
     public void toggleSaveCredential() {
-        isSaveCredential = ! isSaveCredential();
+        isSaveCredential = !isSaveCredential();
         name = getSavedName();
         username = getSavedUsername();
         password = isSaveCredential ? getSavedPassword() : null;

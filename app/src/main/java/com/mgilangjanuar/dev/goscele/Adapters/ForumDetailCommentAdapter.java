@@ -51,7 +51,7 @@ public class ForumDetailCommentAdapter extends RecyclerView.Adapter<ForumDetailC
         HtmlHandlerHelper helper = new HtmlHandlerHelper(context, model.content);
         helper.setTextViewHTML(holder.content);
 
-        if (! model.deleteUrl.equals("")) {
+        if (!model.deleteUrl.equals("")) {
             holder.delete.setVisibility(Button.VISIBLE);
             holder.delete.getBackground().setColorFilter(context.getResources().getColor(android.R.color.holo_red_light), PorterDuff.Mode.MULTIPLY);
             holder.delete.setOnClickListener(new View.OnClickListener() {
@@ -89,7 +89,7 @@ public class ForumDetailCommentAdapter extends RecyclerView.Adapter<ForumDetailC
                     });
                     final AlertDialog alert = builder.create();
 
-                    alert.setOnShowListener( new DialogInterface.OnShowListener() {
+                    alert.setOnShowListener(new DialogInterface.OnShowListener() {
                         @Override
                         public void onShow(DialogInterface arg0) {
                             alert.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(Color.DKGRAY);
@@ -110,7 +110,9 @@ public class ForumDetailCommentAdapter extends RecyclerView.Adapter<ForumDetailC
 
     @Override
     public int getItemCount() {
-        if (list == null) { return 0; }
+        if (list == null) {
+            return 0;
+        }
         return list.size();
     }
 

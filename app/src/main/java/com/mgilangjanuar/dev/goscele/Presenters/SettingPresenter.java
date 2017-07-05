@@ -10,16 +10,16 @@ import android.graphics.Color;
 import android.view.View;
 import android.widget.ToggleButton;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-
 import com.mgilangjanuar.dev.goscele.Adapters.SettingAdapter;
 import com.mgilangjanuar.dev.goscele.AuthActivity;
 import com.mgilangjanuar.dev.goscele.BaseActivity;
 import com.mgilangjanuar.dev.goscele.MainActivity;
 import com.mgilangjanuar.dev.goscele.Models.AccountModel;
 import com.mgilangjanuar.dev.goscele.R;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by muhammadgilangjanuar on 5/14/17.
@@ -104,7 +104,8 @@ public class SettingPresenter {
             final PackageInfo info = manager.getPackageInfo(
                     activity.getPackageName(), 0);
             version = info.versionName;
-        } catch (PackageManager.NameNotFoundException e) {}
+        } catch (PackageManager.NameNotFoundException e) {
+        }
 
         final String versionName = version;
         listContent.add(new HashMap<String, String>() {{
@@ -143,7 +144,7 @@ public class SettingPresenter {
         });
         final AlertDialog alert = builder.create();
 
-        alert.setOnShowListener( new DialogInterface.OnShowListener() {
+        alert.setOnShowListener(new DialogInterface.OnShowListener() {
             @Override
             public void onShow(DialogInterface arg0) {
                 alert.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(Color.DKGRAY);
@@ -154,7 +155,7 @@ public class SettingPresenter {
     }
 
     public void savePasswordActionHelper(final ToggleButton toggle) {
-        toggle.setChecked(! toggle.isChecked());
+        toggle.setChecked(!toggle.isChecked());
         final AccountModel accountModel = new AccountModel(activity);
         String message;
         if (accountModel.isSaveCredential()) {
@@ -186,7 +187,7 @@ public class SettingPresenter {
         });
         final AlertDialog alert = builder.create();
 
-        alert.setOnShowListener( new DialogInterface.OnShowListener() {
+        alert.setOnShowListener(new DialogInterface.OnShowListener() {
             @Override
             public void onShow(DialogInterface arg0) {
                 alert.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(Color.DKGRAY);

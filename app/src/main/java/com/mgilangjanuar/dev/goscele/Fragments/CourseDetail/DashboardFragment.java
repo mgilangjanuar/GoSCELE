@@ -56,7 +56,9 @@ public class DashboardFragment extends Fragment implements CourseDetailPresenter
             @Override
             public void run() {
                 final CourseModel courseModel = courseDetailPresenter.getCourseModel();
-                if (getActivity() == null) { return; }
+                if (getActivity() == null) {
+                    return;
+                }
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -80,13 +82,15 @@ public class DashboardFragment extends Fragment implements CourseDetailPresenter
         final CourseDetailAdapter adapter = courseDetailPresenter.buildDashboardAdapter();
         final TextView status = (TextView) view.findViewById(R.id.text_status_course_dashboard);
 
-        if (getActivity() == null) { return; }
+        if (getActivity() == null) {
+            return;
+        }
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
                 recyclerView.setItemAnimator(new DefaultItemAnimator());
-                if (recyclerView.getAdapter() == null || ! adapter.equals(recyclerView.getAdapter())) {
+                if (recyclerView.getAdapter() == null || !adapter.equals(recyclerView.getAdapter())) {
                     recyclerView.setAdapter(adapter);
                 }
                 if (adapter.getItemCount() == 0) {
@@ -110,7 +114,9 @@ public class DashboardFragment extends Fragment implements CourseDetailPresenter
                             public void run() {
                                 courseDetailPresenter.clearDashboard();
                                 final CourseDetailAdapter adapter = courseDetailPresenter.buildDashboardAdapter();
-                                if (getActivity() == null) { return; }
+                                if (getActivity() == null) {
+                                    return;
+                                }
                                 getActivity().runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {

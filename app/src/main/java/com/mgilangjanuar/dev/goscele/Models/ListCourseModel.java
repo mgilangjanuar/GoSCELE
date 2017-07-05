@@ -37,7 +37,8 @@ public class ListCourseModel extends BaseRecord implements BaseRecord.BasicInter
 
     public List<CourseModel> getSavedCourseModelList() {
         Gson gson = new Gson();
-        courseModelList =  gson.fromJson(sharedPreferences.getString(getAttributeTag("courseModelList"), null), new TypeToken<ArrayList<CourseModel>>() {}.getType());
+        courseModelList = gson.fromJson(sharedPreferences.getString(getAttributeTag("courseModelList"), null), new TypeToken<ArrayList<CourseModel>>() {
+        }.getType());
         return courseModelList;
     }
 }

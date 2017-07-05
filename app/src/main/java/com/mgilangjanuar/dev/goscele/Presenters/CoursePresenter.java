@@ -4,10 +4,6 @@ import android.app.Activity;
 import android.util.Log;
 import android.view.View;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Map;
-
 import com.mgilangjanuar.dev.goscele.Adapters.AllCoursesViewAdapter;
 import com.mgilangjanuar.dev.goscele.Adapters.CurrentCoursesViewAdapter;
 import com.mgilangjanuar.dev.goscele.Adapters.SearchCourseAdapter;
@@ -15,6 +11,10 @@ import com.mgilangjanuar.dev.goscele.Models.CourseModel;
 import com.mgilangjanuar.dev.goscele.Models.ListCourseModel;
 import com.mgilangjanuar.dev.goscele.Models.ListCurrentCourseModel;
 import com.mgilangjanuar.dev.goscele.Services.CourseService;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Map;
 
 /**
  * Created by muhammadgilangjanuar on 5/15/17.
@@ -85,7 +85,7 @@ public class CoursePresenter {
     public void buildAllCourses() {
         try {
             listCourseModel.courseModelList = new ArrayList<>();
-            for (Map<String, String> course: courseService.getCourses()) {
+            for (Map<String, String> course : courseService.getCourses()) {
                 CourseModel courseModel = new CourseModel();
                 courseModel.url = course.get("url");
                 courseModel.name = course.get("name");
@@ -105,7 +105,7 @@ public class CoursePresenter {
 
     public void addToCurrent(CourseModel courseModel) {
         buildCurrentCoursesIfNull();
-        if (! listCurrentCourseModel.courseModelList.contains(courseModel)) {
+        if (!listCurrentCourseModel.courseModelList.contains(courseModel)) {
             listCurrentCourseModel.courseModelList.add(courseModel);
             listCurrentCourseModel.save();
         }
@@ -127,7 +127,7 @@ public class CoursePresenter {
     }
 
     public View getView() {
-        return  this.view;
+        return this.view;
     }
 
     public SearchCourseAdapter buildSearchAdapter(String query) {
@@ -138,7 +138,7 @@ public class CoursePresenter {
     public void buildSearchCourses(String query) {
         try {
             listSearchCourseModel.courseModelList = new ArrayList<>();
-            for (Map<String, String> course: courseService.searchCourse(query)) {
+            for (Map<String, String> course : courseService.searchCourse(query)) {
                 CourseModel courseModel = new CourseModel();
                 courseModel.url = course.get("url");
                 courseModel.name = course.get("name");

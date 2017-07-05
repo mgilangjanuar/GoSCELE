@@ -66,14 +66,16 @@ public class Comments extends Fragment implements ForumDetailPresenter.ForumDeta
         final RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view_forum_detail);
         final TextView status = (TextView) view.findViewById(R.id.text_status_forum_comments);
 
-        if (getActivity() == null) { return; }
+        if (getActivity() == null) {
+            return;
+        }
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
                 recyclerView.setItemAnimator(new DefaultItemAnimator());
                 recyclerView.setAdapter(adapter);
-                if(adapter.getItemCount() == 0) {
+                if (adapter.getItemCount() == 0) {
                     status.setText(getActivity().getResources().getString(R.string.empty_text));
                     status.setTextColor(getActivity().getResources().getColor(R.color.color_accent));
                 } else {
@@ -94,7 +96,9 @@ public class Comments extends Fragment implements ForumDetailPresenter.ForumDeta
                             public void run() {
                                 forumDetailPresenter.clear();
                                 final ForumDetailCommentAdapter adapter = forumDetailPresenter.buildCommentAdapter();
-                                if (getActivity() == null) { return; }
+                                if (getActivity() == null) {
+                                    return;
+                                }
                                 getActivity().runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {

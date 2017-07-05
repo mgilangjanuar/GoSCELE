@@ -30,7 +30,8 @@ public class HomeFragment extends Fragment implements HomePresenter.HomeServiceP
     HomePresenter homePresenter;
     RecyclerView recyclerView;
 
-    public HomeFragment() {}
+    public HomeFragment() {
+    }
 
     public static HomeFragment newInstance() {
         HomeFragment fragment = new HomeFragment();
@@ -69,14 +70,18 @@ public class HomeFragment extends Fragment implements HomePresenter.HomeServiceP
 
     @Override
     public void setupHome(View view) {
-        if (getActivity() == null) { return; }
+        if (getActivity() == null) {
+            return;
+        }
         homePresenter = new HomePresenter(getActivity(), view);
         recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view_home);
 
         final HomePostAdapter adapter = homePresenter.buildAdapter();
         final TextView status = (TextView) view.findViewById(R.id.text_status_home);
 
-        if (getActivity() == null) { return; }
+        if (getActivity() == null) {
+            return;
+        }
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -104,7 +109,9 @@ public class HomeFragment extends Fragment implements HomePresenter.HomeServiceP
                             public void run() {
                                 homePresenter.clear();
                                 final HomePostAdapter adapter = homePresenter.buildAdapter();
-                                if (getActivity() == null) { return; }
+                                if (getActivity() == null) {
+                                    return;
+                                }
                                 getActivity().runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {

@@ -31,7 +31,7 @@ public class ForumAdapter extends RecyclerView.Adapter<ForumAdapter.ForumViewHol
 
     @Override
     public ForumViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new ForumViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_forum ,parent, false));
+        return new ForumViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_forum, parent, false));
     }
 
     @Override

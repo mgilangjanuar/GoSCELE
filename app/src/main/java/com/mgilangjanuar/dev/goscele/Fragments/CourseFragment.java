@@ -30,7 +30,8 @@ public class CourseFragment extends Fragment {
 
     CoursePresenter presenter;
 
-    public CourseFragment() {}
+    public CourseFragment() {
+    }
 
     public static CourseFragment newInstance() {
         CourseFragment fragment = new CourseFragment();
@@ -92,10 +93,12 @@ public class CourseFragment extends Fragment {
             }
 
             @Override
-            public void onTabUnselected(TabLayout.Tab tab) {}
+            public void onTabUnselected(TabLayout.Tab tab) {
+            }
 
             @Override
-            public void onTabReselected(TabLayout.Tab tab) {}
+            public void onTabReselected(TabLayout.Tab tab) {
+            }
         });
     }
 
@@ -109,7 +112,9 @@ public class CourseFragment extends Fragment {
                 @Override
                 public void run() {
                     final AllCoursesViewAdapter adapter = presenter.getAllCoursesViewAdapter();
-                    if (getActivity() == null) { return; }
+                    if (getActivity() == null) {
+                        return;
+                    }
                     getActivity().runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -125,7 +130,9 @@ public class CourseFragment extends Fragment {
                 @Override
                 public void run() {
                     final CurrentCoursesViewAdapter adapter = presenter.getCurrentCoursesViewAdapter();
-                    if (getActivity() == null) {return;}
+                    if (getActivity() == null) {
+                        return;
+                    }
                     getActivity().runOnUiThread(new Runnable() {
                         @Override
                         public void run() {

@@ -11,7 +11,6 @@ import android.widget.TextView;
 
 import com.mgilangjanuar.dev.goscele.InAppBrowserActivity;
 import com.mgilangjanuar.dev.goscele.Models.CourseModel;
-import com.mgilangjanuar.dev.goscele.Models.ListCourseModel;
 import com.mgilangjanuar.dev.goscele.R;
 
 import java.util.List;

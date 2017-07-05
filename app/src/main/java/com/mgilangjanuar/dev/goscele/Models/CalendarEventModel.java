@@ -49,7 +49,8 @@ public class CalendarEventModel extends BaseRecord implements BaseRecord.BasicIn
 
     public List<Integer> getSavedListEvent() {
         Gson gson = new Gson();
-        listEvent =  gson.fromJson(sharedPreferences.getString(getAttributeTag("listEvent"), null), new TypeToken<ArrayList<Integer>>() {}.getType());
+        listEvent = gson.fromJson(sharedPreferences.getString(getAttributeTag("listEvent"), null), new TypeToken<ArrayList<Integer>>() {
+        }.getType());
         return listEvent;
     }
 }

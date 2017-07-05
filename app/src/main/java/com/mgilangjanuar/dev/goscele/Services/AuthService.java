@@ -70,8 +70,8 @@ public class AuthService {
     public void logout() throws IOException {
         if (this.isLogin()) {
             Document doc = Jsoup.connect(ConfigAppModel.BASE_URL)
-                                .cookies(getCookies())
-                                .get();
+                    .cookies(getCookies())
+                    .get();
 
             String url = doc.select(".icon.menu-action[aria-labelledby=actionmenuaction-6]").attr("href");
             Jsoup.connect(url)

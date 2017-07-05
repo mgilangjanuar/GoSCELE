@@ -15,7 +15,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.mgilangjanuar.dev.goscele.Fragments.CourseFragment;
 import com.mgilangjanuar.dev.goscele.Fragments.HomeFragment;
@@ -97,7 +96,7 @@ public class BaseActivity extends AppCompatActivity {
 
     public void hideKeyboard() {
         if (getCurrentFocus() != null) {
-            InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
         }
     }

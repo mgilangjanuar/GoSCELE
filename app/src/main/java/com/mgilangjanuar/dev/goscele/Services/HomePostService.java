@@ -29,7 +29,7 @@ public class HomePostService {
 
     public List<Map<String, String>> getPosts() throws IOException {
         List<Map<String, String>> results = new ArrayList<>();
-        for (final Element e: getElements(".forumpost")) {
+        for (final Element e : getElements(".forumpost")) {
             results.add(new HashMap<String, String>() {{
                 put("url", e.select(".link > a").attr("href"));
                 put("title", e.select(".subject").text());

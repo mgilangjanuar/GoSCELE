@@ -28,6 +28,7 @@ public class AuthPresenter {
 
     public interface AuthServicePresenter {
         void authenticate();
+
         boolean isAuthenticate() throws IOException;
     }
 
@@ -56,7 +57,7 @@ public class AuthPresenter {
         } catch (IOException e) {
             Log.e("AuthPresenter", e.getMessage());
         }
-        return  null;
+        return null;
     }
 
     public void save(String username, String password) {
@@ -74,15 +75,15 @@ public class AuthPresenter {
     }
 
     public String getUsername() {
-        return  accountModel.getSavedUsername();
+        return accountModel.getSavedUsername();
     }
 
     public String getPassword() {
-        return  accountModel.getSavedPassword();
+        return accountModel.getSavedPassword();
     }
 
     public boolean isUsernameAndPasswordExist() {
-        return (accountModel.isSaveCredential() && getUsername() != null && getPassword() != null) || (! accountModel.isSaveCredential());
+        return (accountModel.isSaveCredential() && getUsername() != null && getPassword() != null) || (!accountModel.isSaveCredential());
     }
 
     public boolean logout() {
@@ -91,11 +92,11 @@ public class AuthPresenter {
             accountModel.clear();
             (new ListCourseModel(activity)).clear();
             (new ListScheduleModel(activity)).clear();
-            return ! isLogin();
+            return !isLogin();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return  false;
+        return false;
     }
 
     public void showProgressDialog() {

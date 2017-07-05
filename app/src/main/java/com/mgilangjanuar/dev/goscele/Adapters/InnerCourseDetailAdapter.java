@@ -38,7 +38,7 @@ public class InnerCourseDetailAdapter extends RecyclerView.Adapter<InnerCourseDe
     public void onBindViewHolder(InnerCourseDetailViewHolder holder, int position) {
         final InnerCoursePostModel model = list.get(position);
 
-        if (! model.title.equals("")) {
+        if (!model.title.equals("")) {
             holder.title.setVisibility(TextView.VISIBLE);
             holder.title.setText(model.title);
             holder.title.setOnClickListener(new View.OnClickListener() {
@@ -49,7 +49,7 @@ public class InnerCourseDetailAdapter extends RecyclerView.Adapter<InnerCourseDe
             });
         }
 
-        if (! model.comment.equals("")) {
+        if (!model.comment.equals("")) {
             holder.comment.setVisibility(TextView.VISIBLE);
             HtmlHandlerHelper helper = new HtmlHandlerHelper(context, model.comment);
             helper.setTextViewHTML(holder.comment);
