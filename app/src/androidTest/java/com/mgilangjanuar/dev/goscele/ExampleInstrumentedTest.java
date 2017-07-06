@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("mgilangjanuar.anjayyydev.com.sceleapp", appContext.getPackageName());
+        assertEquals("com.mgilangjanuar.dev.goscele", appContext.getPackageName());
     }
 }
