@@ -7,18 +7,10 @@ import android.content.SharedPreferences;
  * Created by muhammadgilangjanuar on 5/14/17.
  */
 
-public class BaseRecord {
-
-    public interface BasicInterface {
-        void save();
-
-        void clear();
-    }
-
+public abstract class BaseRecord {
     protected Context context;
     protected SharedPreferences sharedPreferences;
     protected SharedPreferences.Editor prefsEditor;
-    protected String tag;
 
     public BaseRecord(Context context) {
         this.context = context;
@@ -27,6 +19,12 @@ public class BaseRecord {
     }
 
     public String getAttributeTag(String attr) {
-        return tag + "_" + attr;
+        return tag() + "_" + attr;
     }
+
+    public abstract String tag();
+
+    public abstract void save();
+
+    public abstract void clear();
 }

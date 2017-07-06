@@ -12,14 +12,18 @@ import java.util.List;
  * Created by muhammadgilangjanuar on 5/14/17.
  */
 
-public class ListHomePostModel extends BaseRecord implements BaseRecord.BasicInterface {
+public class ListHomePostModel extends BaseRecord {
 
     public List<HomePostModel> homePostModelList;
 
     public ListHomePostModel(Context context) {
         super(context);
         homePostModelList = new ArrayList<>();
-        tag = "ListHomePostModel";
+    }
+
+    @Override
+    public String tag() {
+        return "ListHomePostModel";
     }
 
     @Override

@@ -12,14 +12,18 @@ import java.util.List;
  * Created by muhammadgilangjanuar on 5/16/17.
  */
 
-public class ListCurrentCourseModel extends BaseRecord implements BaseRecord.BasicInterface {
+public class ListCurrentCourseModel extends BaseRecord {
 
     public List<CourseModel> courseModelList;
 
     public ListCurrentCourseModel(Context context) {
         super(context);
         courseModelList = new ArrayList<>();
-        tag = "ListCurrentCourseModel";
+    }
+
+    @Override
+    public String tag() {
+        return "ListCurrentCourseModel";
     }
 
     @Override

@@ -12,7 +12,7 @@ import java.util.List;
  * Created by muhammadgilangjanuar on 5/18/17.
  */
 
-public class CalendarEventModel extends BaseRecord implements BaseRecord.BasicInterface {
+public class CalendarEventModel extends BaseRecord {
 
     public String date;
     public List<Integer> listEvent;
@@ -20,7 +20,11 @@ public class CalendarEventModel extends BaseRecord implements BaseRecord.BasicIn
     public CalendarEventModel(Context context) {
         super(context);
         listEvent = new ArrayList<>();
-        tag = "CalendarEventModel";
+    }
+
+    @Override
+    public String tag() {
+        return "CalendarEventModel";
     }
 
     @Override

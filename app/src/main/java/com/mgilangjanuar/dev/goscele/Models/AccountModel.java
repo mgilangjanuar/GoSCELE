@@ -13,7 +13,7 @@ import java.util.Map;
  * Created by muhammadgilangjanuar on 5/14/17.
  */
 
-public class AccountModel extends BaseRecord implements BaseRecord.BasicInterface {
+public class AccountModel extends BaseRecord {
     public String name;
     public String username;
     public String password;
@@ -25,7 +25,11 @@ public class AccountModel extends BaseRecord implements BaseRecord.BasicInterfac
 
     public AccountModel(Context context) {
         super(context);
-        tag = "AccountModel";
+    }
+
+    @Override
+    public String tag() {
+        return "AccountModel";
     }
 
     public void save() {

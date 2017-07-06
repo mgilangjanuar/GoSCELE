@@ -6,14 +6,18 @@ import android.content.Context;
  * Created by muhammadgilangjanuar on 5/29/17.
  */
 
-public class EventNotificationModel extends BaseRecord implements BaseRecord.BasicInterface {
+public class EventNotificationModel extends BaseRecord {
 
     public String date;
     public boolean isEnableAlarm;
 
     public EventNotificationModel(Context context) {
         super(context);
-        tag = "EventNotificationModel";
+    }
+
+    @Override
+    public String tag() {
+        return "EventNotificationModel";
     }
 
     @Override

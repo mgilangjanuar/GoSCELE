@@ -12,7 +12,7 @@ import java.util.List;
  * Created by muhammadgilangjanuar on 5/31/17.
  */
 
-public class ListForumModel extends BaseRecord implements BaseRecord.BasicInterface {
+public class ListForumModel extends BaseRecord {
 
     public String url;
     public List<ForumModel> forumModelList;
@@ -20,7 +20,11 @@ public class ListForumModel extends BaseRecord implements BaseRecord.BasicInterf
     public ListForumModel(Context context) {
         super(context);
         forumModelList = new ArrayList<>();
-        tag = "ListForumModel";
+    }
+
+    @Override
+    public String tag() {
+        return "ListForumModel";
     }
 
     @Override
