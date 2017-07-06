@@ -41,6 +41,7 @@ public class InAppBrowserPresenter {
     public String url;
     public AuthPresenter authPresenter;
     private Activity activity;
+    private AlertDialog alertDialog;
 
     public interface InAppBrowserServicePresenter {
         void setupInAppBrowser();
@@ -66,7 +67,8 @@ public class InAppBrowserPresenter {
             activity.startActivity(intent);
         });
         builder.setNegativeButton("Ignore", (dialog, which) -> dialog.dismiss());
-        builder.create().show();
+        alertDialog = builder.create();
+        alertDialog.show();
     }
 
     public boolean isContinueOpenWebView() {
@@ -204,7 +206,8 @@ public class InAppBrowserPresenter {
         // https://stackoverflow.com/questions/33434532/android-webview-download-files-like-browsers-do
         @Override
         public void onDownloadStart(String url, String userAgent, String contentDisposition, String mimetype, long contentLength) {
-            activity.onBackPressed();
+            alertDialog.cancel();
+            activity.finish();
             DownloadManager.Request request = new DownloadManager.Request(Uri.parse(url));
 
             request.setMimeType(mimetype);
@@ -224,7 +227,7 @@ public class InAppBrowserPresenter {
                 dm.enqueue(request);
                 Toast.makeText(activity, "Downloading file...", Toast.LENGTH_LONG).show();
             } catch (Exception e) {
-                Toast.makeText(activity, "Oh snap! Download failed!", Toast.LENGTH_LONG).show();
+                Toast.makeText(activity, "Download failed!", Toast.LENGTH_LONG).show();
             }
         }
     }
