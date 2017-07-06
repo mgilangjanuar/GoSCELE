@@ -96,7 +96,7 @@ public class ForumService {
                 .data("sesskey", doc.select("input[name=sesskey]").attr("value"))
                 .data("_qf__mod_forum_post_form", "1")
                 .data("mform_isexpanded_id_general", "1")
-                .data("submitbutton", "Post to forum")
+                .data("submitbutton", "PostFragment to forum")
                 .cookies(AuthService.getCookies())
                 .post();
     }

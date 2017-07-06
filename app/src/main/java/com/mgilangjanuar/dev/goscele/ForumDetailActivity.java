@@ -7,8 +7,8 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 
 import com.mgilangjanuar.dev.goscele.Adapters.BaseTabViewPagerAdapter;
-import com.mgilangjanuar.dev.goscele.Fragments.ForumDetail.Comments;
-import com.mgilangjanuar.dev.goscele.Fragments.ForumDetail.Post;
+import com.mgilangjanuar.dev.goscele.Fragments.ForumDetail.CommentsFragment;
+import com.mgilangjanuar.dev.goscele.Fragments.ForumDetail.PostFragment;
 import com.mgilangjanuar.dev.goscele.Presenters.ForumDetailPresenter;
 
 import butterknife.BindView;
@@ -47,8 +47,8 @@ public class ForumDetailActivity extends BaseActivity {
         actionButton.hide();
 
         final BaseTabViewPagerAdapter baseTabViewPagerAdapter = new BaseTabViewPagerAdapter(getSupportFragmentManager());
-        baseTabViewPagerAdapter.addFragment(Post.newInstance(presenter), getResources().getString(R.string.title_forum_detail_post));
-        baseTabViewPagerAdapter.addFragment(Comments.newInstance(presenter, actionButton), getResources().getString(R.string.title_forum_detail_comments));
+        baseTabViewPagerAdapter.addFragment(PostFragment.newInstance(presenter), getResources().getString(R.string.title_forum_detail_post));
+        baseTabViewPagerAdapter.addFragment(CommentsFragment.newInstance(presenter, actionButton), getResources().getString(R.string.title_forum_detail_comments));
 
         runOnUiThread(() -> {
             viewPager.setAdapter(baseTabViewPagerAdapter);

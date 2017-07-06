@@ -21,7 +21,7 @@ import com.mgilangjanuar.dev.goscele.R;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class Post extends Fragment implements ForumDetailPresenter.ForumDetailServicePresenter {
+public class PostFragment extends Fragment implements ForumDetailPresenter.ForumDetailServicePresenter {
 
     private ForumDetailPresenter forumDetailPresenter;
 
@@ -36,8 +36,8 @@ public class Post extends Fragment implements ForumDetailPresenter.ForumDetailSe
     @BindView(R.id.button_delete_post)
     Button btnDelete;
 
-    public static Post newInstance(ForumDetailPresenter forumDetailPresenter) {
-        Post fragment = new Post();
+    public static PostFragment newInstance(ForumDetailPresenter forumDetailPresenter) {
+        PostFragment fragment = new PostFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         fragment.forumDetailPresenter = forumDetailPresenter;

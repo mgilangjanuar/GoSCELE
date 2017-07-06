@@ -21,7 +21,7 @@ import com.mgilangjanuar.dev.goscele.R;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class Comments extends Fragment implements ForumDetailPresenter.ForumDetailServicePresenter {
+public class CommentsFragment extends Fragment implements ForumDetailPresenter.ForumDetailServicePresenter {
 
     private ForumDetailPresenter presenter;
     private FloatingActionButton actionButton;
@@ -33,8 +33,8 @@ public class Comments extends Fragment implements ForumDetailPresenter.ForumDeta
     @BindView(R.id.swipe_refresh_forum_detail)
     SwipeRefreshLayout swipeRefreshLayout;
 
-    public static Comments newInstance(ForumDetailPresenter presenter, FloatingActionButton actionButton) {
-        Comments fragment = new Comments();
+    public static CommentsFragment newInstance(ForumDetailPresenter presenter, FloatingActionButton actionButton) {
+        CommentsFragment fragment = new CommentsFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         fragment.presenter = presenter;
