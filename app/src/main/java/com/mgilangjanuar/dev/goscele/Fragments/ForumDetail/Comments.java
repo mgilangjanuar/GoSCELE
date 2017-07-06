@@ -23,7 +23,7 @@ import butterknife.ButterKnife;
 
 public class Comments extends Fragment implements ForumDetailPresenter.ForumDetailServicePresenter {
 
-    private ForumDetailPresenter forumDetailPresenter;
+    private ForumDetailPresenter presenter;
     private FloatingActionButton actionButton;
 
     @BindView(R.id.recycler_view_forum_detail)
@@ -33,11 +33,11 @@ public class Comments extends Fragment implements ForumDetailPresenter.ForumDeta
     @BindView(R.id.swipe_refresh_forum_detail)
     SwipeRefreshLayout swipeRefreshLayout;
 
-    public static Comments newInstance(ForumDetailPresenter forumDetailPresenter, FloatingActionButton actionButton) {
+    public static Comments newInstance(ForumDetailPresenter presenter, FloatingActionButton actionButton) {
         Comments fragment = new Comments();
         Bundle args = new Bundle();
         fragment.setArguments(args);
-        fragment.forumDetailPresenter = forumDetailPresenter;
+        fragment.presenter = presenter;
         fragment.actionButton = actionButton;
         return fragment;
     }
@@ -64,7 +64,9 @@ public class Comments extends Fragment implements ForumDetailPresenter.ForumDeta
 
     @Override
     public void setupForumDetail(View view) {
-        final ForumDetailCommentAdapter adapter = forumDetailPresenter.buildCommentAdapter();
+        ForumDetailCommentAdapter adapter = presenter.buildCommentAdapter();
+
+        actionButton.setOnClickListener(v -> presenter.buildAlertDialog(recyclerView, swipeRefreshLayout));
 
         if (getActivity() == null) return;
         getActivity().runOnUiThread(() -> {
@@ -80,8 +82,8 @@ public class Comments extends Fragment implements ForumDetailPresenter.ForumDeta
         });
 
         swipeRefreshLayout.setOnRefreshListener(() -> new Handler().postDelayed(() -> (new Thread(() -> {
-            forumDetailPresenter.clear();
-            final ForumDetailCommentAdapter adapter1 = forumDetailPresenter.buildCommentAdapter();
+            presenter.clear();
+            final ForumDetailCommentAdapter adapter1 = presenter.buildCommentAdapter();
             if (getActivity() == null) return;
             getActivity().runOnUiThread(() -> {
                 recyclerView.setAdapter(adapter1);

@@ -54,7 +54,6 @@ public class ForumDetailActivity extends BaseActivity {
             viewPager.setAdapter(baseTabViewPagerAdapter);
             tabLayout.setupWithViewPager(viewPager);
         });
-        actionButton.setOnClickListener(v -> presenter.buildAlertDialog());
 
         tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override

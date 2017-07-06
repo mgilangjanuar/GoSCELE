@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.mgilangjanuar.dev.goscele.BaseActivity;
 import com.mgilangjanuar.dev.goscele.ForumDetailActivity;
 import com.mgilangjanuar.dev.goscele.Helpers.HtmlHandlerHelper;
 import com.mgilangjanuar.dev.goscele.Models.ForumCommentModel;
@@ -66,7 +67,7 @@ public class ForumDetailCommentAdapter extends RecyclerView.Adapter<ForumDetailC
                 builder.setPositiveButton("Yes", (dialog, which) -> {
                     (new Thread(() -> {
                         presenter.deleteComment(model);
-                        ((ForumDetailActivity) context).runOnUiThread(() -> Toast.makeText(context, "Deleted!", Toast.LENGTH_SHORT).show());
+                        ((ForumDetailActivity) context).runOnUiThread(() -> ((BaseActivity) context).showToast("Deleted!"));
                     })).start();
                     list.remove(position);
                     notifyItemRemoved(position);

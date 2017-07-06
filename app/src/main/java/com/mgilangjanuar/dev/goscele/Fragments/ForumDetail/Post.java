@@ -13,9 +13,11 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.mgilangjanuar.dev.goscele.BaseActivity;
 import com.mgilangjanuar.dev.goscele.ForumDetailActivity;
 import com.mgilangjanuar.dev.goscele.Helpers.HtmlHandlerHelper;
 import com.mgilangjanuar.dev.goscele.Presenters.ForumDetailPresenter;
+import com.mgilangjanuar.dev.goscele.Presenters.ForumPresenter;
 import com.mgilangjanuar.dev.goscele.R;
 
 import butterknife.BindView;
@@ -87,14 +89,14 @@ public class Post extends Fragment implements ForumDetailPresenter.ForumDetailSe
                     builder.setInverseBackgroundForced(true);
                     builder.setPositiveButton("Yes", (dialog, which) -> {
                         btnDelete.setClickable(false);
-                        Toast.makeText(getContext(), "Please wait...", Toast.LENGTH_LONG).show();
+                        ((BaseActivity) getActivity()).showToast("Please wait...");
 
                         (new Thread(() -> {
                             forumDetailPresenter.deletePost();
                             if (getActivity() == null) return;
                             getActivity().runOnUiThread(() -> {
                                 getActivity().onBackPressed();
-                                Toast.makeText(getContext(), "Deleted! Please refresh the forum", Toast.LENGTH_SHORT).show();
+                                forumDetailPresenter.clearForum();
                             });
                         })).start();
                     });

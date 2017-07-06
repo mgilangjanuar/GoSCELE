@@ -175,13 +175,13 @@ public class ForumPresenter {
                 final String titleText = etTitle.getText().toString().trim();
                 final String messageText = etMessage.getText().toString().replaceAll("\\n", "<br />");
                 if (titleText.equals("") || messageText.equals("")) {
-                    Toast.makeText(activity, "Title and message are required fields", Toast.LENGTH_SHORT).show();
+                    ((BaseActivity) activity). showToast("Title and message are required fields");
                 } else {
-                    Toast.makeText(activity, "Please wait...", Toast.LENGTH_LONG).show();
+                    ((BaseActivity) activity).showToast("Please wait...");
                     (new Thread(() -> {
                         sendNews(titleText, messageText);
                         refreshingForum(recyclerView, swipeRefreshLayout);
-                        activity.runOnUiThread(() -> Toast.makeText(activity, "Sent!", Toast.LENGTH_SHORT).show());
+                        activity.runOnUiThread(() -> ((BaseActivity) activity).showToast("Sent!"));
                     })).start();
                     alertDialog.dismiss();
                 }

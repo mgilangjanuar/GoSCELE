@@ -2,7 +2,10 @@ package com.mgilangjanuar.dev.goscele.Presenters;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.graphics.Color;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,9 +14,13 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
+import com.mgilangjanuar.dev.goscele.Adapters.ForumAdapter;
 import com.mgilangjanuar.dev.goscele.Adapters.ForumDetailCommentAdapter;
+import com.mgilangjanuar.dev.goscele.BaseActivity;
+import com.mgilangjanuar.dev.goscele.ForumActivity;
 import com.mgilangjanuar.dev.goscele.Models.ForumCommentModel;
 import com.mgilangjanuar.dev.goscele.Models.ForumDetailModel;
+import com.mgilangjanuar.dev.goscele.Models.ListForumModel;
 import com.mgilangjanuar.dev.goscele.R;
 import com.mgilangjanuar.dev.goscele.Services.ForumService;
 
@@ -123,7 +130,7 @@ public class ForumDetailPresenter {
         }
     }
 
-    public void buildAlertDialog() {
+    public void buildAlertDialog(RecyclerView recyclerView, SwipeRefreshLayout swipeRefreshLayout) {
         AlertDialog.Builder alert = new AlertDialog.Builder(activity);
         alert.setTitle("Reply ForumActivity");
         alert.setMessage("Write your reply here:");
@@ -153,16 +160,41 @@ public class ForumDetailPresenter {
             button.setOnClickListener(view -> {
                 final String message = edittext.getText().toString().replaceAll("\\n", "<br />");
                 if (message.equals("")) {
-                    Toast.makeText(activity, "Message couldn't be blank", Toast.LENGTH_SHORT).show();
+                    ((BaseActivity) activity).showToast("Message couldn't be blank");
                 } else {
+                    ((BaseActivity) activity).showToast("Please wait...");
                     (new Thread(() -> {
                         sendComment(message);
-                        activity.runOnUiThread(() -> Toast.makeText(activity, "Sent!", Toast.LENGTH_SHORT).show());
+                        refreshingComment(recyclerView, swipeRefreshLayout);
+                        activity.runOnUiThread(() -> ((BaseActivity) activity).showToast("Sent!"));
                     })).start();
                     alertDialog.dismiss();
                 }
             });
         });
         alertDialog.show();
+    }
+
+    private void refreshingComment(RecyclerView recyclerView, SwipeRefreshLayout swipeRefreshLayout) {
+        swipeRefreshLayout.post(() -> {
+            swipeRefreshLayout.setRefreshing(true);
+            (new Thread(() -> {
+                clear();
+                ForumDetailCommentAdapter adapter = buildCommentAdapter();
+                activity.runOnUiThread(() -> {
+                    recyclerView.setAdapter(adapter);
+                    swipeRefreshLayout.setRefreshing(false);
+                });
+            })).start();
+        });
+    }
+
+    public void clearForum() {
+        ListForumModel listForumModel = new ListForumModel(activity);
+        Intent intent = new Intent(activity, ForumActivity.class).putExtra("url", listForumModel.getSavedUrl());
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        activity.startActivity(intent);
+        ForumPresenter presenter = new ForumPresenter(activity, listForumModel.getSavedUrl());
+        presenter.clear();
     }
 }
