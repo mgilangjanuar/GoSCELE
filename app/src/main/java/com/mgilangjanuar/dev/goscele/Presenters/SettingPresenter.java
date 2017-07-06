@@ -29,15 +29,13 @@ public class SettingPresenter {
     private ArrayList<Map<String, String>> listContent;
 
     private Activity activity;
-    private View view;
 
     public interface SettingServicePresenter {
         void setupContents(View view);
     }
 
-    public SettingPresenter(Activity activity, View view) {
+    public SettingPresenter(Activity activity) {
         this.activity = activity;
-        this.view = view;
         listContent = new ArrayList<>();
     }
 

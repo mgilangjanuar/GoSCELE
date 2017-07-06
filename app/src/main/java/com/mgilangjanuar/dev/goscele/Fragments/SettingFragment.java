@@ -16,12 +16,17 @@ import com.mgilangjanuar.dev.goscele.Adapters.SettingAdapter;
 import com.mgilangjanuar.dev.goscele.Presenters.SettingPresenter;
 import com.mgilangjanuar.dev.goscele.R;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class SettingFragment extends Fragment implements SettingPresenter.SettingServicePresenter {
 
     private SettingPresenter settingPresenter;
 
-    public SettingFragment() {
-    }
+    @BindView(R.id.toolbar_setting)
+    Toolbar toolbar;
+    @BindView(R.id.recycler_view_setting)
+    RecyclerView recyclerView;
 
     public static SettingFragment newInstance() {
         SettingFragment fragment = new SettingFragment();
@@ -38,7 +43,6 @@ public class SettingFragment extends Fragment implements SettingPresenter.Settin
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar_setting);
         toolbar.setTitle(getActivity().getResources().getString(R.string.title_fragment_setting));
 
         setupContents(view);
@@ -47,27 +51,23 @@ public class SettingFragment extends Fragment implements SettingPresenter.Settin
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_setting, container, false);
+        View view = inflater.inflate(R.layout.fragment_setting, container, false);
+        ButterKnife.bind(this, view);
+        return view;
     }
 
     @Override
     public void setupContents(View view) {
-        settingPresenter = new SettingPresenter(getActivity(), view);
+        settingPresenter = new SettingPresenter(getActivity());
 
-        final RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view_setting);
         final SettingAdapter adapter = settingPresenter.buildAdapter();
-        if (getActivity() == null) {
-            return;
-        }
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
-                recyclerView.setLayoutManager(layoutManager);
-                recyclerView.setItemAnimator(new DefaultItemAnimator());
-                recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), layoutManager.getOrientation()));
-                recyclerView.setAdapter(adapter);
-            }
+        if (getActivity() == null) return;
+        getActivity().runOnUiThread(() -> {
+            LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+            recyclerView.setLayoutManager(layoutManager);
+            recyclerView.setItemAnimator(new DefaultItemAnimator());
+            recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), layoutManager.getOrientation()));
+            recyclerView.setAdapter(adapter);
         });
     }
 }

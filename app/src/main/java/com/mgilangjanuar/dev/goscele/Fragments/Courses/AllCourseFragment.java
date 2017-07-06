@@ -72,9 +72,7 @@ public class AllCourseFragment extends Fragment implements CoursePresenter.Cours
         refreshLayout.setOnRefreshListener(() -> new Handler().postDelayed(() -> (new Thread(() -> {
             coursePresenter.clear();
             updateAdapter();
-            if (getActivity() == null) {
-                return;
-            }
+            if (getActivity() == null) return;
             getActivity().runOnUiThread(() -> refreshLayout.setRefreshing(false));
         })).start(), 1000));
     }
@@ -83,9 +81,7 @@ public class AllCourseFragment extends Fragment implements CoursePresenter.Cours
         (new Thread(() -> {
             final AllCoursesViewAdapter adapter = coursePresenter.getAllCoursesViewAdapter();
 
-            if (getActivity() == null) {
-                return;
-            }
+            if (getActivity() == null) return;
             getActivity().runOnUiThread(() -> {
                 recyclerView.setAdapter(adapter);
                 if (adapter.getItemCount() == 0) {

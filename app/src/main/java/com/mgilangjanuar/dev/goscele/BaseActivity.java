@@ -70,16 +70,16 @@ public class BaseActivity extends AppCompatActivity {
         Fragment fragment = null;
 
         switch (item.getItemId()) {
-            case com.mgilangjanuar.dev.goscele.R.id.action_home:
+            case R.id.action_home:
                 fragment = HomeFragment.newInstance();
                 break;
-            case com.mgilangjanuar.dev.goscele.R.id.action_course:
+            case R.id.action_course:
                 fragment = CourseFragment.newInstance();
                 break;
-            case com.mgilangjanuar.dev.goscele.R.id.action_schedule:
+            case R.id.action_schedule:
                 fragment = ScheduleFragment.newInstance();
                 break;
-            case com.mgilangjanuar.dev.goscele.R.id.action_setting:
+            case R.id.action_setting:
                 fragment = SettingFragment.newInstance();
                 break;
         }

@@ -17,7 +17,7 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(com.mgilangjanuar.dev.goscele.R.layout.activity_main);
+        setContentView(R.layout.activity_main);
 
         AuthPresenter.BottomNavigationViewHelper.disableShiftMode(bottomNavigationView);
         onNavigationSelected(bottomNavigationView);
@@ -35,6 +35,6 @@ public class MainActivity extends BaseActivity {
         } catch (Exception e) {
         }
 
-        (new Thread(() -> (new SchedulePresenter(this, null)).notifySchedule())).start();
+        (new Thread(() -> (new SchedulePresenter(this)).notifySchedule())).start();
     }
 }

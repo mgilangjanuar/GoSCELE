@@ -2,6 +2,7 @@ package com.mgilangjanuar.dev.goscele;
 
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -43,6 +44,7 @@ public class SearchCourseActivity extends BaseActivity {
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
 
         etSearch.setOnKeyListener((v, keyCode, event) -> {
             if ((event.getAction() == KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_ENTER)) {
@@ -54,12 +56,17 @@ public class SearchCourseActivity extends BaseActivity {
 
         iBtnSearch.setOnClickListener(v -> {
             hideKeyboard();
+            String keyword = etSearch.getText().toString();
+            if (keyword.equals("")) {
+                showToast("That field cannot be blank");
+                return;
+            }
             recyclerView.setVisibility(RecyclerView.GONE);
             tvStatus.setVisibility(TextView.VISIBLE);
             tvStatus.setText(getString(R.string.loading_text));
             tvStatus.setTextColor(getResources().getColor(android.R.color.darker_gray));
             (new Thread(() -> {
-                final SearchCourseAdapter adapter = presenter.buildSearchAdapter(etSearch.getText().toString());
+                SearchCourseAdapter adapter = presenter.buildSearchAdapter(keyword);
                 runOnUiThread(() -> {
                     recyclerView.setVisibility(RecyclerView.VISIBLE);
                     recyclerView.setAdapter(adapter);

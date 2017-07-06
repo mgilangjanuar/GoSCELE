@@ -73,16 +73,12 @@ public class HomeFragment extends Fragment implements HomePresenter.HomeServiceP
 
     @Override
     public void setupHome(View view) {
-        if (getActivity() == null) {
-            return;
-        }
+        if (getActivity() == null) return;
         homePresenter = new HomePresenter(getActivity(), view);
 
         final HomePostAdapter adapter = homePresenter.buildAdapter();
 
-        if (getActivity() == null) {
-            return;
-        }
+        if (getActivity() == null) return;
         getActivity().runOnUiThread(() -> {
             recyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
             recyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -98,9 +94,7 @@ public class HomeFragment extends Fragment implements HomePresenter.HomeServiceP
         refreshLayout.setOnRefreshListener(() -> new Handler().postDelayed(() -> (new Thread(() -> {
             homePresenter.clear();
             final HomePostAdapter adapter1 = homePresenter.buildAdapter();
-            if (getActivity() == null) {
-                return;
-            }
+            if (getActivity() == null) return;
             getActivity().runOnUiThread(() -> {
                 recyclerView.setAdapter(adapter1);
                 refreshLayout.setRefreshing(false);

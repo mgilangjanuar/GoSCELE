@@ -66,9 +66,7 @@ public class Comments extends Fragment implements ForumDetailPresenter.ForumDeta
     public void setupForumDetail(View view) {
         final ForumDetailCommentAdapter adapter = forumDetailPresenter.buildCommentAdapter();
 
-        if (getActivity() == null) {
-            return;
-        }
+        if (getActivity() == null) return;
         getActivity().runOnUiThread(() -> {
             recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
             recyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -84,9 +82,7 @@ public class Comments extends Fragment implements ForumDetailPresenter.ForumDeta
         swipeRefreshLayout.setOnRefreshListener(() -> new Handler().postDelayed(() -> (new Thread(() -> {
             forumDetailPresenter.clear();
             final ForumDetailCommentAdapter adapter1 = forumDetailPresenter.buildCommentAdapter();
-            if (getActivity() == null) {
-                return;
-            }
+            if (getActivity() == null) return;
             getActivity().runOnUiThread(() -> {
                 recyclerView.setAdapter(adapter1);
                 swipeRefreshLayout.setRefreshing(false);

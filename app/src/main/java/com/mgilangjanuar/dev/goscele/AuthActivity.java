@@ -26,7 +26,7 @@ public class AuthActivity extends BaseActivity implements AuthPresenter.AuthServ
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(com.mgilangjanuar.dev.goscele.R.layout.activity_auth);
+        setContentView(R.layout.activity_auth);
 
         authPresenter = new AuthPresenter(this);
         authenticate();

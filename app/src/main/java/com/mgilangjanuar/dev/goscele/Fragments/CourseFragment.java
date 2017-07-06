@@ -114,9 +114,7 @@ public class CourseFragment extends Fragment {
             CoursePresenter.isDataAllCoursesViewAdapterChanged = false;
             (new Thread(() -> {
                 final AllCoursesViewAdapter adapter = presenter.getAllCoursesViewAdapter();
-                if (getActivity() == null) {
-                    return;
-                }
+                if (getActivity() == null) return;
                 RecyclerView rvAllCourses = (RecyclerView) view.findViewById(R.id.recycler_view_all_course);
                 getActivity().runOnUiThread(() -> rvAllCourses.setAdapter(adapter));
             })).start();
@@ -124,9 +122,7 @@ public class CourseFragment extends Fragment {
             CoursePresenter.isDataCurrentCoursesViewAdapterChanged = false;
             (new Thread(() -> {
                 final CurrentCoursesViewAdapter adapter = presenter.getCurrentCoursesViewAdapter();
-                if (getActivity() == null) {
-                    return;
-                }
+                if (getActivity() == null) return;
                 RecyclerView rvCurrentCourses = (RecyclerView) view.findViewById(R.id.recycler_view_current_course);
                 getActivity().runOnUiThread(() -> rvCurrentCourses.setAdapter(adapter));
             })).start();

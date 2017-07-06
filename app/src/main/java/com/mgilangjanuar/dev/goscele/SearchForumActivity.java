@@ -54,12 +54,17 @@ public class SearchForumActivity extends BaseActivity {
 
         iBtnSearch.setOnClickListener(v -> {
             hideKeyboard();
+            String keyword = etSearch.getText().toString();
+            if (keyword.equals("")) {
+                showToast("That field cannot be blank");
+                return;
+            }
             recyclerView.setVisibility(RecyclerView.GONE);
             tvStatus.setVisibility(TextView.VISIBLE);
             tvStatus.setText(getString(R.string.loading_text));
             tvStatus.setTextColor(getResources().getColor(android.R.color.darker_gray));
             (new Thread(() -> {
-                final ForumAdapter adapter = presenter.buildSearchAdapter(etSearch.getText().toString());
+                ForumAdapter adapter = presenter.buildSearchAdapter(keyword);
                 runOnUiThread(() -> {
                     recyclerView.setVisibility(RecyclerView.VISIBLE);
                     recyclerView.setAdapter(adapter);

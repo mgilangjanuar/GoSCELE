@@ -60,9 +60,7 @@ public class DashboardFragment extends Fragment implements CourseDetailPresenter
 
         (new Thread(() -> {
             final CourseModel courseModel = presenter.getCourseModel();
-            if (getActivity() == null) {
-                return;
-            }
+            if (getActivity() == null) return;
             getActivity().runOnUiThread(() -> ((CourseDetailActivity) getActivity()).getSupportActionBar().setTitle(courseModel.name));
         })).start();
 
@@ -73,9 +71,7 @@ public class DashboardFragment extends Fragment implements CourseDetailPresenter
     public void setupCourseDetail(final View view) {
         final CourseDetailAdapter adapter = presenter.buildDashboardAdapter();
 
-        if (getActivity() == null) {
-            return;
-        }
+        if (getActivity() == null) return;
         getActivity().runOnUiThread(() -> {
             recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
             recyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -93,9 +89,7 @@ public class DashboardFragment extends Fragment implements CourseDetailPresenter
         swipeRefreshLayout.setOnRefreshListener(() -> new Handler().postDelayed(() -> (new Thread(() -> {
             presenter.clearDashboard();
             final CourseDetailAdapter adapter1 = presenter.buildDashboardAdapter();
-            if (getActivity() == null) {
-                return;
-            }
+            if (getActivity() == null) return;
             getActivity().runOnUiThread(() -> {
                 recyclerView.setAdapter(adapter1);
                 swipeRefreshLayout.setRefreshing(false);

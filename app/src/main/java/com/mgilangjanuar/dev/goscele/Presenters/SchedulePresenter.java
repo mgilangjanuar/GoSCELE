@@ -38,7 +38,6 @@ import java.util.Map;
 public class SchedulePresenter {
 
     private Activity activity;
-    private View view;
 
     private ProgressDialog progress;
 
@@ -55,9 +54,8 @@ public class SchedulePresenter {
         void setupSchedule(View view);
     }
 
-    public SchedulePresenter(Activity activity, View view) {
+    public SchedulePresenter(Activity activity) {
         this.activity = activity;
-        this.view = view;
         scheduleService = new ScheduleService();
         calendarMonthService = new CalendarMonthService();
         listScheduleModel = new ListScheduleModel(activity);

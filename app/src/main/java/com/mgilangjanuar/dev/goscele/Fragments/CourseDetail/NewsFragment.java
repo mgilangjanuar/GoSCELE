@@ -62,9 +62,7 @@ public class NewsFragment extends Fragment implements CourseDetailPresenter.Cour
     public void setupCourseDetail(View view) {
         final CourseDetailNewsAdapter adapter = presenter.buildNewsAdapter();
 
-        if (getActivity() == null) {
-            return;
-        }
+        if (getActivity() == null) return;
         getActivity().runOnUiThread(() -> {
             recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
             recyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -82,9 +80,7 @@ public class NewsFragment extends Fragment implements CourseDetailPresenter.Cour
         swipeRefreshLayout.setOnRefreshListener(() -> new Handler().postDelayed(() -> (new Thread(() -> {
             presenter.clearNews();
             final CourseDetailNewsAdapter adapter1 = presenter.buildNewsAdapter();
-            if (getActivity() == null) {
-                return;
-            }
+            if (getActivity() == null) return;
             getActivity().runOnUiThread(() -> {
                 recyclerView.setAdapter(adapter1);
                 swipeRefreshLayout.setRefreshing(false);

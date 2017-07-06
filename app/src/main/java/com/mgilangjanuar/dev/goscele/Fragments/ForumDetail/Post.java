@@ -69,9 +69,7 @@ public class Post extends Fragment implements ForumDetailPresenter.ForumDetailSe
 
         final HtmlHandlerHelper helper = new HtmlHandlerHelper(getActivity(), forumDetailPresenter.getForumDetailModel().getSavedContent());
 
-        if (getActivity() == null) {
-            return;
-        }
+        if (getActivity() == null) return;
         getActivity().runOnUiThread(() -> {
             ((ForumDetailActivity) getActivity()).getSupportActionBar().setTitle(forumDetailPresenter.getForumDetailModel().getSavedTitle());
             tvTitle.setText(forumDetailPresenter.getForumDetailModel().getSavedTitle());
@@ -93,9 +91,7 @@ public class Post extends Fragment implements ForumDetailPresenter.ForumDetailSe
 
                         (new Thread(() -> {
                             forumDetailPresenter.deletePost();
-                            if (getActivity() == null) {
-                                return;
-                            }
+                            if (getActivity() == null) return;
                             getActivity().runOnUiThread(() -> {
                                 getActivity().onBackPressed();
                                 Toast.makeText(getContext(), "Deleted! Please refresh the forum", Toast.LENGTH_SHORT).show();
