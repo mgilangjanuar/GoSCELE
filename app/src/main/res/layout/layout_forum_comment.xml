@@ -27,8 +27,7 @@
                 android:textSize="13sp"
                 android:textColor="@android:color/darker_gray"
                 android:drawableLeft="@drawable/ic_access_time_black_24dp"
-                android:drawablePadding="3dip"
-                android:paddingBottom="6dp"/>
+                android:drawablePadding="3dip" />
 
             <TextView
                 android:id="@+id/author_forum_comment"
@@ -39,6 +38,7 @@
                 android:drawableLeft="@drawable/ic_person_black_24dp"
                 android:drawablePadding="3dip"
                 android:layout_alignParentLeft="true"
+                android:paddingBottom="6dp"
                 android:maxLines="1"
                 android:ellipsize="end"/>
 
