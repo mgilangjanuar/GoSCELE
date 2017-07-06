@@ -12,9 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
-import android.widget.Toast;
 
-import com.mgilangjanuar.dev.goscele.Adapters.ForumAdapter;
 import com.mgilangjanuar.dev.goscele.Adapters.ForumDetailCommentAdapter;
 import com.mgilangjanuar.dev.goscele.BaseActivity;
 import com.mgilangjanuar.dev.goscele.ForumActivity;

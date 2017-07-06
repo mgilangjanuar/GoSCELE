@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import com.mgilangjanuar.dev.goscele.Adapters.ForumAdapter;
 import com.mgilangjanuar.dev.goscele.BaseActivity;
@@ -175,7 +174,7 @@ public class ForumPresenter {
                 final String titleText = etTitle.getText().toString().trim();
                 final String messageText = etMessage.getText().toString().replaceAll("\\n", "<br />");
                 if (titleText.equals("") || messageText.equals("")) {
-                    ((BaseActivity) activity). showToast("Title and message are required fields");
+                    ((BaseActivity) activity).showToast("Title and message are required fields");
                 } else {
                     ((BaseActivity) activity).showToast("Please wait...");
                     (new Thread(() -> {
