@@ -122,11 +122,19 @@ public class SettingPresenter {
         builder.setTitle("Logout");
         builder.setMessage("Are you sure want to logout?");
         builder.setInverseBackgroundForced(true);
-        builder.setPositiveButton("Yes", (dialog, which) -> (new Thread(() -> {
-            ((MainActivity) activity).forceRedirect(new Intent(activity, AuthActivity.class));
+        builder.setPositiveButton("Yes", (dialog, which) -> {
             AuthPresenter authPresenter = new AuthPresenter(activity);
-            authPresenter.logout();
-        })).start());
+            authPresenter.showProgressDialog();
+            (new Thread(() -> {
+                boolean isLogout = authPresenter.logout();
+                activity.runOnUiThread(() -> {
+                    if (isLogout) {
+                        ((MainActivity) activity).forceRedirect(new Intent(activity, AuthActivity.class));
+                    }
+                    authPresenter.dismissProgressDialog();
+                });
+            })).start();
+        });
         builder.setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss());
         final AlertDialog alert = builder.create();
 
