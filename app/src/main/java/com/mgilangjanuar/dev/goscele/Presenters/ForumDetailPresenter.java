@@ -192,6 +192,7 @@ public class ForumDetailPresenter {
         Intent intent = new Intent(activity, ForumActivity.class).putExtra("url", listForumModel.getSavedUrl());
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         activity.startActivity(intent);
+        activity.overridePendingTransition(0, 0);
         ForumPresenter presenter = new ForumPresenter(activity, listForumModel.getSavedUrl());
         presenter.clear();
     }
