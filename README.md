@@ -8,6 +8,11 @@ GoSCELE is an open source project and my first native Android application with J
 ![featured image](https://mgilangjanuar.dev.php.or.id/uploads/666/b21c4040dc-untitled.png)
 
 
+Development Channel
+-------------------
+[Telegram](https://t.me/joinchat/BBhj0w69cebVtkvUWdCJLg)
+
+
 Download
---------------
+--------
 [Google Play Store](https://play.google.com/store/apps/details?id=com.mgilangjanuar.dev.goscele)
