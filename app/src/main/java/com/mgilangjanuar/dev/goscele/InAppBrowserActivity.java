@@ -82,7 +82,8 @@ public class InAppBrowserActivity extends BaseActivity implements InAppBrowserPr
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+        if (! presenter.isStoragePermissionGranted()) {
+            webView.stopLoading();
             presenter.showStoragePermissionAlertDialog();
         }
 

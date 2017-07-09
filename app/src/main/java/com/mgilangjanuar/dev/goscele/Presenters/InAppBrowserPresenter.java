@@ -1,5 +1,6 @@
 package com.mgilangjanuar.dev.goscele.Presenters;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.DownloadManager;
 import android.content.Context;
@@ -11,6 +12,7 @@ import android.os.Build;
 import android.os.Environment;
 import android.os.Parcelable;
 import android.provider.Settings;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
@@ -51,6 +53,10 @@ public class InAppBrowserPresenter {
         this.activity = activity;
         this.url = url;
         this.authPresenter = new AuthPresenter(activity);
+    }
+
+    public boolean isStoragePermissionGranted() {
+        return ContextCompat.checkSelfPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED;
     }
 
     public void showStoragePermissionAlertDialog() {
