@@ -212,7 +212,7 @@ public class InAppBrowserPresenter {
         // https://stackoverflow.com/questions/33434532/android-webview-download-files-like-browsers-do
         @Override
         public void onDownloadStart(String url, String userAgent, String contentDisposition, String mimetype, long contentLength) {
-            alertDialog.cancel();
+            if (alertDialog != null && alertDialog.isShowing()) alertDialog.cancel();
             activity.finish();
             DownloadManager.Request request = new DownloadManager.Request(Uri.parse(url));
 
