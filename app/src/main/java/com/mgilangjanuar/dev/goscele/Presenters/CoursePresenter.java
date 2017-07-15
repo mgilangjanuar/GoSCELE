@@ -22,24 +22,16 @@ import java.util.Map;
 
 public class CoursePresenter {
 
+    public static boolean isDataCurrentCoursesViewAdapterChanged;
+    public static boolean isDataAllCoursesViewAdapterChanged;
     private Activity activity;
     private View view;
-
     private CourseService courseService;
-
     private CurrentCoursesViewAdapter currentCoursesViewAdapter;
     private AllCoursesViewAdapter allCoursesViewAdapter;
-
     private ListCourseModel listCourseModel;
     private ListCurrentCourseModel listCurrentCourseModel;
     private ListCourseModel listSearchCourseModel;
-
-    public static boolean isDataCurrentCoursesViewAdapterChanged;
-    public static boolean isDataAllCoursesViewAdapterChanged;
-
-    public interface CourseServicePresenter {
-        void setupCourses(View view);
-    }
 
     public CoursePresenter(Activity activity, View view) {
         this.activity = activity;
@@ -93,7 +85,7 @@ public class CoursePresenter {
             }
             listCourseModel.save();
         } catch (IOException e) {
-            Log.e("CoursePresenter", e.getMessage());
+            Log.e("CoursePresenter", String.valueOf(e.getMessage()));
         }
     }
 
@@ -145,7 +137,11 @@ public class CoursePresenter {
                 listSearchCourseModel.courseModelList.add(courseModel);
             }
         } catch (IOException e) {
-            Log.e("CoursePresenter", e.getMessage());
+            Log.e("CoursePresenter", String.valueOf(e.getMessage()));
         }
+    }
+
+    public interface CourseServicePresenter {
+        void setupCourses(View view);
     }
 }

@@ -19,10 +19,9 @@ import butterknife.ButterKnife;
 
 public class CurrentCourseFragment extends Fragment implements CoursePresenter.CourseServicePresenter {
 
-    private CoursePresenter coursePresenter;
-
     @BindView(R.id.recycler_view_current_course)
     RecyclerView recyclerView;
+    private CoursePresenter coursePresenter;
 
     public static CurrentCourseFragment newInstance() {
         CurrentCourseFragment fragment = new CurrentCourseFragment();

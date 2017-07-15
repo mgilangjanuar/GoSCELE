@@ -9,12 +9,13 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.TextView;
 
 import com.mgilangjanuar.dev.goscele.BaseActivity;
 import com.mgilangjanuar.dev.goscele.ForumDetailActivity;
-import com.mgilangjanuar.dev.goscele.Helpers.HtmlHandlerHelper;
+import com.mgilangjanuar.dev.goscele.Helpers.WebViewContentHelper;
 import com.mgilangjanuar.dev.goscele.Presenters.ForumDetailPresenter;
 import com.mgilangjanuar.dev.goscele.R;
 
@@ -23,8 +24,6 @@ import butterknife.ButterKnife;
 
 public class PostFragment extends Fragment implements ForumDetailPresenter.ForumDetailServicePresenter {
 
-    private ForumDetailPresenter forumDetailPresenter;
-
     @BindView(R.id.title_forum_detail)
     TextView tvTitle;
     @BindView(R.id.date_forum_detail)
@@ -32,9 +31,10 @@ public class PostFragment extends Fragment implements ForumDetailPresenter.Forum
     @BindView(R.id.author_forum_detail)
     TextView tvAuthor;
     @BindView(R.id.content_forum_detail)
-    TextView tvContent;
+    WebView wvContent;
     @BindView(R.id.button_delete_post)
     Button btnDelete;
+    private ForumDetailPresenter forumDetailPresenter;
 
     public static PostFragment newInstance(ForumDetailPresenter forumDetailPresenter) {
         PostFragment fragment = new PostFragment();
@@ -67,15 +67,13 @@ public class PostFragment extends Fragment implements ForumDetailPresenter.Forum
     public void setupForumDetail(View view) {
         forumDetailPresenter.buildPostModel();
 
-        final HtmlHandlerHelper helper = new HtmlHandlerHelper(getActivity(), forumDetailPresenter.getForumDetailModel().getSavedContent());
-
         if (getActivity() == null) return;
         getActivity().runOnUiThread(() -> {
             ((ForumDetailActivity) getActivity()).getSupportActionBar().setTitle(forumDetailPresenter.getForumDetailModel().getSavedTitle());
             tvTitle.setText(forumDetailPresenter.getForumDetailModel().getSavedTitle());
             tvDate.setText(forumDetailPresenter.getForumDetailModel().getSavedDate());
             tvAuthor.setText(forumDetailPresenter.getForumDetailModel().getSavedAuthor());
-            helper.setTextViewHTML(tvContent);
+            WebViewContentHelper.setWebView(wvContent, forumDetailPresenter.getForumDetailModel().getSavedContent());
             if (!forumDetailPresenter.getForumDetailModel().getSavedDeleteUrl().equals("")) {
                 btnDelete.setVisibility(Button.VISIBLE);
                 btnDelete.getBackground().setColorFilter(getContext().getResources().getColor(android.R.color.holo_red_light), PorterDuff.Mode.MULTIPLY);

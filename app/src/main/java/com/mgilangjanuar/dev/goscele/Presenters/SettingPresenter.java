@@ -30,10 +30,6 @@ public class SettingPresenter {
 
     private Activity activity;
 
-    public interface SettingServicePresenter {
-        void setupContents(View view);
-    }
-
     public SettingPresenter(Activity activity) {
         this.activity = activity;
         listContent = new ArrayList<>();
@@ -177,6 +173,10 @@ public class SettingPresenter {
             alert.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(Color.DKGRAY);
         });
         alert.show();
+    }
+
+    public interface SettingServicePresenter {
+        void setupContents(View view);
     }
 
 }

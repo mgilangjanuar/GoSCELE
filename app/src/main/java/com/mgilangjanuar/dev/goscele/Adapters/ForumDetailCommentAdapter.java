@@ -8,12 +8,13 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.TextView;
 
 import com.mgilangjanuar.dev.goscele.BaseActivity;
 import com.mgilangjanuar.dev.goscele.ForumDetailActivity;
-import com.mgilangjanuar.dev.goscele.Helpers.HtmlHandlerHelper;
+import com.mgilangjanuar.dev.goscele.Helpers.WebViewContentHelper;
 import com.mgilangjanuar.dev.goscele.Models.ForumCommentModel;
 import com.mgilangjanuar.dev.goscele.Presenters.ForumDetailPresenter;
 import com.mgilangjanuar.dev.goscele.R;
@@ -49,9 +50,7 @@ public class ForumDetailCommentAdapter extends RecyclerView.Adapter<ForumDetailC
         final ForumCommentModel model = list.get(position);
         holder.author.setText(model.author);
         holder.date.setText(model.date);
-
-        HtmlHandlerHelper helper = new HtmlHandlerHelper(context, model.content);
-        helper.setTextViewHTML(holder.content);
+        WebViewContentHelper.setWebView(holder.content, model.content);
 
         if (!model.deleteUrl.equals("")) {
             holder.delete.setVisibility(Button.VISIBLE);
@@ -105,7 +104,7 @@ public class ForumDetailCommentAdapter extends RecyclerView.Adapter<ForumDetailC
         @BindView(R.id.date_forum_comment)
         public TextView date;
         @BindView(R.id.content_forum_comment)
-        public TextView content;
+        public WebView content;
         @BindView(R.id.button_delete_comment)
         public Button delete;
 

@@ -25,13 +25,9 @@ import java.net.URL;
 
 public class SplashScreenPresenter implements AuthPresenter.AuthServicePresenter {
 
+    private static String QUOTE_URL = "https://api.forismatic.com/api/1.0/?method=getQuote&lang=en&format=json";
     private AuthPresenter authPresenter;
     private Activity activity;
-    private static String QUOTE_URL = "https://api.forismatic.com/api/1.0/?method=getQuote&lang=en&format=json";
-
-    public interface SplashScreenServicePresenter {
-        void setupSplashScreen();
-    }
 
     public SplashScreenPresenter(Activity activity) {
         this.activity = activity;
@@ -81,6 +77,10 @@ public class SplashScreenPresenter implements AuthPresenter.AuthServicePresenter
             e.printStackTrace();
         }
         return null;
+    }
+
+    public interface SplashScreenServicePresenter {
+        void setupSplashScreen();
     }
 
 }

@@ -23,15 +23,14 @@ import butterknife.ButterKnife;
 
 public class CommentsFragment extends Fragment implements ForumDetailPresenter.ForumDetailServicePresenter {
 
-    private ForumDetailPresenter presenter;
-    private FloatingActionButton actionButton;
-
     @BindView(R.id.recycler_view_forum_detail)
     RecyclerView recyclerView;
     @BindView(R.id.text_status_forum_comments)
     TextView status;
     @BindView(R.id.swipe_refresh_forum_detail)
     SwipeRefreshLayout swipeRefreshLayout;
+    private ForumDetailPresenter presenter;
+    private FloatingActionButton actionButton;
 
     public static CommentsFragment newInstance(ForumDetailPresenter presenter, FloatingActionButton actionButton) {
         CommentsFragment fragment = new CommentsFragment();

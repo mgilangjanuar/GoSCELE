@@ -21,12 +21,11 @@ import butterknife.ButterKnife;
 
 public class SettingFragment extends Fragment implements SettingPresenter.SettingServicePresenter {
 
-    private SettingPresenter settingPresenter;
-
     @BindView(R.id.toolbar_setting)
     Toolbar toolbar;
     @BindView(R.id.recycler_view_setting)
     RecyclerView recyclerView;
+    private SettingPresenter settingPresenter;
 
     public static SettingFragment newInstance() {
         SettingFragment fragment = new SettingFragment();

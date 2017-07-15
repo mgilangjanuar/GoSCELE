@@ -10,12 +10,11 @@ import butterknife.BindView;
 
 public class SplashScreenActivity extends BaseActivity implements SplashScreenPresenter.SplashScreenServicePresenter {
 
-    private SplashScreenPresenter presenter;
-
     @BindView(R.id.progress_bar_splash_screen)
     ProgressBar progressBar;
     @BindView(R.id.text_quote)
     TextView textView;
+    private SplashScreenPresenter presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

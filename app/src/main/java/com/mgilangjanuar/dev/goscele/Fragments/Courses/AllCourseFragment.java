@@ -23,14 +23,13 @@ import butterknife.ButterKnife;
 
 public class AllCourseFragment extends Fragment implements CoursePresenter.CourseServicePresenter {
 
-    private CoursePresenter coursePresenter;
-
     @BindView(R.id.recycler_view_all_course)
     RecyclerView recyclerView;
     @BindView(R.id.swipe_refresh_course)
     SwipeRefreshLayout refreshLayout;
     @BindView(R.id.text_status_all_course)
     TextView tvStatus;
+    private CoursePresenter coursePresenter;
 
     public static AllCourseFragment newInstance() {
         AllCourseFragment fragment = new AllCourseFragment();

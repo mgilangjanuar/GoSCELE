@@ -27,17 +27,11 @@ import java.util.Map;
  */
 
 public class ForumPresenter {
+    public String url;
     private Activity activity;
-
     private ListForumModel listForumModel;
     private ListForumModel listForumSearchModel;
     private ForumService forumService;
-
-    public String url;
-
-    public interface ForumServicePresenter {
-        void setupForum();
-    }
 
     public ForumPresenter(Activity activity, String url) {
         this.activity = activity;
@@ -72,7 +66,7 @@ public class ForumPresenter {
             }
             listForumModel.save();
         } catch (IOException e) {
-            Log.e("ForumPresenter", e.getMessage());
+            Log.e("ForumPresenter", String.valueOf(e.getMessage()));
         }
     }
 
@@ -80,7 +74,7 @@ public class ForumPresenter {
         try {
             return forumService.getTitle();
         } catch (IOException e) {
-            Log.e("ForumPresenter", e.getMessage());
+            Log.e("ForumPresenter", String.valueOf(e.getMessage()));
         }
         return activity.getResources().getString(R.string.app_name);
     }
@@ -102,7 +96,7 @@ public class ForumPresenter {
         try {
             forumService.postForum(title, message);
         } catch (IOException e) {
-            Log.e("ForumPresenter", e.getMessage());
+            Log.e("ForumPresenter", String.valueOf(e.getMessage()));
         }
     }
 
@@ -129,7 +123,7 @@ public class ForumPresenter {
                 ((BaseActivity) activity).showToast("Please try to be more specific");
             }
         } catch (IOException e) {
-            Log.e("ForumPresenter", e.getMessage());
+            Log.e("ForumPresenter", String.valueOf(e.getMessage()));
         }
     }
 
@@ -201,5 +195,9 @@ public class ForumPresenter {
                 });
             })).start();
         });
+    }
+
+    public interface ForumServicePresenter {
+        void setupForum();
     }
 }

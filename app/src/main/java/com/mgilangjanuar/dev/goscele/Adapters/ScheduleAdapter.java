@@ -6,12 +6,13 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.mgilangjanuar.dev.goscele.CourseDetailActivity;
-import com.mgilangjanuar.dev.goscele.Helpers.HtmlHandlerHelper;
+import com.mgilangjanuar.dev.goscele.Helpers.WebViewContentHelper;
 import com.mgilangjanuar.dev.goscele.InAppBrowserActivity;
 import com.mgilangjanuar.dev.goscele.Models.ScheduleModel;
 import com.mgilangjanuar.dev.goscele.R;
@@ -29,29 +30,6 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.Schedu
 
     private Context context;
     private List<ScheduleModel> list;
-
-    public class ScheduleViewHolder extends RecyclerView.ViewHolder {
-
-        @BindView(R.id.title_schedule)
-        public TextView title;
-        @BindView(R.id.subtitle_schedule)
-        public TextView subTitle;
-        @BindView(R.id.description_schedule)
-        public TextView description;
-        @BindView(R.id.time_schedule)
-        public TextView time;
-        @BindView(R.id.button_share_schedule)
-        public Button share;
-        @BindView(R.id.button_view_course_in_schedule)
-        public Button course;
-        @BindView(R.id.title_card)
-        public LinearLayout layout;
-
-        public ScheduleViewHolder(View itemView) {
-            super(itemView);
-            ButterKnife.bind(this, itemView);
-        }
-    }
 
     public ScheduleAdapter(Context context, List<ScheduleModel> list) {
         this.context = context;
@@ -74,8 +52,7 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.Schedu
             holder.description.setVisibility(TextView.GONE);
         } else {
             holder.description.setVisibility(TextView.VISIBLE);
-            HtmlHandlerHelper htmlHandlerHelper = new HtmlHandlerHelper(context, scheduleModel.description);
-            htmlHandlerHelper.setTextViewHTML(holder.description);
+            WebViewContentHelper.setWebView(holder.description, scheduleModel.description);
         }
 
         holder.layout.setOnClickListener(v -> context.startActivity((new Intent(context, InAppBrowserActivity.class)).putExtra("url", scheduleModel.url)));
@@ -93,6 +70,29 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.Schedu
     @Override
     public int getItemCount() {
         return list.size();
+    }
+
+    public class ScheduleViewHolder extends RecyclerView.ViewHolder {
+
+        @BindView(R.id.title_schedule)
+        public TextView title;
+        @BindView(R.id.subtitle_schedule)
+        public TextView subTitle;
+        @BindView(R.id.description_schedule)
+        public WebView description;
+        @BindView(R.id.time_schedule)
+        public TextView time;
+        @BindView(R.id.button_share_schedule)
+        public Button share;
+        @BindView(R.id.button_view_course_in_schedule)
+        public Button course;
+        @BindView(R.id.title_card)
+        public LinearLayout layout;
+
+        public ScheduleViewHolder(View itemView) {
+            super(itemView);
+            ButterKnife.bind(this, itemView);
+        }
     }
 
 }

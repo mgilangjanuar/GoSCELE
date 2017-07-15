@@ -38,10 +38,6 @@ public class ForumDetailPresenter {
     private ForumDetailModel forumDetailModel;
     private ForumService forumService;
 
-    public interface ForumDetailServicePresenter {
-        void setupForumDetail(View view);
-    }
-
     public ForumDetailPresenter(Activity activity, String url) {
         this.activity = activity;
         this.url = url;
@@ -74,7 +70,7 @@ public class ForumDetailPresenter {
             forumDetailModel.deleteUrl = (String) data.get("deleteUrl");
             forumDetailModel.save();
         } catch (IOException e) {
-            Log.e("ForumDetailPresenter", e.getMessage());
+            Log.e("ForumDetailPresenter", String.valueOf(e.getMessage()));
         }
     }
 
@@ -92,7 +88,7 @@ public class ForumDetailPresenter {
             }
             forumDetailModel.save();
         } catch (IOException e) {
-            Log.e("ForumDetailPresenter", e.getMessage());
+            Log.e("ForumDetailPresenter", String.valueOf(e.getMessage()));
         }
     }
 
@@ -108,7 +104,7 @@ public class ForumDetailPresenter {
         try {
             forumService.postForumComment(message);
         } catch (IOException e) {
-            Log.e("ForumDetailPresenter", e.getMessage());
+            Log.e("ForumDetailPresenter", String.valueOf(e.getMessage()));
         }
     }
 
@@ -116,7 +112,7 @@ public class ForumDetailPresenter {
         try {
             forumService.deleteForumComment(model.deleteUrl);
         } catch (IOException e) {
-            Log.e("ForumDetailPresenter", e.getMessage());
+            Log.e("ForumDetailPresenter", String.valueOf(e.getMessage()));
         }
     }
 
@@ -124,7 +120,7 @@ public class ForumDetailPresenter {
         try {
             forumService.deleteForum(forumDetailModel.deleteUrl);
         } catch (IOException e) {
-            Log.e("ForumDetailPresenter", e.getMessage());
+            Log.e("ForumDetailPresenter", String.valueOf(e.getMessage()));
         }
     }
 
@@ -195,5 +191,9 @@ public class ForumDetailPresenter {
         activity.overridePendingTransition(0, 0);
         ForumPresenter presenter = new ForumPresenter(activity, listForumModel.getSavedUrl());
         presenter.clear();
+    }
+
+    public interface ForumDetailServicePresenter {
+        void setupForumDetail(View view);
     }
 }

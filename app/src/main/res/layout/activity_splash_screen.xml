@@ -4,21 +4,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.mgilangjanuar.dev.goscele.SplashScreenActivity"
-    android:background="@color/color_primary_dark">
+    android:background="@color/color_primary_dark"
+    tools:context="com.mgilangjanuar.dev.goscele.SplashScreenActivity">
 
     <ImageView
+        android:id="@+id/imageView4"
         android:layout_width="127dp"
         android:layout_height="124dp"
-        app:srcCompat="@drawable/ic_launcher"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:layout_constraintTop_creator="1"
+        app:layout_constraintVertical_bias="0.234"
+        app:srcCompat="@drawable/ic_launcher"
         tools:layout_constraintBottom_creator="1"
-        android:id="@+id/imageView4"
-        app:layout_constraintVertical_bias="0.234" />
+        tools:layout_constraintTop_creator="1" />
 
     <ProgressBar
         android:id="@+id/progress_bar_splash_screen"
@@ -37,15 +37,15 @@
         android:id="@+id/text_quote"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
         android:padding="20dp"
         android:textAlignment="center"
         android:textColor="@android:color/white"
         android:textStyle="italic"
+        app:layout_constraintBottom_toTopOf="@+id/progress_bar_splash_screen"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView4"
-        app:layout_constraintVertical_bias="0.486"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/progress_bar_splash_screen" />
+        app:layout_constraintVertical_bias="0.486" />
 
 </android.support.constraint.ConstraintLayout>

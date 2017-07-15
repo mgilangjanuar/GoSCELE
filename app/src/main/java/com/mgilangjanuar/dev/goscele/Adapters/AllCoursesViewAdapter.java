@@ -31,31 +31,6 @@ public class AllCoursesViewAdapter extends RecyclerView.Adapter<AllCoursesViewAd
     private Context context;
     private CoursePresenter coursePresenter;
 
-    public class AllCoursesViewHolder extends RecyclerView.ViewHolder {
-
-        @BindView(R.id.layout_course_list)
-        public RelativeLayout relativeLayout;
-        @BindView(R.id.title_course_name)
-        public TextView title;
-        @BindView(R.id.button_course)
-        public Button buttonAction;
-
-        public AllCoursesViewHolder(View itemView) {
-            super(itemView);
-            ButterKnife.bind(this, itemView);
-        }
-
-        public void enableButton() {
-            buttonAction.getBackground().setColorFilter(context.getResources().getColor(android.R.color.holo_green_dark), PorterDuff.Mode.MULTIPLY);
-            buttonAction.setEnabled(true);
-        }
-
-        public void disableButton() {
-            buttonAction.getBackground().setColorFilter(context.getResources().getColor(android.R.color.darker_gray), PorterDuff.Mode.MULTIPLY);
-            buttonAction.setEnabled(false);
-        }
-    }
-
     public AllCoursesViewAdapter(Context context, CoursePresenter coursePresenter, List<CourseModel> list) {
         this.context = context;
         this.coursePresenter = coursePresenter;
@@ -102,6 +77,31 @@ public class AllCoursesViewAdapter extends RecyclerView.Adapter<AllCoursesViewAd
             holder.disableButton();
         } else {
             holder.enableButton();
+        }
+    }
+
+    public class AllCoursesViewHolder extends RecyclerView.ViewHolder {
+
+        @BindView(R.id.layout_course_list)
+        public RelativeLayout relativeLayout;
+        @BindView(R.id.title_course_name)
+        public TextView title;
+        @BindView(R.id.button_course)
+        public Button buttonAction;
+
+        public AllCoursesViewHolder(View itemView) {
+            super(itemView);
+            ButterKnife.bind(this, itemView);
+        }
+
+        public void enableButton() {
+            buttonAction.getBackground().setColorFilter(context.getResources().getColor(android.R.color.holo_green_dark), PorterDuff.Mode.MULTIPLY);
+            buttonAction.setEnabled(true);
+        }
+
+        public void disableButton() {
+            buttonAction.getBackground().setColorFilter(context.getResources().getColor(android.R.color.darker_gray), PorterDuff.Mode.MULTIPLY);
+            buttonAction.setEnabled(false);
         }
     }
 

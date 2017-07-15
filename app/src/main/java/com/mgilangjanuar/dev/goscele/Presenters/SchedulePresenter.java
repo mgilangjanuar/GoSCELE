@@ -37,22 +37,14 @@ import java.util.Map;
 
 public class SchedulePresenter {
 
-    private Activity activity;
-
-    private ProgressDialog progress;
-
-    private ScheduleService scheduleService;
-    private CalendarMonthService calendarMonthService;
-
-    private ListScheduleModel listScheduleModel;
-    private CalendarEventModel calendarEventModel;
-
     public long time;
     public long time2;
-
-    public interface ScheduleServicePresenter {
-        void setupSchedule(View view);
-    }
+    private Activity activity;
+    private ProgressDialog progress;
+    private ScheduleService scheduleService;
+    private CalendarMonthService calendarMonthService;
+    private ListScheduleModel listScheduleModel;
+    private CalendarEventModel calendarEventModel;
 
     public SchedulePresenter(Activity activity) {
         this.activity = activity;
@@ -88,7 +80,7 @@ public class SchedulePresenter {
             }
             calendarEventModel.save();
         } catch (IOException e) {
-            Log.e("SchedulePresenter", e.getMessage());
+            Log.e("SchedulePresenter", String.valueOf(e.getMessage()));
         }
     }
 
@@ -115,7 +107,7 @@ public class SchedulePresenter {
             }
             listScheduleModel.save();
         } catch (IOException e) {
-            Log.e("SchedulePresenter", e.getMessage());
+            Log.e("SchedulePresenter", String.valueOf(e.getMessage()));
         }
     }
 
@@ -214,9 +206,9 @@ public class SchedulePresenter {
                     }
                 }
             } catch (IOException e) {
-                Log.e("SchedulePresenter", e.getMessage());
+                Log.e("SchedulePresenter", String.valueOf(e.getMessage()));
             } catch (ParseException e) {
-                Log.e("SchedulePresenter", e.getMessage());
+                Log.e("SchedulePresenter", String.valueOf(e.getMessage()));
             }
         }
     }
@@ -243,5 +235,9 @@ public class SchedulePresenter {
                 PendingIntent.FLAG_UPDATE_CURRENT);
         builder.setContentIntent(contentIntent);
         return builder.build();
+    }
+
+    public interface ScheduleServicePresenter {
+        void setupSchedule(View view);
     }
 }

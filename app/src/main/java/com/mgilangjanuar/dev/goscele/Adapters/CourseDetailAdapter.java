@@ -7,9 +7,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
 import android.widget.TextView;
 
-import com.mgilangjanuar.dev.goscele.Helpers.HtmlHandlerHelper;
+import com.mgilangjanuar.dev.goscele.Helpers.WebViewContentHelper;
 import com.mgilangjanuar.dev.goscele.Models.CoursePostModel;
 import com.mgilangjanuar.dev.goscele.R;
 
@@ -42,8 +43,7 @@ public class CourseDetailAdapter extends RecyclerView.Adapter<CourseDetailAdapte
         CoursePostModel model = list.get(position);
         holder.title.setText(model.title);
 
-        HtmlHandlerHelper helper = new HtmlHandlerHelper(context, model.summary);
-        helper.setTextViewHTML(holder.summary);
+        WebViewContentHelper.setWebView(holder.summary, model.summary);
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(context);
         holder.content.setLayoutManager(layoutManager);
@@ -60,7 +60,7 @@ public class CourseDetailAdapter extends RecyclerView.Adapter<CourseDetailAdapte
         @BindView(R.id.title_course_detail)
         public TextView title;
         @BindView(R.id.summary_course_detail)
-        public TextView summary;
+        public WebView summary;
         @BindView(R.id.content_course_detail)
         public RecyclerView content;
 

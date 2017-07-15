@@ -45,10 +45,6 @@ public class InAppBrowserPresenter {
     private Activity activity;
     private AlertDialog alertDialog;
 
-    public interface InAppBrowserServicePresenter {
-        void setupInAppBrowser();
-    }
-
     public InAppBrowserPresenter(Activity activity, String url) {
         this.activity = activity;
         this.url = url;
@@ -155,6 +151,44 @@ public class InAppBrowserPresenter {
         activity.startActivity(chooserIntent);
     }
 
+    public WebViewClient buildWebViewClient(Toolbar toolbar, WebView webView) {
+        return new WebViewClient(toolbar, webView);
+    }
+
+    public WebChromeClient buildWebChromeClient(final ProgressBar progressBar) {
+        return new WebChromeClient() {
+            @Override
+            public void onProgressChanged(WebView view, int newProgress) {
+                super.onProgressChanged(view, newProgress);
+                progressBar.setProgress(newProgress);
+                progressBar.setVisibility(newProgress < 100 ? ProgressBar.VISIBLE : ProgressBar.GONE);
+            }
+        };
+    }
+
+    public DownloadListener buildDownloadListener() {
+        return new DownloadListener();
+    }
+
+    private boolean isAlreadyEnrollCourse() {
+        ListCourseModel listCourseModel = new ListCourseModel(activity);
+        List<CourseModel> savedCourseModelList = listCourseModel.getSavedCourseModelList();
+        if (savedCourseModelList == null) {
+            return false;
+        }
+
+        for (CourseModel model : savedCourseModelList) {
+            if (model.url.equals(url)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public interface InAppBrowserServicePresenter {
+        void setupInAppBrowser();
+    }
+
     public class WebViewClient extends android.webkit.WebViewClient {
         Toolbar toolbar;
         WebView webView;
@@ -192,21 +226,6 @@ public class InAppBrowserPresenter {
         }
     }
 
-    public WebViewClient buildWebViewClient(Toolbar toolbar, WebView webView) {
-        return new WebViewClient(toolbar, webView);
-    }
-
-    public WebChromeClient buildWebChromeClient(final ProgressBar progressBar) {
-        return new WebChromeClient() {
-            @Override
-            public void onProgressChanged(WebView view, int newProgress) {
-                super.onProgressChanged(view, newProgress);
-                progressBar.setProgress(newProgress);
-                progressBar.setVisibility(newProgress < 100 ? ProgressBar.VISIBLE : ProgressBar.GONE);
-            }
-        };
-    }
-
     public class DownloadListener implements android.webkit.DownloadListener {
 
         // https://stackoverflow.com/questions/33434532/android-webview-download-files-like-browsers-do
@@ -236,24 +255,5 @@ public class InAppBrowserPresenter {
                 Toast.makeText(activity, "Download failed!", Toast.LENGTH_LONG).show();
             }
         }
-    }
-
-    public DownloadListener buildDownloadListener() {
-        return new DownloadListener();
-    }
-
-    private boolean isAlreadyEnrollCourse() {
-        ListCourseModel listCourseModel = new ListCourseModel(activity);
-        List<CourseModel> savedCourseModelList = listCourseModel.getSavedCourseModelList();
-        if (savedCourseModelList == null) {
-            return false;
-        }
-
-        for (CourseModel model : savedCourseModelList) {
-            if (model.url.equals(url)) {
-                return true;
-            }
-        }
-        return false;
     }
 }

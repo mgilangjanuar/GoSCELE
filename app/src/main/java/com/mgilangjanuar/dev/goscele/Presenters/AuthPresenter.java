@@ -26,12 +26,6 @@ public class AuthPresenter {
 
     private ProgressDialog progress;
 
-    public interface AuthServicePresenter {
-        void authenticate();
-
-        boolean isAuthenticate() throws IOException;
-    }
-
     public AuthPresenter(Activity activity) {
         this.authService = new AuthService();
         this.activity = activity;
@@ -55,7 +49,7 @@ public class AuthPresenter {
         try {
             return authService.getUserText(accountModel.username, accountModel.password);
         } catch (IOException e) {
-            Log.e("AuthPresenter", e.getMessage());
+            Log.e("AuthPresenter", String.valueOf(e.getMessage()));
         }
         return null;
     }
@@ -112,6 +106,21 @@ public class AuthPresenter {
         progress.cancel();
     }
 
+    public String getCookies() {
+        try {
+            return "MoodleSession=" + AuthService.getCookies().get("MoodleSession");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public interface AuthServicePresenter {
+        void authenticate();
+
+        boolean isAuthenticate() throws IOException;
+    }
+
     public static class BottomNavigationViewHelper {
         public static void disableShiftMode(BottomNavigationView view) {
             BottomNavigationMenuView menuView = (BottomNavigationMenuView) view.getChildAt(0);
@@ -133,15 +142,6 @@ public class AuthPresenter {
                 Log.e("BNVHelper", "Unable to change value of shift mode", e);
             }
         }
-    }
-
-    public String getCookies() {
-        try {
-            return "MoodleSession=" + AuthService.getCookies().get("MoodleSession");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return null;
     }
 
 }

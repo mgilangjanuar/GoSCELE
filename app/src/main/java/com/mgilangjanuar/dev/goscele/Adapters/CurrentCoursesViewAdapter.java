@@ -31,21 +31,6 @@ public class CurrentCoursesViewAdapter extends RecyclerView.Adapter<CurrentCours
     private List<CourseModel> list;
     private CoursePresenter coursePresenter;
 
-    public class CurrentCoursesViewHolder extends RecyclerView.ViewHolder {
-
-        @BindView(R.id.layout_course_list)
-        public RelativeLayout relativeLayout;
-        @BindView(R.id.title_course_name)
-        public TextView title;
-        @BindView(R.id.button_course)
-        public Button buttonAction;
-
-        public CurrentCoursesViewHolder(View itemView) {
-            super(itemView);
-            ButterKnife.bind(this, itemView);
-        }
-    }
-
     public CurrentCoursesViewAdapter(Context context, CoursePresenter coursePresenter, List<CourseModel> list) {
         this.context = context;
         this.coursePresenter = coursePresenter;
@@ -86,5 +71,20 @@ public class CurrentCoursesViewAdapter extends RecyclerView.Adapter<CurrentCours
     @Override
     public int getItemCount() {
         return list.size();
+    }
+
+    public class CurrentCoursesViewHolder extends RecyclerView.ViewHolder {
+
+        @BindView(R.id.layout_course_list)
+        public RelativeLayout relativeLayout;
+        @BindView(R.id.title_course_name)
+        public TextView title;
+        @BindView(R.id.button_course)
+        public Button buttonAction;
+
+        public CurrentCoursesViewHolder(View itemView) {
+            super(itemView);
+            ButterKnife.bind(this, itemView);
+        }
     }
 }

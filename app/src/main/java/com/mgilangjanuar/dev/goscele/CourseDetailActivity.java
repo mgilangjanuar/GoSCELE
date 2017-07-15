@@ -15,15 +15,14 @@ import butterknife.BindView;
 
 public class CourseDetailActivity extends BaseActivity {
 
-    private String url;
-    private CourseDetailPresenter presenter;
-
     @BindView(R.id.toolbar_course_detail)
     Toolbar toolbar;
     @BindView(R.id.view_pager_activity_course_detail)
     ViewPager viewPager;
     @BindView(R.id.tab_course_detail)
     TabLayout tabLayout;
+    private String url;
+    private CourseDetailPresenter presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

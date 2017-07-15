@@ -25,10 +25,6 @@ public class HomePresenter {
     private HomePostService homePostService;
     private ListHomePostModel listHomePostModel;
 
-    public interface HomeServicePresenter {
-        void setupHome(View view);
-    }
-
     public HomePresenter(Activity activity, View view) {
         this.activity = activity;
         this.view = view;
@@ -58,11 +54,15 @@ public class HomePresenter {
             }
             listHomePostModel.save();
         } catch (IOException e) {
-            Log.e("HomePresenter", e.getMessage());
+            Log.e("HomePresenter", String.valueOf(e.getMessage()));
         }
     }
 
     public void clear() {
         this.listHomePostModel.clear();
+    }
+
+    public interface HomeServicePresenter {
+        void setupHome(View view);
     }
 }

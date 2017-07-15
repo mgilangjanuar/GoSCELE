@@ -15,9 +15,6 @@ import butterknife.BindView;
 
 public class ForumDetailActivity extends BaseActivity {
 
-    private String url;
-    private ForumDetailPresenter presenter;
-
     @BindView(R.id.toolbar_forum_detail)
     Toolbar toolbar;
     @BindView(R.id.fab_forum_comment)
@@ -26,6 +23,8 @@ public class ForumDetailActivity extends BaseActivity {
     ViewPager viewPager;
     @BindView(R.id.tab_forum_detail)
     TabLayout tabLayout;
+    private String url;
+    private ForumDetailPresenter presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

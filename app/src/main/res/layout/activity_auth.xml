@@ -11,12 +11,12 @@
         android:id="@+id/imageView"
         android:layout_width="102dp"
         android:layout_height="108dp"
-        app:srcCompat="@drawable/ic_launcher"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@+id/username"
-        app:layout_constraintVertical_bias="0.726" />
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.726"
+        app:srcCompat="@drawable/ic_launcher" />
 
     <EditText
         android:id="@+id/username"
@@ -69,21 +69,21 @@
         android:id="@+id/login_button"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="67dp"
+        android:layout_marginLeft="67dp"
+        android:layout_marginRight="67dp"
+        android:layout_marginStart="67dp"
         android:layout_marginTop="17dp"
         android:background="@color/color_accent"
         android:text="Sign In"
         android:textColor="@android:color/white"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/password"
-        tools:layout_constraintTop_creator="1"
-        tools:layout_constraintRight_creator="1"
-        android:layout_marginStart="67dp"
-        android:layout_marginEnd="67dp"
         tools:layout_constraintLeft_creator="1"
-        android:layout_marginLeft="67dp"
-        android:layout_marginRight="67dp"
-        app:layout_constraintHorizontal_bias="0.0" />
+        tools:layout_constraintRight_creator="1"
+        tools:layout_constraintTop_creator="1" />
 
     <TextView
         android:id="@+id/textView2"

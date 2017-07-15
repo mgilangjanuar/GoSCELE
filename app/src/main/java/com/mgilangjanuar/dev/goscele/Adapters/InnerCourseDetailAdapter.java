@@ -6,9 +6,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.mgilangjanuar.dev.goscele.Helpers.HtmlHandlerHelper;
+import com.mgilangjanuar.dev.goscele.Helpers.WebViewContentHelper;
 import com.mgilangjanuar.dev.goscele.InAppBrowserActivity;
 import com.mgilangjanuar.dev.goscele.Models.InnerCoursePostModel;
 import com.mgilangjanuar.dev.goscele.R;
@@ -48,9 +50,8 @@ public class InnerCourseDetailAdapter extends RecyclerView.Adapter<InnerCourseDe
         }
 
         if (!model.comment.equals("")) {
-            holder.comment.setVisibility(TextView.VISIBLE);
-            HtmlHandlerHelper helper = new HtmlHandlerHelper(context, model.comment);
-            helper.setTextViewHTML(holder.comment);
+            holder.layoutComment.setVisibility(TextView.VISIBLE);
+            WebViewContentHelper.setWebView(holder.comment, model.comment);
         }
     }
 
@@ -64,7 +65,9 @@ public class InnerCourseDetailAdapter extends RecyclerView.Adapter<InnerCourseDe
         @BindView(R.id.title_inner_course_post)
         public TextView title;
         @BindView(R.id.comment_inner_course_post)
-        public TextView comment;
+        public WebView comment;
+        @BindView(R.id.layout_comment_inner_course_post)
+        LinearLayout layoutComment;
 
         public InnerCourseDetailViewHolder(View itemView) {
             super(itemView);

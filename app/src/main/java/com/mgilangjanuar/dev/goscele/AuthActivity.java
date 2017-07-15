@@ -13,15 +13,13 @@ import butterknife.BindView;
 
 public class AuthActivity extends BaseActivity implements AuthPresenter.AuthServicePresenter {
 
-    private AuthPresenter authPresenter;
-
     @BindView(R.id.login_button)
     Button btnLogin;
     @BindView(R.id.username)
     EditText etUsername;
     @BindView(R.id.password)
     EditText etPassword;
-
+    private AuthPresenter authPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -6,11 +6,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.mgilangjanuar.dev.goscele.ForumDetailActivity;
-import com.mgilangjanuar.dev.goscele.Helpers.HtmlHandlerHelper;
+import com.mgilangjanuar.dev.goscele.Helpers.WebViewContentHelper;
 import com.mgilangjanuar.dev.goscele.Models.HomePostModel;
 import com.mgilangjanuar.dev.goscele.R;
 
@@ -43,9 +44,7 @@ public class HomePostAdapter extends RecyclerView.Adapter<HomePostAdapter.HomePo
         holder.title.setText(model.title);
         holder.author.setText(model.author);
         holder.info.setText(model.date);
-
-        HtmlHandlerHelper helper = new HtmlHandlerHelper(context, model.content);
-        helper.setTextViewHTML(holder.content);
+        WebViewContentHelper.setWebView(holder.content, model.content);
 
         holder.layout.setOnClickListener(v -> {
             Intent intent = new Intent(context, ForumDetailActivity.class).putExtra("url", model.url);
@@ -67,7 +66,7 @@ public class HomePostAdapter extends RecyclerView.Adapter<HomePostAdapter.HomePo
         @BindView(R.id.info_home)
         public TextView info;
         @BindView(R.id.content_home)
-        public TextView content;
+        public WebView content;
         @BindView(R.id.main_layout_home)
         public LinearLayout layout;
 
@@ -76,6 +75,4 @@ public class HomePostAdapter extends RecyclerView.Adapter<HomePostAdapter.HomePo
             ButterKnife.bind(this, itemView);
         }
     }
-
-
 }

@@ -1,36 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/layout_inner_course_detail"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
     <TextView
         android:id="@+id/title_inner_course_post"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="15sp"
+        android:background="?attr/selectableItemBackground"
+        android:clickable="true"
         android:drawableLeft="@drawable/ic_chevron_right_black_24dp"
         android:drawablePadding="4dip"
         android:paddingBottom="10dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
         android:paddingTop="6dp"
         android:textColor="@color/color_accent"
+        android:textSize="15sp"
         android:textStyle="italic"
-        android:clickable="true"
-        android:background="?attr/selectableItemBackground"
-        android:visibility="gone"
-        android:paddingLeft="20dp"
-        android:paddingRight="20dp"/>
+        android:visibility="gone" />
 
-    <TextView
-        android:id="@+id/comment_inner_course_post"
+    <LinearLayout
+        android:id="@+id/layout_comment_inner_course_post"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingBottom="10dp"
-        android:visibility="gone"
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
-        android:textIsSelectable="true"/>
+        android:visibility="gone">
+
+        <WebView
+            android:id="@+id/comment_inner_course_post"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scrollbars="none" />
+    </LinearLayout>
 
 </LinearLayout>

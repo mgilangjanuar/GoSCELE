@@ -20,8 +20,8 @@ import java.util.Map;
 
 public class ForumService {
 
-    public String url;
     private static String URL_SEARCH = ConfigAppModel.urlTo("mod/forum/search.php?id=1&perpage=50&search=");
+    public String url;
 
     public ForumService(String url) {
         this.url = url;

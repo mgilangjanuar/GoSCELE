@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -11,28 +10,31 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        tools:layout_editor_absoluteY="0dp"
-        tools:layout_editor_absoluteX="8dp">
+        tools:layout_editor_absoluteX="8dp"
+        tools:layout_editor_absoluteY="0dp">
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar_search_forum"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:weightSum="1">
+
                 <EditText
                     android:id="@+id/edit_search_forum"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.95"
+                    android:backgroundTint="@android:color/white"
                     android:elevation="1dp"
                     android:hint="@string/hint_search_forum"
                     android:inputType="textNoSuggestions"
-                    android:backgroundTint="@android:color/white"
                     android:singleLine="true" />
+
                 <ImageButton
                     android:id="@+id/button_search_forum"
                     style="@android:style/Widget.Material.Light.Button.Borderless.Colored"
@@ -50,28 +52,28 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:paddingTop="?attr/actionBarSize"
-        tools:layout_editor_absoluteY="0dp"
+        app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent">
+        tools:layout_editor_absoluteY="0dp">
 
         <TextView
             android:id="@+id/text_status_search_forum"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textAlignment="center"
-            android:text="@string/loading_text"
-            android:textColor="@android:color/darker_gray"
             android:layout_marginTop="?attr/actionBarSize"
             android:paddingTop="20dp"
+            android:text="@string/loading_text"
+            android:textAlignment="center"
+            android:textColor="@android:color/darker_gray"
             android:textStyle="italic"
-            android:visibility="gone"/>
+            android:visibility="gone" />
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recycler_view_search_forum"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:layout_editor_absoluteY="0dp"
-            tools:layout_editor_absoluteX="8dp" />
+            tools:layout_editor_absoluteX="8dp"
+            tools:layout_editor_absoluteY="0dp" />
 
     </LinearLayout>
 

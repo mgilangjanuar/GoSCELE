@@ -1,9 +1,6 @@
 package com.mgilangjanuar.dev.goscele;
 
-import android.Manifest;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -18,14 +15,13 @@ import butterknife.BindView;
 
 public class InAppBrowserActivity extends BaseActivity implements InAppBrowserPresenter.InAppBrowserServicePresenter {
 
-    private InAppBrowserPresenter presenter;
-
     @BindView(R.id.toolbar_app_browser)
     Toolbar toolbar;
     @BindView(R.id.web_view)
     WebView webView;
     @BindView(R.id.progress_bar_browser)
     ProgressBar progressBar;
+    private InAppBrowserPresenter presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,7 +78,7 @@ public class InAppBrowserActivity extends BaseActivity implements InAppBrowserPr
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
-        if (! presenter.isStoragePermissionGranted()) {
+        if (!presenter.isStoragePermissionGranted()) {
             webView.stopLoading();
             presenter.showStoragePermissionAlertDialog();
         }

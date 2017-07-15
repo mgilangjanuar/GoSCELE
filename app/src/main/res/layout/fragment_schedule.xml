@@ -1,15 +1,14 @@
-<com.sothree.slidinguppanel.SlidingUpPanelLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<com.sothree.slidinguppanel.SlidingUpPanelLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/sliding_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="bottom"
     app:umanoPanelHeight="68dp"
-    app:umanoShadowHeight="4dp"
     app:umanoParallaxOffset="?attr/actionBarSize"
-    app:umanoScrollableView="@+id/recycler_view_schedule">
+    app:umanoScrollableView="@+id/recycler_view_schedule"
+    app:umanoShadowHeight="4dp">
 
     <FrameLayout
         android:id="@+id/layout_schedule"
@@ -31,7 +30,7 @@
                     android:id="@+id/toolbar_schedule"
                     android:layout_width="match_parent"
                     android:layout_height="?attr/actionBarSize"
-                    android:title="@string/title_fragment_schedule"/>
+                    android:title="@string/title_fragment_schedule" />
 
             </android.support.design.widget.AppBarLayout>
 
@@ -40,18 +39,18 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <com.prolificinteractive.materialcalendarview.MaterialCalendarView
-                    xmlns:app="http://schemas.android.com/apk/res-auto"
+                <com.prolificinteractive.materialcalendarview.MaterialCalendarView xmlns:app="http://schemas.android.com/apk/res-auto"
                     android:id="@+id/calendar_view"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:mcv_showOtherDates="all"
-                    app:mcv_selectionColor="@color/color_primary" />
+                    app:mcv_selectionColor="@color/color_primary"
+                    app:mcv_showOtherDates="all" />
 
             </android.support.v4.widget.SwipeRefreshLayout>
 
         </LinearLayout>
     </FrameLayout>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -61,28 +60,28 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/color_primary"
-            android:paddingTop="18dp"
             android:paddingBottom="18dp"
             android:paddingLeft="20dp"
-            android:paddingRight="20dp" >
+            android:paddingRight="20dp"
+            android:paddingTop="18dp">
 
             <ImageView
                 android:id="@+id/img_detail_description"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
-                android:src="@drawable/ic_sliding_up"
-                android:backgroundTint="@android:color/white" />
+                android:backgroundTint="@android:color/white"
+                android:src="@drawable/ic_sliding_up" />
 
             <TextView
                 android:id="@+id/title_slidingup_panel_schedule"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@android:color/white"
-                android:text="Loading..."
-                android:textSize="20dp"
+                android:layout_toRightOf="@+id/img_detail_description"
                 android:paddingLeft="10dp"
-                android:layout_toRightOf="@+id/img_detail_description"/>
+                android:text="Loading..."
+                android:textColor="@android:color/white"
+                android:textSize="20dp" />
 
         </RelativeLayout>
 
@@ -90,19 +89,19 @@
             android:id="@+id/text_status_schedule"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textAlignment="center"
-            android:text="@string/loading_text"
-            android:textColor="@android:color/darker_gray"
+            android:layout_below="@+id/header_slidingup_panel_schedule"
             android:paddingTop="20dp"
-            android:textStyle="italic"
-            android:layout_below="@+id/header_slidingup_panel_schedule"/>
+            android:text="@string/loading_text"
+            android:textAlignment="center"
+            android:textColor="@android:color/darker_gray"
+            android:textStyle="italic" />
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recycler_view_schedule"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:scrollbars="vertical"
-            android:layout_below="@+id/header_slidingup_panel_schedule" />
+            android:layout_below="@+id/header_slidingup_panel_schedule"
+            android:scrollbars="vertical" />
 
     </RelativeLayout>
 

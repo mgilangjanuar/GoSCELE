@@ -30,8 +30,6 @@ import butterknife.ButterKnife;
 
 public class HomeFragment extends Fragment implements HomePresenter.HomeServicePresenter {
 
-    private HomePresenter homePresenter;
-
     @BindView(R.id.recycler_view_home)
     RecyclerView recyclerView;
     @BindView(R.id.toolbar_home)
@@ -40,6 +38,7 @@ public class HomeFragment extends Fragment implements HomePresenter.HomeServiceP
     TextView status;
     @BindView(R.id.swipe_refresh_home)
     SwipeRefreshLayout refreshLayout;
+    private HomePresenter homePresenter;
 
     public static HomeFragment newInstance() {
         HomeFragment fragment = new HomeFragment();

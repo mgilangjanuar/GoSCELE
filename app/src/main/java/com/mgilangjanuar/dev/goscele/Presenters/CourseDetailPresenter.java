@@ -29,21 +29,13 @@ import java.util.Map;
 
 public class CourseDetailPresenter {
 
+    public String url;
     private Activity activity;
-
     private ListCoursePostModel listCoursePostModel;
     private ListCourseEventModel listCourseEventModel;
     private ListCourseNewsModel listCourseNewsModel;
-
     private CourseDetailService courseDetailService;
-
     private CourseModel courseModel;
-
-    public String url;
-
-    public interface CourseDetailServicePresenter {
-        void setupCourseDetail(View view);
-    }
 
     public CourseDetailPresenter(Activity activity, String url) {
         this.activity = activity;
@@ -82,7 +74,7 @@ public class CourseDetailPresenter {
             }
             listCoursePostModel.save();
         } catch (IOException e) {
-            Log.e("CourseDetailPresenter", e.getMessage());
+            Log.e("CourseDetailPresenter", String.valueOf(e.getMessage()));
         }
     }
 
@@ -112,7 +104,7 @@ public class CourseDetailPresenter {
             }
             listCourseEventModel.save();
         } catch (IOException e) {
-            Log.e("CourseDetailPresenter", e.getMessage());
+            Log.e("CourseDetailPresenter", String.valueOf(e.getMessage()));
         }
     }
 
@@ -128,7 +120,7 @@ public class CourseDetailPresenter {
             courseModel.url = url;
             courseModel.name = courseDetailService.getCourseName(url);
         } catch (IOException e) {
-            Log.e("CourseDetailPresenter", e.getMessage() + " ");
+            Log.e("CourseDetailPresenter", String.valueOf(e.getMessage()));
         }
         return courseModel;
     }
@@ -155,11 +147,15 @@ public class CourseDetailPresenter {
             }
             listCourseNewsModel.save();
         } catch (IOException e) {
-            Log.e("CourseDetailPresenter", e.getMessage());
+            Log.e("CourseDetailPresenter", String.valueOf(e.getMessage()));
         }
     }
 
     public void clearNews() {
         listCourseNewsModel.clear();
+    }
+
+    public interface CourseDetailServicePresenter {
+        void setupCourseDetail(View view);
     }
 }

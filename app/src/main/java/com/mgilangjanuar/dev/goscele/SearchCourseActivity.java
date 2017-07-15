@@ -18,8 +18,6 @@ import butterknife.BindView;
 
 public class SearchCourseActivity extends BaseActivity {
 
-    private CoursePresenter presenter;
-
     @BindView(R.id.toolbar_search_course)
     Toolbar toolbar;
     @BindView(R.id.recycler_view_search_course)
@@ -30,6 +28,7 @@ public class SearchCourseActivity extends BaseActivity {
     TextView tvStatus;
     @BindView(R.id.edit_search_course)
     EditText etSearch;
+    private CoursePresenter presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

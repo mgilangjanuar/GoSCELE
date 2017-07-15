@@ -5,6 +5,7 @@ import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -17,9 +18,6 @@ import butterknife.BindView;
 
 public class ForumActivity extends BaseActivity implements ForumPresenter.ForumServicePresenter {
 
-    private ForumPresenter presenter;
-    private String url;
-
     @BindView(R.id.toolbar_forum)
     Toolbar toolbar;
     @BindView(R.id.recycler_view_forum)
@@ -28,6 +26,8 @@ public class ForumActivity extends BaseActivity implements ForumPresenter.ForumS
     TextView status;
     @BindView(R.id.swipe_refresh_forum)
     SwipeRefreshLayout swipeRefreshLayout;
+    private ForumPresenter presenter;
+    private String url;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +56,7 @@ public class ForumActivity extends BaseActivity implements ForumPresenter.ForumS
         runOnUiThread(() -> {
             recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
             recyclerView.setItemAnimator(new DefaultItemAnimator());
+            recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
             recyclerView.setAdapter(adapter);
             if (adapter.getItemCount() == 0) {
                 status.setText(getResources().getString(R.string.empty_text));

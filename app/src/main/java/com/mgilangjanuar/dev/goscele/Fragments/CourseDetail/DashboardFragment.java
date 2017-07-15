@@ -24,14 +24,13 @@ import butterknife.ButterKnife;
 
 public class DashboardFragment extends Fragment implements CourseDetailPresenter.CourseDetailServicePresenter {
 
-    private CourseDetailPresenter presenter;
-
     @BindView(R.id.recycler_view_course_detail)
     RecyclerView recyclerView;
     @BindView(R.id.text_status_course_dashboard)
     TextView tvStatus;
     @BindView(R.id.swipe_refresh_course_detail)
     SwipeRefreshLayout swipeRefreshLayout;
+    private CourseDetailPresenter presenter;
 
     public static DashboardFragment newInstance(CourseDetailPresenter courseDetailPresenter) {
         DashboardFragment fragment = new DashboardFragment();

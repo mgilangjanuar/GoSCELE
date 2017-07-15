@@ -31,14 +31,13 @@ import butterknife.ButterKnife;
 
 public class CourseFragment extends Fragment {
 
-    private CoursePresenter presenter;
-
     @BindView(R.id.toolbar_course)
     Toolbar toolbar;
     @BindView(R.id.view_pager_fragment_course)
     ViewPager viewPager;
     @BindView(R.id.tab_fragment_course)
     TabLayout tabLayout;
+    private CoursePresenter presenter;
 
     public static CourseFragment newInstance() {
         CourseFragment fragment = new CourseFragment();

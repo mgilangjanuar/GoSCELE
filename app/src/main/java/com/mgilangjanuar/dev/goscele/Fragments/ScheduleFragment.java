@@ -36,9 +36,6 @@ import butterknife.ButterKnife;
 
 public class ScheduleFragment extends Fragment implements SettingPresenter.SettingServicePresenter {
 
-    private SchedulePresenter schedulePresenter;
-    private boolean isCannotChangeMonth;
-
     @BindView(R.id.calendar_view)
     MaterialCalendarView materialCalendarView;
     @BindView(R.id.toolbar_schedule)
@@ -55,6 +52,8 @@ public class ScheduleFragment extends Fragment implements SettingPresenter.Setti
     SlidingUpPanelLayout slidingUpPanelLayout;
     @BindView(R.id.img_detail_description)
     ImageView iViewDetailDescription;
+    private SchedulePresenter schedulePresenter;
+    private boolean isCannotChangeMonth;
 
     public static ScheduleFragment newInstance() {
         ScheduleFragment fragment = new ScheduleFragment();

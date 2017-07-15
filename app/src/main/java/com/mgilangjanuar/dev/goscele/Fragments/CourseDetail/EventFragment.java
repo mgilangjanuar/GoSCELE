@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -22,14 +23,13 @@ import butterknife.ButterKnife;
 
 public class EventFragment extends Fragment implements CourseDetailPresenter.CourseDetailServicePresenter {
 
-    private CourseDetailPresenter presenter;
-
     @BindView(R.id.recycler_view_course_detail_event)
     RecyclerView recyclerView;
     @BindView(R.id.text_status_course_event)
     TextView tvStatus;
     @BindView(R.id.swipe_refresh_course_detail_event)
     SwipeRefreshLayout swipeRefreshLayout;
+    private CourseDetailPresenter presenter;
 
     public static EventFragment newInstance(CourseDetailPresenter courseDetailPresenter) {
         EventFragment fragment = new EventFragment();
@@ -67,6 +67,7 @@ public class EventFragment extends Fragment implements CourseDetailPresenter.Cou
         getActivity().runOnUiThread(() -> {
             recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
             recyclerView.setItemAnimator(new DefaultItemAnimator());
+            recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), LinearLayoutManager.VERTICAL));
             if (recyclerView.getAdapter() == null || !adapter.equals(recyclerView.getAdapter())) {
                 recyclerView.setAdapter(adapter);
             }

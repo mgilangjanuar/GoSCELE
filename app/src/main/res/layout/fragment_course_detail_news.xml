@@ -8,11 +8,11 @@
         android:id="@+id/text_status_course_news"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textAlignment="center"
-        android:text="@string/loading_text"
-        android:textColor="@android:color/darker_gray"
         android:paddingTop="20dp"
-        android:textStyle="italic"/>
+        android:text="@string/loading_text"
+        android:textAlignment="center"
+        android:textColor="@android:color/darker_gray"
+        android:textStyle="italic" />
 
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/swipe_refresh_course_detail_news"
