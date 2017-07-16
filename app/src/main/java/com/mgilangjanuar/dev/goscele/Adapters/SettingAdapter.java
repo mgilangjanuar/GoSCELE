@@ -80,15 +80,19 @@ public class SettingAdapter extends RecyclerView.Adapter<SettingAdapter.SettingV
                         "<h3>Main Developer</h3>" +
                         "<p>M Gilang Januar</p>" +
                         "<br /><h3>Contributor</h3>" +
-                        "<p>Sumarliyanti</p>" +
+                        "<p>" +
+                        "Sumarliyanti<br />" +
+                        "Dzulham Azham<br />" +
+                        "Salsabila Nadhifah<br />" +
+                        "Zamil Majdy<br />" +
+                        "Wahyu Prihantoro<br />" +
+                        "</p>" +
                         "<br /><h3>Beta Tester</h3>" +
                         "<p>" +
                         "Burhan Sidqi<br />" +
                         "Fandika Okdiba<br />" +
                         "Ayu Annisa<br />" +
                         "Kustiawanto Halim<br />" +
-                        "Zamil Majdy<br />" +
-                        "Salsabila Nadhifah<br />" +
                         "Farhan Je<br />" +
                         "Hadi Syah Putra<br />" +
                         "Wresni Ronggowerdhi<br />" +
