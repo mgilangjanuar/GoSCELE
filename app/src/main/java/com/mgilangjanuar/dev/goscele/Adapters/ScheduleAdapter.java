@@ -61,7 +61,7 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.Schedu
             Intent shareIntent = new Intent(Intent.ACTION_SEND);
             shareIntent.setType("text/plain");
             shareIntent.putExtra(Intent.EXTRA_TEXT, scheduleModel.courseModel.name + "\n\n" + scheduleModel.title + "\n" + "(" + scheduleModel.date + " " + scheduleModel.time + ")" + "\n\n" + scheduleModel.url);
-            holder.itemView.getContext().startActivity(Intent.createChooser(shareIntent, "Share Link"));
+            holder.itemView.getContext().startActivity(Intent.createChooser(shareIntent, "Share"));
         });
 
         holder.course.setOnClickListener(v -> context.startActivity((new Intent(context, CourseDetailActivity.class)).putExtra("url", scheduleModel.courseModel.url)));

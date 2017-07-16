@@ -193,6 +193,14 @@ public class ForumDetailPresenter {
         presenter.clear();
     }
 
+    public boolean isCanShareContent() {
+        return forumDetailModel.getSavedTitle() != null && forumDetailModel.getSavedUrl() != null && forumDetailModel.getSavedAuthor() != null && forumDetailModel.getSavedDate() != null;
+    }
+
+    public String getContentModel() {
+        return forumDetailModel.getSavedTitle() + "\n(" + forumDetailModel.getSavedAuthor() + " - " + forumDetailModel.getSavedDate() + ")\n\n" + forumDetailModel.getSavedUrl();
+    }
+
     public interface ForumDetailServicePresenter {
         void setupForumDetail(View view);
     }

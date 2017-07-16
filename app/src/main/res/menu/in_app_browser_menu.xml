@@ -2,15 +2,13 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <item
-        android:id="@+id/item_browser_share"
-        android:icon="@drawable/ic_share_white_24dp"
-        android:title="Share"
-        app:showAsAction="ifRoom" />
-
     <group
         android:id="@+id/group_more"
         android:checkableBehavior="none">
+        <item
+            android:id="@+id/item_browser_share"
+            android:icon="@null"
+            android:title="Share" />
         <item
             android:id="@+id/item_browser_open"
             android:icon="@null"

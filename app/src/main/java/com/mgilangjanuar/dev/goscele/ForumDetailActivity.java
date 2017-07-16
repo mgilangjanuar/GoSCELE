@@ -5,10 +5,14 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 
 import com.mgilangjanuar.dev.goscele.Adapters.BaseTabViewPagerAdapter;
 import com.mgilangjanuar.dev.goscele.Fragments.ForumDetail.CommentsFragment;
 import com.mgilangjanuar.dev.goscele.Fragments.ForumDetail.PostFragment;
+import com.mgilangjanuar.dev.goscele.Helpers.ShareContentHelper;
 import com.mgilangjanuar.dev.goscele.Presenters.ForumDetailPresenter;
 
 import butterknife.BindView;
@@ -83,5 +87,20 @@ public class ForumDetailActivity extends BaseActivity {
     public boolean onSupportNavigateUp() {
         onBackPressed();
         return true;
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.content_default_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.menuitem_share && presenter.isCanShareContent()) {
+            ShareContentHelper.share(this, presenter.getContentModel());
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

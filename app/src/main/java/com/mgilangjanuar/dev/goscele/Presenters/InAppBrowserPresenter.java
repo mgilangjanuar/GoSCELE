@@ -6,11 +6,9 @@ import android.app.DownloadManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.content.pm.ResolveInfo;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
-import android.os.Parcelable;
 import android.provider.Settings;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
@@ -28,11 +26,12 @@ import android.widget.Toast;
 import com.mgilangjanuar.dev.goscele.CourseDetailActivity;
 import com.mgilangjanuar.dev.goscele.ForumActivity;
 import com.mgilangjanuar.dev.goscele.ForumDetailActivity;
+import com.mgilangjanuar.dev.goscele.Helpers.OpenOtherAppHelper;
+import com.mgilangjanuar.dev.goscele.Helpers.ShareContentHelper;
 import com.mgilangjanuar.dev.goscele.Models.AccountModel;
 import com.mgilangjanuar.dev.goscele.Models.CourseModel;
 import com.mgilangjanuar.dev.goscele.Models.ListCourseModel;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -122,33 +121,11 @@ public class InAppBrowserPresenter {
     }
 
     public void shareUrl(WebView webView) {
-        Intent shareIntent = new Intent(Intent.ACTION_SEND);
-        shareIntent.setType("text/plain");
-        shareIntent.putExtra(Intent.EXTRA_TEXT, webView.getUrl());
-        activity.startActivity(Intent.createChooser(shareIntent, "Share Link"));
+        ShareContentHelper.share(activity, webView.getUrl());
     }
 
-    // source: https://stackoverflow.com/a/23268821
     public void openOtherApp() {
-        Intent intent = new Intent();
-        intent.setAction(android.content.Intent.ACTION_VIEW);
-        intent.setData(Uri.parse(url));
-        PackageManager packageManager = activity.getPackageManager();
-        List<ResolveInfo> activities = packageManager.queryIntentActivities(intent, 0);
-        String packageNameToHide = activity.getPackageName();
-        ArrayList<Intent> targetIntents = new ArrayList<>();
-        for (ResolveInfo currentInfo : activities) {
-            String packageName = currentInfo.activityInfo.packageName;
-            if (!packageNameToHide.equals(packageName)) {
-                Intent targetIntent = new Intent(android.content.Intent.ACTION_VIEW);
-                targetIntent.setData(Uri.parse(url));
-                targetIntent.setPackage(packageName);
-                targetIntents.add(targetIntent);
-            }
-        }
-        Intent chooserIntent = Intent.createChooser(targetIntents.remove(0), "Open with");
-        chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, targetIntents.toArray(new Parcelable[]{}));
-        activity.startActivity(chooserIntent);
+        OpenOtherAppHelper.openLink(activity, url);
     }
 
     public WebViewClient buildWebViewClient(Toolbar toolbar, WebView webView) {

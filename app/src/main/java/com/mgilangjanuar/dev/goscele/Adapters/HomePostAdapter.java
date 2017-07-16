@@ -2,15 +2,19 @@ package com.mgilangjanuar.dev.goscele.Adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.mgilangjanuar.dev.goscele.ForumDetailActivity;
+import com.mgilangjanuar.dev.goscele.Helpers.ShareContentHelper;
 import com.mgilangjanuar.dev.goscele.Helpers.WebViewContentHelper;
 import com.mgilangjanuar.dev.goscele.Models.HomePostModel;
 import com.mgilangjanuar.dev.goscele.R;
@@ -50,6 +54,19 @@ public class HomePostAdapter extends RecyclerView.Adapter<HomePostAdapter.HomePo
             Intent intent = new Intent(context, ForumDetailActivity.class).putExtra("url", model.url);
             context.startActivity(intent);
         });
+
+        holder.menuMore.setOnClickListener(v -> {
+            PopupMenu popup = new PopupMenu(context, holder.menuMore);
+            MenuInflater inflater = popup.getMenuInflater();
+            inflater.inflate(R.menu.content_default_menu, popup.getMenu());
+            popup.setOnMenuItemClickListener(item -> {
+                if (item.getItemId() == R.id.menuitem_share) {
+                    ShareContentHelper.share(context, model.title + "\n(" + model.author + " - " + model.date + ")\n\n" + model.url);
+                }
+                return false;
+            });
+            popup.show();
+        });
     }
 
     @Override
@@ -69,6 +86,8 @@ public class HomePostAdapter extends RecyclerView.Adapter<HomePostAdapter.HomePo
         public WebView content;
         @BindView(R.id.main_layout_home)
         public LinearLayout layout;
+        @BindView(R.id.menu_more_home)
+        ImageButton menuMore;
 
         public HomePostViewHolder(View itemView) {
             super(itemView);
