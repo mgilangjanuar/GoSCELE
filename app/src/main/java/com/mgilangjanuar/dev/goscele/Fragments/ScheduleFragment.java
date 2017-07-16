@@ -125,6 +125,7 @@ public class ScheduleFragment extends Fragment implements SettingPresenter.Setti
 
             @Override
             public void decorate(DayViewFacade view) {
+                if (getContext() == null) return;
                 view.addSpan(new ForegroundColorSpan(ContextCompat.getColor(getContext(), android.R.color.white)));
                 view.setSelectionDrawable(ContextCompat.getDrawable(getContext(), R.drawable.round));
             }

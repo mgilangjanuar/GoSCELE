@@ -39,7 +39,6 @@
                 android:drawablePadding="3dip"
                 android:ellipsize="end"
                 android:maxLines="1"
-                android:paddingBottom="6dp"
                 android:textColor="@android:color/darker_gray"
                 android:textSize="13sp" />
 
