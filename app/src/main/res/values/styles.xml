@@ -6,7 +6,6 @@
         <item name="colorPrimary">@color/color_primary</item>
         <item name="colorPrimaryDark">@color/color_primary_dark</item>
         <item name="colorAccent">@color/color_accent</item>
-        <item name="android:windowBackground">@android:color/white</item>
         <item name="android:lineSpacingExtra">4dp</item>
         <item name="android:textViewStyle">@style/AppTheme.TextView</item>
         <item name="android:actionBarStyle">@style/AppTheme.ActionBar</item>

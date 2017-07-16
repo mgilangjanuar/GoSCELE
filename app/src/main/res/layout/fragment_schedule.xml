@@ -8,13 +8,14 @@
     app:umanoPanelHeight="68dp"
     app:umanoParallaxOffset="?attr/actionBarSize"
     app:umanoScrollableView="@+id/recycler_view_schedule"
-    app:umanoShadowHeight="4dp">
+    app:umanoShadowHeight="4dp"
+    tools:context="com.mgilangjanuar.dev.goscele.Fragments.ScheduleFragment">
 
     <FrameLayout
         android:id="@+id/layout_schedule"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="com.mgilangjanuar.dev.goscele.Fragments.ScheduleFragment">
+        android:background="@android:color/white">
 
         <LinearLayout
             android:layout_width="match_parent"
