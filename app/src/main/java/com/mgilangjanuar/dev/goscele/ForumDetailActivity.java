@@ -1,5 +1,8 @@
 package com.mgilangjanuar.dev.goscele;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
@@ -8,6 +11,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.mgilangjanuar.dev.goscele.Adapters.BaseTabViewPagerAdapter;
 import com.mgilangjanuar.dev.goscele.Fragments.ForumDetail.CommentsFragment;
@@ -98,8 +102,16 @@ public class ForumDetailActivity extends BaseActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.menuitem_share && presenter.isCanShareContent()) {
-            ShareContentHelper.share(this, presenter.getContentModel());
+        switch (item.getItemId()) {
+            case R.id.menuitem_share:
+                if (presenter.isCanShareContent())
+                    ShareContentHelper.share(this, presenter.getContentModel());
+                break;
+            case R.id.menuitem_copy_url:
+                ClipboardManager clipboardManager = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+                clipboardManager.setPrimaryClip(ClipData.newPlainText("label", url));
+                Toast.makeText(this, "URL Copied!", Toast.LENGTH_SHORT).show();
+                break;
         }
         return super.onOptionsItemSelected(item);
     }

@@ -29,6 +29,7 @@ public class SplashScreenActivity extends BaseActivity implements SplashScreenPr
         presenter.setupThreadPolicy();
 
         progressBar.getIndeterminateDrawable().setColorFilter(0xFFFFFFFF, android.graphics.PorterDuff.Mode.MULTIPLY);
+        getWindow().setStatusBarColor(getResources().getColor(R.color.color_primary));
 
         if (!isNetworkAvailable()) {
             textView.setText("\"Oh Snap! Please check your internet connection.\"\n\u2014 A Panda");
