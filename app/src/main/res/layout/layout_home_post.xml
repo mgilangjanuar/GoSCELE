@@ -26,10 +26,7 @@
                 android:background="?attr/selectableItemBackground"
                 android:clickable="true"
                 android:orientation="vertical"
-                android:paddingBottom="10dp"
-                android:paddingLeft="20dp"
-                android:paddingRight="20dp"
-                android:paddingTop="20dp">
+                android:paddingBottom="10dp">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -40,6 +37,10 @@
                         android:layout_height="wrap_content"
                         android:textColor="@android:color/darker_gray"
                         android:textSize="13sp"
+                        android:paddingTop="20dp"
+                        android:paddingLeft="20dp"
+                        android:paddingRight="20dp"
+                        android:layout_alignParentStart="true"
                         android:layout_alignParentLeft="true"/>
                     <ImageButton
                         android:id="@+id/menu_more_home"
@@ -48,6 +49,10 @@
                         android:src="@drawable/ic_more_horiz_black_24dp"
                         android:layout_alignParentRight="true"
                         android:layout_alignParentEnd="true"
+                        android:paddingTop="17dp"
+                        android:paddingBottom="0dp"
+                        android:paddingLeft="20dp"
+                        android:paddingRight="20dp"
                         android:background="?attr/selectableItemBackground"/>
                 </RelativeLayout>
 
@@ -56,7 +61,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingBottom="6dp"
-                    android:textSize="22sp" />
+                    android:textSize="22sp"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp"/>
 
                 <TextView
                     android:id="@+id/author_home"
@@ -67,7 +74,9 @@
                     android:ellipsize="end"
                     android:maxLines="1"
                     android:textColor="@android:color/darker_gray"
-                    android:textSize="13sp" />
+                    android:textSize="13sp"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp"/>
             </LinearLayout>
 
             <LinearLayout
