@@ -32,6 +32,7 @@ public class AuthActivity extends BaseActivity implements AuthPresenter.AuthServ
 
     @Override
     public void authenticate() {
+        getWindow().setStatusBarColor(getResources().getColor(R.color.color_primary));
         btnLogin.setOnClickListener(v -> {
             hideKeyboard();
             String username = etUsername.getText().toString().trim();
