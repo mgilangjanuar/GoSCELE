@@ -40,4 +40,7 @@
     <string name="title_activity_search_forum">Search Forum</string>
     <string name="hint_search_forum">Search forum...</string>
     <string name="hint_search_course">Search course...</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

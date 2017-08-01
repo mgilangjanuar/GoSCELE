@@ -31,23 +31,17 @@
                     android:id="@+id/toolbar_schedule"
                     android:layout_width="match_parent"
                     android:layout_height="?attr/actionBarSize"
-                    android:title="@string/title_fragment_schedule" />
+                    android:title="@string/title_fragment_schedule"
+                    app:layout_scrollFlags="scroll|enterAlways" />
 
             </android.support.design.widget.AppBarLayout>
 
-            <android.support.v4.widget.SwipeRefreshLayout
-                android:id="@+id/swipe_refresh_schedule"
+            <android.support.v4.view.ViewPager
+                android:id="@+id/view_pager_fragment_schedule"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <com.prolificinteractive.materialcalendarview.MaterialCalendarView xmlns:app="http://schemas.android.com/apk/res-auto"
-                    android:id="@+id/calendar_view"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:mcv_selectionColor="@color/color_primary"
-                    app:mcv_showOtherDates="all" />
-
-            </android.support.v4.widget.SwipeRefreshLayout>
+                android:layout_height="wrap_content"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                tools:context="com.mgilangjanuar.dev.goscele.Fragments.ScheduleFragment" />
 
         </LinearLayout>
     </FrameLayout>

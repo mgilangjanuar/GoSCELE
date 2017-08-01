@@ -1,5 +1,7 @@
 package com.mgilangjanuar.dev.goscele.Services;
 
+import android.util.Log;
+
 import com.mgilangjanuar.dev.goscele.Models.ConfigAppModel;
 
 import org.jsoup.Connection;
@@ -29,6 +31,7 @@ public class AuthSiakService {
         Document doc = Jsoup.connect(ConfigAppModel.urlTo("main/Welcome/", true))
                 .cookies(cookies)
                 .get();
+        Log.e("aoinsioasas",  doc.select(".linfo:eq(0)").text());
         return doc == null ? null : doc.select(".linfo:eq(0)");
     }
 }
