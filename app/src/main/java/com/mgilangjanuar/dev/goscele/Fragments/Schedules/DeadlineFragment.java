@@ -213,6 +213,7 @@ public class DeadlineFragment extends Fragment implements SchedulePresenter.Sche
         if (getActivity() != null) {
             getActivity().runOnUiThread(() -> tvTitleSlidingUpPanel.setText(schedulePresenter.getDate() + "  (" + schedulePresenter.getListScheduleModel().scheduleModelList.size() + ")"));
         }
+
         slidingUpPanelLayout.addPanelSlideListener(new SlidingUpPanelLayout.PanelSlideListener() {
             @Override
             public void onPanelSlide(View panel, final float slideOffset) {
@@ -228,7 +229,6 @@ public class DeadlineFragment extends Fragment implements SchedulePresenter.Sche
 
             @Override
             public void onPanelStateChanged(View panel, SlidingUpPanelLayout.PanelState previousState, SlidingUpPanelLayout.PanelState newState) {
-                return;
             }
         });
 
