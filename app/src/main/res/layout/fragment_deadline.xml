@@ -1,23 +1,89 @@
-<FrameLayout
+<com.sothree.slidinguppanel.SlidingUpPanelLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/sliding_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:gravity="bottom"
+    app:umanoPanelHeight="68dp"
+    app:umanoParallaxOffset="?attr/actionBarSize"
+    app:umanoScrollableView="@+id/recycler_view_schedule"
+    app:umanoShadowHeight="4dp"
     tools:context="com.mgilangjanuar.dev.goscele.Fragments.Schedules.DeadlineFragment">
 
-    <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/swipe_refresh_schedule"
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/swipe_refresh_schedule"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.prolificinteractive.materialcalendarview.MaterialCalendarView
+                android:id="@+id/calendar_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:mcv_selectionColor="@color/color_primary"
+                app:mcv_showOtherDates="all" />
+
+        </android.support.v4.widget.SwipeRefreshLayout>
+
+    </FrameLayout>
+
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <com.prolificinteractive.materialcalendarview.MaterialCalendarView
-            android:id="@+id/calendar_view"
+        <RelativeLayout
+            android:id="@+id/header_slidingup_panel_schedule"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:mcv_selectionColor="@color/color_primary"
-            app:mcv_showOtherDates="all" />
+            android:background="@color/color_primary"
+            android:paddingBottom="18dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:paddingTop="18dp">
 
-    </android.support.v4.widget.SwipeRefreshLayout>
+            <ImageView
+                android:id="@+id/img_detail_description"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:backgroundTint="@android:color/white"
+                android:src="@drawable/ic_sliding_up" />
 
-</FrameLayout>
+            <TextView
+                android:id="@+id/title_slidingup_panel_schedule"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/img_detail_description"
+                android:paddingLeft="10dp"
+                android:text="Loading..."
+                android:textColor="@android:color/white"
+                android:textSize="20dp" />
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/text_status_schedule"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/header_slidingup_panel_schedule"
+            android:paddingTop="20dp"
+            android:text="@string/loading_text"
+            android:textAlignment="center"
+            android:textColor="@android:color/darker_gray"
+            android:textStyle="italic" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler_view_schedule"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/header_slidingup_panel_schedule"
+            android:scrollbars="vertical" />
+
+    </RelativeLayout>
+
+</com.sothree.slidinguppanel.SlidingUpPanelLayout>

@@ -1,103 +1,30 @@
-<com.sothree.slidinguppanel.SlidingUpPanelLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/sliding_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="bottom"
-    app:umanoPanelHeight="68dp"
-    app:umanoParallaxOffset="?attr/actionBarSize"
-    app:umanoScrollableView="@+id/recycler_view_schedule"
-    app:umanoShadowHeight="4dp"
     tools:context="com.mgilangjanuar.dev.goscele.Fragments.ScheduleFragment">
 
-    <FrameLayout
-        android:id="@+id/layout_schedule"
+    <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@android:color/white">
+        android:layout_height="wrap_content"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
-        <LinearLayout
+        <android.support.design.widget.TabLayout
+            android:id="@+id/tab_fragment_schedule"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_height="?attr/actionBarSize"
+            app:tabGravity="fill"
+            app:tabMode="fixed" />
 
-            <android.support.design.widget.AppBarLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+    </android.support.design.widget.AppBarLayout>
 
-                <android.support.v7.widget.Toolbar
-                    android:id="@+id/toolbar_schedule"
-                    android:layout_width="match_parent"
-                    android:layout_height="?attr/actionBarSize"
-                    android:title="@string/title_fragment_schedule"
-                    app:layout_scrollFlags="scroll|enterAlways" />
-
-            </android.support.design.widget.AppBarLayout>
-
-            <android.support.v4.view.ViewPager
-                android:id="@+id/view_pager_fragment_schedule"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_behavior="@string/appbar_scrolling_view_behavior"
-                tools:context="com.mgilangjanuar.dev.goscele.Fragments.ScheduleFragment" />
-
-        </LinearLayout>
-    </FrameLayout>
-
-    <RelativeLayout
+    <android.support.v4.view.ViewPager
+        android:id="@+id/view_pager_fragment_schedule"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        tools:context="com.mgilangjanuar.dev.goscele.Fragments.ScheduleFragment" />
 
-        <RelativeLayout
-            android:id="@+id/header_slidingup_panel_schedule"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/color_primary"
-            android:paddingBottom="18dp"
-            android:paddingLeft="20dp"
-            android:paddingRight="20dp"
-            android:paddingTop="18dp">
-
-            <ImageView
-                android:id="@+id/img_detail_description"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:backgroundTint="@android:color/white"
-                android:src="@drawable/ic_sliding_up" />
-
-            <TextView
-                android:id="@+id/title_slidingup_panel_schedule"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_toRightOf="@+id/img_detail_description"
-                android:paddingLeft="10dp"
-                android:text="Loading..."
-                android:textColor="@android:color/white"
-                android:textSize="20dp" />
-
-        </RelativeLayout>
-
-        <TextView
-            android:id="@+id/text_status_schedule"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/header_slidingup_panel_schedule"
-            android:paddingTop="20dp"
-            android:text="@string/loading_text"
-            android:textAlignment="center"
-            android:textColor="@android:color/darker_gray"
-            android:textStyle="italic" />
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recycler_view_schedule"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@+id/header_slidingup_panel_schedule"
-            android:scrollbars="vertical" />
-
-    </RelativeLayout>
-
-</com.sothree.slidinguppanel.SlidingUpPanelLayout>
+</android.support.design.widget.CoordinatorLayout>

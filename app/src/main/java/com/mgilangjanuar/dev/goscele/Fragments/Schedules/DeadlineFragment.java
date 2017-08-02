@@ -1,109 +1,237 @@
 package com.mgilangjanuar.dev.goscele.Fragments.Schedules;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.mgilangjanuar.dev.goscele.Adapters.ScheduleAdapter;
+import com.mgilangjanuar.dev.goscele.Presenters.SchedulePresenter;
 import com.mgilangjanuar.dev.goscele.R;
+import com.prolificinteractive.materialcalendarview.CalendarDay;
+import com.prolificinteractive.materialcalendarview.DayViewDecorator;
+import com.prolificinteractive.materialcalendarview.DayViewFacade;
+import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
+import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link DeadlineFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link DeadlineFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class DeadlineFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+import java.text.SimpleDateFormat;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
-    private OnFragmentInteractionListener mListener;
+public class DeadlineFragment extends Fragment implements SchedulePresenter.ScheduleServicePresenter {
 
-    public DeadlineFragment() {
-        // Required empty public constructor
-    }
+    @BindView(R.id.calendar_view)
+    MaterialCalendarView materialCalendarView;
+    @BindView(R.id.swipe_refresh_schedule)
+    SwipeRefreshLayout swipeRefreshLayout;
+    @BindView(R.id.recycler_view_schedule)
+    RecyclerView recyclerView;
+    @BindView(R.id.title_slidingup_panel_schedule)
+    TextView tvTitleSlidingUpPanel;
+    @BindView(R.id.text_status_schedule)
+    TextView tvStatus;
+    @BindView(R.id.sliding_layout)
+    SlidingUpPanelLayout slidingUpPanelLayout;
+    @BindView(R.id.img_detail_description)
+    ImageView iViewDetailDescription;
+    private SchedulePresenter schedulePresenter;
+    private boolean isCannotChangeMonth;
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment DeadlineFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static DeadlineFragment newInstance(String param1, String param2) {
+    public static DeadlineFragment newInstance() {
         DeadlineFragment fragment = new DeadlineFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
         return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_deadline, container, false);
-    }
-
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
+        View view = inflater.inflate(R.layout.fragment_deadline, container, false);
+        ButterKnife.bind(this, view);
+        return view;
     }
 
     @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        schedulePresenter = new SchedulePresenter(getActivity());
+        (new Thread(() -> setupSchedule(view))).start();
     }
 
     @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
+    public void setupSchedule(View view) {
+        final ScheduleAdapter adapter = schedulePresenter.buildScheduleAdapterForce();
+
+        try {
+            if (getActivity() == null) return;
+            getActivity().runOnUiThread(() -> {
+                recyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
+                recyclerView.setItemAnimator(new DefaultItemAnimator());
+                recyclerView.setAdapter(adapter);
+                setDate(schedulePresenter.getDate());
+                if (adapter.getItemCount() == 0) {
+                    tvStatus.setText(getActivity().getResources().getString(R.string.empty_text));
+                    tvStatus.setTextColor(getActivity().getResources().getColor(R.color.color_accent));
+                } else {
+                    tvStatus.setVisibility(TextView.GONE);
+                }
+            });
+        } catch (NullPointerException e) {
+        }
+        slidingUpPanelLayout = setupSlidingUpPanelLayout();
+        setupMaterialCalendarView(recyclerView, slidingUpPanelLayout);
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
+    private void addDecoratorMaterialCalendarView() {
+        materialCalendarView.addDecorator(new DayViewDecorator() {
+            @Override
+            public boolean shouldDecorate(CalendarDay day) {
+                return schedulePresenter.isCurrentMonth(day.getDate().getTime() / 1000)
+                        && schedulePresenter.getCalendarEventModel().listEvent.contains(day.getDay())
+                        && !schedulePresenter.convertTimeToString(schedulePresenter.getCurrentTime())
+                        .equals((new SimpleDateFormat("EEEE, dd MMM yyyy")).format(day.getDate().getTime()));
+            }
+
+            @Override
+            public void decorate(DayViewFacade view) {
+                if (getContext() == null) return;
+                view.addSpan(new ForegroundColorSpan(ContextCompat.getColor(getContext(), android.R.color.white)));
+                view.setSelectionDrawable(ContextCompat.getDrawable(getContext(), R.drawable.round));
+            }
+        });
+
+        materialCalendarView.addDecorator(new DayViewDecorator() {
+            @Override
+            public boolean shouldDecorate(CalendarDay day) {
+                return schedulePresenter.convertTimeToString(schedulePresenter.getCurrentTime())
+                        .equals((new SimpleDateFormat("EEEE, dd MMM yyyy")).format(day.getDate().getTime()));
+            }
+
+            @Override
+            public void decorate(DayViewFacade view) {
+                view.addSpan(new ForegroundColorSpan(ContextCompat.getColor(getContext(), R.color.color_accent)));
+            }
+        });
+    }
+
+    private void setupMaterialCalendarView(final RecyclerView recyclerView, final SlidingUpPanelLayout slidingUpPanelLayout) {
+        materialCalendarView.setDynamicHeightEnabled(true);
+        materialCalendarView.setOnDateChangedListener((widget, date, selected) -> updateAdapter(recyclerView, date.getDate().getTime() / 1000, slidingUpPanelLayout));
+
+        schedulePresenter.buildCalendarEventModel();
+        try {
+            if (getActivity() == null) return;
+            getActivity().runOnUiThread(() -> addDecoratorMaterialCalendarView());
+        } catch (NullPointerException e) {
+        }
+
+        final String title = tvTitleSlidingUpPanel.getText().toString();
+        materialCalendarView.setOnMonthChangedListener((widget, date) -> {
+            schedulePresenter.time2 = date.getDate().getTime() / 1000;
+            materialCalendarView.removeDecorators();
+            tvTitleSlidingUpPanel.setText("Please wait...");
+
+            if (isCannotChangeMonth) return;
+            isCannotChangeMonth = true;
+
+            (new Thread(() -> {
+                schedulePresenter.buildCalendarEventModel();
+                if (getActivity() == null) return;
+                getActivity().runOnUiThread(() -> {
+                    addDecoratorMaterialCalendarView();
+                    isCannotChangeMonth = false;
+                    tvTitleSlidingUpPanel.setText(title);
+                });
+            })).start();
+        });
+
+        swipeRefreshLayout.setOnRefreshListener(() -> {
+            materialCalendarView.removeDecorators();
+            new Handler().postDelayed(() -> (new Thread(() -> {
+                schedulePresenter.buildCalendarEventModel();
+                if (getActivity() == null) return;
+                getActivity().runOnUiThread(() -> {
+                    addDecoratorMaterialCalendarView();
+                    swipeRefreshLayout.setRefreshing(false);
+                });
+            })).start(), 1000);
+        });
+    }
+
+    private void setDate(String date) {
+        tvTitleSlidingUpPanel.setText(date + "  (" + schedulePresenter.getListScheduleModel().scheduleModelList.size() + ")");
+    }
+
+    private void updateAdapterHelper(final RecyclerView recyclerView, long time, final SlidingUpPanelLayout slidingUpPanelLayout, final boolean isShowDialog) {
+        if (isShowDialog) {
+            schedulePresenter.showProgressDialog();
+        }
+        tvStatus.setVisibility(TextView.VISIBLE);
+
+        schedulePresenter.time = time;
+        (new Thread(() -> {
+            final ScheduleAdapter scheduleAdapter = schedulePresenter.buildScheduleAdapterForce();
+            if (getActivity() == null) return;
+            getActivity().runOnUiThread(() -> {
+                setDate(schedulePresenter.getDateForce());
+                recyclerView.setAdapter(scheduleAdapter);
+                if (scheduleAdapter.getItemCount() == 0) {
+                    tvStatus.setText(getActivity().getResources().getString(R.string.empty_text));
+                    tvStatus.setTextColor(getActivity().getResources().getColor(R.color.color_accent));
+                } else {
+                    tvStatus.setVisibility(TextView.GONE);
+                }
+                if (isShowDialog) {
+                    schedulePresenter.dismissProgressDialog();
+                }
+                slidingUpPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);
+            });
+        })).start();
+    }
+
+    private void updateAdapter(final RecyclerView recyclerView, long time, SlidingUpPanelLayout slidingUpPanelLayout) {
+        updateAdapterHelper(recyclerView, time, slidingUpPanelLayout, true);
+    }
+
+    private SlidingUpPanelLayout setupSlidingUpPanelLayout() {
+        if (getActivity() != null) {
+            getActivity().runOnUiThread(() -> tvTitleSlidingUpPanel.setText(schedulePresenter.getDate() + "  (" + schedulePresenter.getListScheduleModel().scheduleModelList.size() + ")"));
+        }
+        slidingUpPanelLayout.addPanelSlideListener(new SlidingUpPanelLayout.PanelSlideListener() {
+            @Override
+            public void onPanelSlide(View panel, final float slideOffset) {
+                if (getActivity() == null) return;
+                getActivity().runOnUiThread(() -> {
+                    if (slideOffset > 0.5) {
+                        iViewDetailDescription.setImageResource(R.drawable.ic_sliding_down);
+                    } else {
+                        iViewDetailDescription.setImageResource(R.drawable.ic_sliding_up);
+                    }
+                });
+            }
+
+            @Override
+            public void onPanelStateChanged(View panel, SlidingUpPanelLayout.PanelState previousState, SlidingUpPanelLayout.PanelState newState) {
+                return;
+            }
+        });
+
+        return slidingUpPanelLayout;
     }
 }
