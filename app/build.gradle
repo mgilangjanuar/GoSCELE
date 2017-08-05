@@ -7,8 +7,8 @@ android {
         applicationId "com.mgilangjanuar.dev.goscele"
         minSdkVersion 14
         targetSdkVersion 25
-        versionCode 17
-        versionName "ORION 0.10.4"
+        versionCode 18
+        versionName "ORION 0.11"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         jackOptions {
             enabled true
