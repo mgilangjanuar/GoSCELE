@@ -13,15 +13,16 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.mgilangjanuar.dev.goscele.Adapters.CourseDetailSiakAdapter;
 import com.mgilangjanuar.dev.goscele.Adapters.ScheduleDailyAdapter;
 import com.mgilangjanuar.dev.goscele.AuthActivity;
 import com.mgilangjanuar.dev.goscele.BaseActivity;
-import com.mgilangjanuar.dev.goscele.MainActivity;
 import com.mgilangjanuar.dev.goscele.Presenters.AuthPresenter;
 import com.mgilangjanuar.dev.goscele.Presenters.SchedulePresenter;
 import com.mgilangjanuar.dev.goscele.R;
@@ -34,6 +35,10 @@ public class DailyFragment extends Fragment implements SchedulePresenter.Schedul
 
     @BindView(R.id.recycler_view_daily_schedule)
     RecyclerView recyclerViewDaily;
+    @BindView(R.id.siak_status)
+    LinearLayout siakStatusLayout;
+    @BindView(R.id.button_sync)
+    Button buttonSync;
 
     RecyclerView recyclerView;
     TextView tvTitleSlidingUpPanel;
@@ -138,22 +143,24 @@ public class DailyFragment extends Fragment implements SchedulePresenter.Schedul
         if (getActivity() == null) return;
         getActivity().runOnUiThread(() -> {
             tvTitleSlidingUpPanel.setText("Courses Detail");
-            if (adapter != null) {
+            if (adapter != null && courseAdapter != null) {
+                siakStatusLayout.setVisibility(LinearLayout.GONE);
+
+                recyclerView.setVisibility(RecyclerView.VISIBLE);
+                recyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
+                recyclerView.setItemAnimator(new DefaultItemAnimator());
+                recyclerView.setAdapter(courseAdapter);
+
                 recyclerViewDaily.setVisibility(RecyclerView.VISIBLE);
                 recyclerViewDaily.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
                 recyclerViewDaily.setItemAnimator(new DefaultItemAnimator());
                 recyclerViewDaily.setAdapter(adapter);
             } else {
-                recyclerViewDaily.setVisibility(RecyclerView.GONE);
-            }
-
-            if (courseAdapter != null) {
-                recyclerView.setVisibility(RecyclerView.VISIBLE);
-                recyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
-                recyclerView.setItemAnimator(new DefaultItemAnimator());
-                recyclerView.setAdapter(courseAdapter);
-            } else {
                 recyclerView.setVisibility(RecyclerView.GONE);
+                recyclerViewDaily.setVisibility(RecyclerView.GONE);
+
+                siakStatusLayout.setVisibility(LinearLayout.VISIBLE);
+                buttonSync.setOnClickListener(v -> buttonRefresh.performClick());
             }
         });
     }

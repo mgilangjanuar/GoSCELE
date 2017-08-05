@@ -41,7 +41,8 @@ public class CourseDetailSiakModel extends BaseRecord {
 
     public List<Course> getSavedList() {
         Gson gson = new Gson();
-        list = gson.fromJson(sharedPreferences.getString(getAttributeTag("list"), null), new TypeToken<ArrayList<Course>>() {}.getType());
+        list = gson.fromJson(sharedPreferences.getString(getAttributeTag("list"), null), new TypeToken<ArrayList<Course>>() {
+        }.getType());
         return list;
     }
 

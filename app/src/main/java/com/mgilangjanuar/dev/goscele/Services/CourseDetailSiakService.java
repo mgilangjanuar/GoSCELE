@@ -1,7 +1,5 @@
 package com.mgilangjanuar.dev.goscele.Services;
 
-import android.util.Log;
-
 import com.mgilangjanuar.dev.goscele.Models.ConfigAppModel;
 
 import org.jsoup.Jsoup;
@@ -31,7 +29,7 @@ public class CourseDetailSiakService {
 
     public List<Map<String, String>> getCourseDetails() throws IOException {
         List<Map<String, String>> results = new ArrayList<>();
-        for (Element e: getElements("table.box > tbody > tr")) {
+        for (Element e : getElements("table.box > tbody > tr")) {
             if (e.className() != null && ("alt".equals(e.className()) || "x".equals(e.className()))) {
                 results.add(new HashMap<String, String>() {{
                     put("code", e.select("td:eq(1)").text());

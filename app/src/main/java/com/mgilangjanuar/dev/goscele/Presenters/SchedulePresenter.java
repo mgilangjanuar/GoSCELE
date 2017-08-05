@@ -157,9 +157,9 @@ public class SchedulePresenter {
             List<List<Map<String, String>>> models = scheduleSiakService.getSchedule();
             if (models != null) {
                 int i = 0;
-                for (List<Map<String, String>> e1: models) {
+                for (List<Map<String, String>> e1 : models) {
                     List<ScheduleDailyModel.Schedule> list = new ArrayList<>();
-                    for (Map<String, String> e2: e1) {
+                    for (Map<String, String> e2 : e1) {
                         ScheduleDailyModel.Schedule schedule = new ScheduleDailyModel.Schedule();
                         schedule.time = e2.get("time");
                         schedule.desc = e2.get("desc");
@@ -181,13 +181,20 @@ public class SchedulePresenter {
 
     private String getDayConstant(int i) {
         switch (i) {
-            case 0: return "Monday";
-            case 1: return "Tuesday";
-            case 2: return "Wednesday";
-            case 3: return "Thursday";
-            case 4: return "Friday";
-            case 5: return "Saturday";
-            case 6: return "Sunday";
+            case 0:
+                return "Monday";
+            case 1:
+                return "Tuesday";
+            case 2:
+                return "Wednesday";
+            case 3:
+                return "Thursday";
+            case 4:
+                return "Friday";
+            case 5:
+                return "Saturday";
+            case 6:
+                return "Sunday";
         }
         return null;
     }
@@ -203,7 +210,7 @@ public class SchedulePresenter {
         try {
             courseDetailSiakModel.clear();
             courseDetailSiakModel.list = new ArrayList<>();
-            for (Map<String, String> e: courseDetailSiakService.getCourseDetails()) {
+            for (Map<String, String> e : courseDetailSiakService.getCourseDetails()) {
                 CourseDetailSiakModel.Course course = new CourseDetailSiakModel.Course();
                 course.code = e.get("code");
                 course.courseName = e.get("courseName");

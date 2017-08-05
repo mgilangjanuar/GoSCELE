@@ -1,7 +1,6 @@
 package com.mgilangjanuar.dev.goscele.Adapters;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.text.Spannable;
 import android.text.SpannableString;
@@ -46,7 +45,7 @@ public class ScheduleDailyAdapter extends RecyclerView.Adapter<ScheduleDailyAdap
         holder.title.setText(model.day);
 
         CharSequence builder = null;
-        for (ScheduleDailyModel.Schedule e: model.scheduleList) {
+        for (ScheduleDailyModel.Schedule e : model.scheduleList) {
             String course = e.desc.substring(0, e.desc.indexOf(" Ruang: "));
             String room = e.desc.substring(e.desc.indexOf(" Ruang: ") + 8);
             SpannableString title = new SpannableString(course);

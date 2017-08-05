@@ -85,6 +85,7 @@ public class DeadlineFragment extends Fragment implements SchedulePresenter.Sche
             if (getActivity() == null) return;
             getActivity().runOnUiThread(() -> {
                 tvTitleSlidingUpPanel.setText("Loading...");
+                recyclerView.setVisibility(RecyclerView.VISIBLE);
                 recyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
                 recyclerView.setItemAnimator(new DefaultItemAnimator());
                 recyclerView.setAdapter(adapter);

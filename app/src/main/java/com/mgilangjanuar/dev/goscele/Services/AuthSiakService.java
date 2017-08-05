@@ -1,7 +1,5 @@
 package com.mgilangjanuar.dev.goscele.Services;
 
-import android.util.Log;
-
 import com.mgilangjanuar.dev.goscele.Models.ConfigAppModel;
 
 import org.jsoup.Connection;

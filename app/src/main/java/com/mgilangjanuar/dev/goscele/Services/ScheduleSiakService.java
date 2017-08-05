@@ -30,11 +30,11 @@ public class ScheduleSiakService {
     public List<List<Map<String, String>>> getSchedule() throws IOException {
         List<List<Map<String, String>>> finalResults = new ArrayList<>();
         int count = 0;
-        for (Element e1: getElements(".box.cal > tbody > tr:eq(1) > td")) {
+        for (Element e1 : getElements(".box.cal > tbody > tr:eq(1) > td")) {
             if (count != 0 && count != 7) {
                 List<Map<String, String>> result = new ArrayList<>();
                 if (e1.select("div.sch") != null) {
-                    for (Element e2: e1.select("div.sch")) {
+                    for (Element e2 : e1.select("div.sch")) {
                         result.add(new HashMap<String, String>() {{
                             put("time", e2.select(".sch-inner > h3").text());
                             put("desc", e2.select(".sch-inner > .desc > p").text());

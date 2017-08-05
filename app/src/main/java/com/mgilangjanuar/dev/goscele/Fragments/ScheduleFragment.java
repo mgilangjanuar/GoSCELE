@@ -87,7 +87,7 @@ public class ScheduleFragment extends Fragment implements SchedulePresenter.Sche
                     buttonRefresh.setVisibility(ImageButton.GONE);
                     (new Thread(() -> deadlineFragment.setupSchedule())).start();
 
-                } else if (tab.getText().equals(getString(R.string.title_fragment_daily))){
+                } else if (tab.getText().equals(getString(R.string.title_fragment_daily))) {
                     buttonRefresh.setVisibility(ImageButton.VISIBLE);
                     (new Thread(() -> dailyFragment.setupSchedule())).start();
                 }
