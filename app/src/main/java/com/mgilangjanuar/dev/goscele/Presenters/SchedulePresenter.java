@@ -10,12 +10,14 @@ import android.content.Intent;
 import android.os.SystemClock;
 import android.util.Log;
 
+import com.mgilangjanuar.dev.goscele.Adapters.CourseDetailSiakAdapter;
 import com.mgilangjanuar.dev.goscele.Adapters.ScheduleAdapter;
 import com.mgilangjanuar.dev.goscele.Adapters.ScheduleDailyAdapter;
 import com.mgilangjanuar.dev.goscele.AlarmNotificationCancellationActivity;
 import com.mgilangjanuar.dev.goscele.Helpers.ScheduleBroadcastReceiver;
 import com.mgilangjanuar.dev.goscele.Models.AccountModel;
 import com.mgilangjanuar.dev.goscele.Models.CalendarEventModel;
+import com.mgilangjanuar.dev.goscele.Models.CourseDetailSiakModel;
 import com.mgilangjanuar.dev.goscele.Models.CourseModel;
 import com.mgilangjanuar.dev.goscele.Models.EventNotificationModel;
 import com.mgilangjanuar.dev.goscele.Models.ListScheduleModel;
@@ -24,6 +26,7 @@ import com.mgilangjanuar.dev.goscele.Models.ScheduleModel;
 import com.mgilangjanuar.dev.goscele.R;
 import com.mgilangjanuar.dev.goscele.Services.AuthSiakService;
 import com.mgilangjanuar.dev.goscele.Services.CalendarMonthService;
+import com.mgilangjanuar.dev.goscele.Services.CourseDetailSiakService;
 import com.mgilangjanuar.dev.goscele.Services.ScheduleService;
 import com.mgilangjanuar.dev.goscele.Services.ScheduleSiakService;
 
@@ -34,7 +37,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.StringJoiner;
 
 /**
  * Created by muhammadgilangjanuar on 5/17/17.
@@ -50,9 +52,11 @@ public class SchedulePresenter {
     private CalendarMonthService calendarMonthService;
     private ScheduleSiakService scheduleSiakService;
     private AuthSiakService authSiakService;
+    private CourseDetailSiakService courseDetailSiakService;
     private ListScheduleModel listScheduleModel;
     private CalendarEventModel calendarEventModel;
     private ScheduleDailyModel scheduleDailyModel;
+    private CourseDetailSiakModel courseDetailSiakModel;
     private AccountModel accountModel;
 
     public SchedulePresenter(Activity activity) {
@@ -61,10 +65,12 @@ public class SchedulePresenter {
         calendarMonthService = new CalendarMonthService();
         scheduleSiakService = new ScheduleSiakService();
         authSiakService = new AuthSiakService();
+        courseDetailSiakService = new CourseDetailSiakService();
         listScheduleModel = new ListScheduleModel(activity);
         calendarEventModel = new CalendarEventModel(activity);
         scheduleDailyModel = new ScheduleDailyModel(activity);
         accountModel = new AccountModel(activity);
+        courseDetailSiakModel = new CourseDetailSiakModel(activity);
 
         time = getCurrentTime();
         time2 = getCurrentTime();
@@ -128,6 +134,7 @@ public class SchedulePresenter {
 
     public boolean refreshScheduleDaily() {
         scheduleDailyModel.clear();
+        courseDetailSiakModel.clear();
         if (accountModel.isSaveCredential()) {
             buildScheduleDailyModel(accountModel.getSavedUsername(), accountModel.getSavedPassword());
             return true;
@@ -166,6 +173,7 @@ public class SchedulePresenter {
                 }
             }
             scheduleDailyModel.save();
+            buildCourseDetailSiakModel();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -182,6 +190,32 @@ public class SchedulePresenter {
             case 6: return "Sunday";
         }
         return null;
+    }
+
+    public CourseDetailSiakAdapter buildCourseDetailSiakAdapter() {
+        if (courseDetailSiakModel.getSavedList() != null && !courseDetailSiakModel.getSavedList().isEmpty()) {
+            return new CourseDetailSiakAdapter(courseDetailSiakModel.getSavedList());
+        }
+        return null;
+    }
+
+    public void buildCourseDetailSiakModel() {
+        try {
+            courseDetailSiakModel.clear();
+            courseDetailSiakModel.list = new ArrayList<>();
+            for (Map<String, String> e: courseDetailSiakService.getCourseDetails()) {
+                CourseDetailSiakModel.Course course = new CourseDetailSiakModel.Course();
+                course.code = e.get("code");
+                course.courseName = e.get("courseName");
+                course.courseClass = e.get("courseClass");
+                course.credits = e.get("credits");
+                course.lecturer = e.get("lecturer");
+                courseDetailSiakModel.list.add(course);
+            }
+            courseDetailSiakModel.save();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void clear() {

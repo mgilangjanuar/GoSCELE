@@ -17,6 +17,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.mgilangjanuar.dev.goscele.Adapters.CourseDetailSiakAdapter;
 import com.mgilangjanuar.dev.goscele.Adapters.ScheduleDailyAdapter;
 import com.mgilangjanuar.dev.goscele.AuthActivity;
 import com.mgilangjanuar.dev.goscele.BaseActivity;
@@ -79,8 +80,8 @@ public class DailyFragment extends Fragment implements SchedulePresenter.Schedul
     @Override
     public void setupSchedule() {
         setAdapter();
-
         getActivity().runOnUiThread(() -> {
+            tvStatus.setVisibility(TextView.GONE);
             progress.setMessage("Loading...");
             progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
             progress.setIndeterminate(false);
@@ -90,7 +91,10 @@ public class DailyFragment extends Fragment implements SchedulePresenter.Schedul
             progress.show();
             (new Thread(() -> {
                 if (presenter.refreshScheduleDaily()) {
-                    getActivity().runOnUiThread(() -> recyclerViewDaily.setVisibility(RecyclerView.GONE));
+                    getActivity().runOnUiThread(() -> {
+                        recyclerViewDaily.setVisibility(RecyclerView.GONE);
+                        recyclerView.setVisibility(RecyclerView.GONE);
+                    });
                     setAdapter();
                 } else {
                     getActivity().runOnUiThread(() -> {
@@ -129,6 +133,7 @@ public class DailyFragment extends Fragment implements SchedulePresenter.Schedul
 
     private void setAdapter() {
         ScheduleDailyAdapter adapter = presenter.buildScheduleDailyAdapter();
+        CourseDetailSiakAdapter courseAdapter = presenter.buildCourseDetailSiakAdapter();
 
         if (getActivity() == null) return;
         getActivity().runOnUiThread(() -> {
@@ -138,6 +143,17 @@ public class DailyFragment extends Fragment implements SchedulePresenter.Schedul
                 recyclerViewDaily.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
                 recyclerViewDaily.setItemAnimator(new DefaultItemAnimator());
                 recyclerViewDaily.setAdapter(adapter);
+            } else {
+                recyclerViewDaily.setVisibility(RecyclerView.GONE);
+            }
+
+            if (courseAdapter != null) {
+                recyclerView.setVisibility(RecyclerView.VISIBLE);
+                recyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
+                recyclerView.setItemAnimator(new DefaultItemAnimator());
+                recyclerView.setAdapter(courseAdapter);
+            } else {
+                recyclerView.setVisibility(RecyclerView.GONE);
             }
         });
     }
