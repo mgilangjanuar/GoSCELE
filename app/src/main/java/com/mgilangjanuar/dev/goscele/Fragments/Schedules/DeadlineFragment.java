@@ -36,21 +36,23 @@ public class DeadlineFragment extends Fragment implements SchedulePresenter.Sche
     MaterialCalendarView materialCalendarView;
     @BindView(R.id.swipe_refresh_schedule)
     SwipeRefreshLayout swipeRefreshLayout;
-    @BindView(R.id.recycler_view_schedule)
+
     RecyclerView recyclerView;
-    @BindView(R.id.title_slidingup_panel_schedule)
     TextView tvTitleSlidingUpPanel;
-    @BindView(R.id.text_status_schedule)
     TextView tvStatus;
-    @BindView(R.id.sliding_layout)
     SlidingUpPanelLayout slidingUpPanelLayout;
-    @BindView(R.id.img_detail_description)
     ImageView iViewDetailDescription;
+
     private SchedulePresenter schedulePresenter;
     private boolean isCannotChangeMonth;
 
-    public static DeadlineFragment newInstance() {
+    public static DeadlineFragment newInstance(RecyclerView recyclerView, TextView tvTitleSlidingUpPanel, TextView tvStatus, SlidingUpPanelLayout slidingUpPanelLayout, ImageView iViewDetailDescription) {
         DeadlineFragment fragment = new DeadlineFragment();
+        fragment.recyclerView = recyclerView;
+        fragment.tvTitleSlidingUpPanel = tvTitleSlidingUpPanel;
+        fragment.tvStatus = tvStatus;
+        fragment.slidingUpPanelLayout = slidingUpPanelLayout;
+        fragment.iViewDetailDescription = iViewDetailDescription;
         return fragment;
     }
 
