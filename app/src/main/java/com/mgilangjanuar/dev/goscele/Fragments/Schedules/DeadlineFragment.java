@@ -45,6 +45,7 @@ public class DeadlineFragment extends Fragment implements SchedulePresenter.Sche
 
     private SchedulePresenter schedulePresenter;
     private boolean isCannotChangeMonth;
+    private String date;
 
     public static DeadlineFragment newInstance(RecyclerView recyclerView, TextView tvTitleSlidingUpPanel, TextView tvStatus, SlidingUpPanelLayout slidingUpPanelLayout, ImageView iViewDetailDescription) {
         DeadlineFragment fragment = new DeadlineFragment();
@@ -73,16 +74,17 @@ public class DeadlineFragment extends Fragment implements SchedulePresenter.Sche
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         schedulePresenter = new SchedulePresenter(getActivity());
-        (new Thread(() -> setupSchedule(view))).start();
+        (new Thread(() -> setupSchedule())).start();
     }
 
     @Override
-    public void setupSchedule(View view) {
-        final ScheduleAdapter adapter = schedulePresenter.buildScheduleAdapterForce();
+    public void setupSchedule() {
+        final ScheduleAdapter adapter = schedulePresenter.buildScheduleAdapter();
 
         try {
             if (getActivity() == null) return;
             getActivity().runOnUiThread(() -> {
+                tvTitleSlidingUpPanel.setText("Loading...");
                 recyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
                 recyclerView.setItemAnimator(new DefaultItemAnimator());
                 recyclerView.setAdapter(adapter);
@@ -189,9 +191,10 @@ public class DeadlineFragment extends Fragment implements SchedulePresenter.Sche
         schedulePresenter.time = time;
         (new Thread(() -> {
             final ScheduleAdapter scheduleAdapter = schedulePresenter.buildScheduleAdapterForce();
+            final String date = schedulePresenter.getDateForce();
             if (getActivity() == null) return;
             getActivity().runOnUiThread(() -> {
-                setDate(schedulePresenter.getDateForce());
+                setDate(date);
                 recyclerView.setAdapter(scheduleAdapter);
                 if (scheduleAdapter.getItemCount() == 0) {
                     tvStatus.setText(getActivity().getResources().getString(R.string.empty_text));

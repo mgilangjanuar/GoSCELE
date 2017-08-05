@@ -9,19 +9,23 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.SystemClock;
 import android.util.Log;
-import android.view.View;
 
 import com.mgilangjanuar.dev.goscele.Adapters.ScheduleAdapter;
+import com.mgilangjanuar.dev.goscele.Adapters.ScheduleDailyAdapter;
 import com.mgilangjanuar.dev.goscele.AlarmNotificationCancellationActivity;
 import com.mgilangjanuar.dev.goscele.Helpers.ScheduleBroadcastReceiver;
+import com.mgilangjanuar.dev.goscele.Models.AccountModel;
 import com.mgilangjanuar.dev.goscele.Models.CalendarEventModel;
 import com.mgilangjanuar.dev.goscele.Models.CourseModel;
 import com.mgilangjanuar.dev.goscele.Models.EventNotificationModel;
 import com.mgilangjanuar.dev.goscele.Models.ListScheduleModel;
+import com.mgilangjanuar.dev.goscele.Models.ScheduleDailyModel;
 import com.mgilangjanuar.dev.goscele.Models.ScheduleModel;
 import com.mgilangjanuar.dev.goscele.R;
+import com.mgilangjanuar.dev.goscele.Services.AuthSiakService;
 import com.mgilangjanuar.dev.goscele.Services.CalendarMonthService;
 import com.mgilangjanuar.dev.goscele.Services.ScheduleService;
+import com.mgilangjanuar.dev.goscele.Services.ScheduleSiakService;
 
 import java.io.IOException;
 import java.text.ParseException;
@@ -30,6 +34,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.StringJoiner;
 
 /**
  * Created by muhammadgilangjanuar on 5/17/17.
@@ -43,15 +48,23 @@ public class SchedulePresenter {
     private ProgressDialog progress;
     private ScheduleService scheduleService;
     private CalendarMonthService calendarMonthService;
+    private ScheduleSiakService scheduleSiakService;
+    private AuthSiakService authSiakService;
     private ListScheduleModel listScheduleModel;
     private CalendarEventModel calendarEventModel;
+    private ScheduleDailyModel scheduleDailyModel;
+    private AccountModel accountModel;
 
     public SchedulePresenter(Activity activity) {
         this.activity = activity;
         scheduleService = new ScheduleService();
         calendarMonthService = new CalendarMonthService();
+        scheduleSiakService = new ScheduleSiakService();
+        authSiakService = new AuthSiakService();
         listScheduleModel = new ListScheduleModel(activity);
         calendarEventModel = new CalendarEventModel(activity);
+        scheduleDailyModel = new ScheduleDailyModel(activity);
+        accountModel = new AccountModel(activity);
 
         time = getCurrentTime();
         time2 = getCurrentTime();
@@ -72,13 +85,15 @@ public class SchedulePresenter {
 
     public void buildCalendarEventModel() {
         try {
-            calendarEventModel.clear();
-            calendarEventModel.date = calendarMonthService.getMonth(time2);
-            calendarEventModel.listEvent = new ArrayList<>();
-            for (String e : calendarMonthService.getListDay(time2)) {
-                calendarEventModel.listEvent.add(Integer.parseInt(e));
+            if (calendarEventModel.getSavedDate() == null || !calendarEventModel.getSavedDate().equals(calendarMonthService.getMonth(time2))) {
+                calendarEventModel.clear();
+                calendarEventModel.date = calendarMonthService.getMonth(time2);
+                calendarEventModel.listEvent = new ArrayList<>();
+                for (String e : calendarMonthService.getListDay(time2)) {
+                    calendarEventModel.listEvent.add(Integer.parseInt(e));
+                }
+                calendarEventModel.save();
             }
-            calendarEventModel.save();
         } catch (IOException e) {
             Log.e("SchedulePresenter", String.valueOf(e.getMessage()));
         }
@@ -109,6 +124,64 @@ public class SchedulePresenter {
         } catch (IOException e) {
             Log.e("SchedulePresenter", String.valueOf(e.getMessage()));
         }
+    }
+
+    public boolean refreshScheduleDaily() {
+        scheduleDailyModel.clear();
+        if (accountModel.isSaveCredential()) {
+            buildScheduleDailyModel(accountModel.getSavedUsername(), accountModel.getSavedPassword());
+            return true;
+        }
+        return false;
+    }
+
+    public ScheduleDailyAdapter buildScheduleDailyAdapter() {
+        if (scheduleDailyModel.getSavedList() != null && !scheduleDailyModel.getSavedList().isEmpty()) {
+            return new ScheduleDailyAdapter(activity, scheduleDailyModel.getSavedList());
+        }
+        return null;
+    }
+
+    public void buildScheduleDailyModel(String username, String password) {
+        try {
+            authSiakService.login(username, password);
+            scheduleDailyModel.clear();
+            scheduleDailyModel.list = new ArrayList<>();
+            List<List<Map<String, String>>> models = scheduleSiakService.getSchedule();
+            if (models != null) {
+                int i = 0;
+                for (List<Map<String, String>> e1: models) {
+                    List<ScheduleDailyModel.Schedule> list = new ArrayList<>();
+                    for (Map<String, String> e2: e1) {
+                        ScheduleDailyModel.Schedule schedule = new ScheduleDailyModel.Schedule();
+                        schedule.time = e2.get("time");
+                        schedule.desc = e2.get("desc");
+                        list.add(schedule);
+
+                    }
+                    ScheduleDailyModel.ListSchedule listSchedule = new ScheduleDailyModel.ListSchedule();
+                    listSchedule.day = getDayConstant(i++);
+                    listSchedule.scheduleList = list;
+                    scheduleDailyModel.list.add(listSchedule);
+                }
+            }
+            scheduleDailyModel.save();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private String getDayConstant(int i) {
+        switch (i) {
+            case 0: return "Monday";
+            case 1: return "Tuesday";
+            case 2: return "Wednesday";
+            case 3: return "Thursday";
+            case 4: return "Friday";
+            case 5: return "Saturday";
+            case 6: return "Sunday";
+        }
+        return null;
     }
 
     public void clear() {
@@ -238,6 +311,6 @@ public class SchedulePresenter {
     }
 
     public interface ScheduleServicePresenter {
-        void setupSchedule(View view);
+        void setupSchedule();
     }
 }

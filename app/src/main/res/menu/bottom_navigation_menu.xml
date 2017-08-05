@@ -6,23 +6,23 @@
         android:enabled="true"
         android:icon="@drawable/ic_menu_home"
         android:title="HOME"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="always" />
     <item
         android:id="@+id/action_course"
         android:enabled="true"
         android:icon="@drawable/ic_menu_course"
         android:title="COURSES"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="always" />
     <item
         android:id="@+id/action_schedule"
         android:enabled="true"
         android:icon="@drawable/ic_menu_schedule"
         android:title="SCHEDULES"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="always" />
     <item
         android:id="@+id/action_setting"
         android:enabled="true"
         android:icon="@drawable/ic_menu_more"
         android:title="SETTINGS"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="always" />
 </menu>

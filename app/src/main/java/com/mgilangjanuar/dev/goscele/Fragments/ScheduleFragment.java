@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -38,6 +39,8 @@ public class ScheduleFragment extends Fragment implements SchedulePresenter.Sche
     SlidingUpPanelLayout slidingUpPanelLayout;
     @BindView(R.id.img_detail_description)
     ImageView iViewDetailDescription;
+    @BindView(R.id.button_refresh)
+    ImageButton buttonRefresh;
 
     public static ScheduleFragment newInstance() {
         ScheduleFragment fragment = new ScheduleFragment();
@@ -62,15 +65,43 @@ public class ScheduleFragment extends Fragment implements SchedulePresenter.Sche
     @Override
     public void onViewCreated(final View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        setupSchedule(view);
+        setupSchedule();
     }
 
     @Override
-    public void setupSchedule(View view) {
+    public void setupSchedule() {
         BaseTabViewPagerAdapter fragmentPagerAdapter = new BaseTabViewPagerAdapter(getChildFragmentManager());
-        fragmentPagerAdapter.addFragment(DeadlineFragment.newInstance(recyclerView, tvTitleSlidingUpPanel, tvStatus, slidingUpPanelLayout, iViewDetailDescription), getResources().getString(R.string.title_fragment_deadline));
-        fragmentPagerAdapter.addFragment(DailyFragment.newInstance(recyclerView, tvTitleSlidingUpPanel, tvStatus, slidingUpPanelLayout, iViewDetailDescription), getResources().getString(R.string.title_fragment_daily));
+
+        DeadlineFragment deadlineFragment = DeadlineFragment.newInstance(recyclerView, tvTitleSlidingUpPanel, tvStatus, slidingUpPanelLayout, iViewDetailDescription);
+        fragmentPagerAdapter.addFragment(deadlineFragment, getResources().getString(R.string.title_fragment_deadline));
+
+        DailyFragment dailyFragment = DailyFragment.newInstance(recyclerView, tvTitleSlidingUpPanel, tvStatus, slidingUpPanelLayout, iViewDetailDescription, buttonRefresh);
+        fragmentPagerAdapter.addFragment(dailyFragment, getResources().getString(R.string.title_fragment_daily));
+
         viewPager.setAdapter(fragmentPagerAdapter);
         tabLayout.setupWithViewPager(viewPager);
+        tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                if (tab.getText().equals(getString(R.string.title_fragment_deadline))) {
+                    buttonRefresh.setVisibility(ImageButton.GONE);
+                    (new Thread(() -> deadlineFragment.setupSchedule())).start();
+
+                } else if (tab.getText().equals(getString(R.string.title_fragment_daily))){
+                    buttonRefresh.setVisibility(ImageButton.VISIBLE);
+                    (new Thread(() -> dailyFragment.setupSchedule())).start();
+                }
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
     }
 }

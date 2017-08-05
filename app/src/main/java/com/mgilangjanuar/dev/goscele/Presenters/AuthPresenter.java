@@ -42,6 +42,9 @@ public class AuthPresenter {
     public boolean login(String username, String password) throws IOException {
         boolean isLogin = authService.login(username, password);
         save(username, password);
+
+        SchedulePresenter schedulePresenter = new SchedulePresenter(activity);
+        schedulePresenter.buildScheduleDailyModel(username, password);
         return isLogin;
     }
 

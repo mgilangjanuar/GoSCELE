@@ -10,7 +10,7 @@ app:umanoPanelHeight="68dp"
 app:umanoParallaxOffset="?attr/actionBarSize"
 app:umanoScrollableView="@+id/recycler_view_schedule"
 app:umanoShadowHeight="4dp"
-tools:context="com.mgilangjanuar.dev.goscele.Fragments.Schedules.DeadlineFragment">
+tools:context="com.mgilangjanuar.dev.goscele.Fragments.ScheduleFragment">
 
 <android.support.design.widget.CoordinatorLayout
     android:layout_width="match_parent"
@@ -48,28 +48,43 @@ tools:context="com.mgilangjanuar.dev.goscele.Fragments.Schedules.DeadlineFragmen
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/color_primary"
-        android:paddingBottom="18dp"
         android:paddingLeft="20dp"
-        android:paddingRight="20dp"
-        android:paddingTop="18dp">
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp">
 
-        <ImageView
-            android:id="@+id/img_detail_description"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:backgroundTint="@android:color/white"
-            android:src="@drawable/ic_sliding_up" />
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
+            android:layout_alignParentLeft="true">
+            <ImageView
+                android:id="@+id/img_detail_description"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:backgroundTint="@android:color/white"
+                android:src="@drawable/ic_sliding_up" />
 
-        <TextView
-            android:id="@+id/title_slidingup_panel_schedule"
+            <TextView
+                android:id="@+id/title_slidingup_panel_schedule"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/img_detail_description"
+                android:paddingLeft="10dp"
+                android:text="Loading..."
+                android:textColor="@android:color/white"
+                android:textSize="20dp" />
+        </LinearLayout>
+
+        <ImageButton
+            android:id="@+id/button_refresh"
+            android:layout_alignParentRight="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/img_detail_description"
-            android:paddingLeft="10dp"
-            android:text="Loading..."
-            android:textColor="@android:color/white"
-            android:textSize="20dp" />
+            android:src="@drawable/ic_refresh_black_24dp"
+            android:visibility="gone"
+            style="?android:attr/borderlessButtonStyle"/>
 
     </RelativeLayout>
 
