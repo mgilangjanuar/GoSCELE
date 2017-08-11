@@ -80,7 +80,7 @@ public class InAppBrowserActivity extends BaseActivity implements InAppBrowserPr
 
         if (!presenter.isStoragePermissionGranted()) {
             webView.stopLoading();
-            presenter.showStoragePermissionAlertDialog();
+            presenter.showStoragePermissionAlertDialog(InAppBrowserActivity.this);
         }
 
         CookieManager.getInstance().setAcceptCookie(true);

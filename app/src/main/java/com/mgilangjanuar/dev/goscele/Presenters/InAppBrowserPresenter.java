@@ -9,11 +9,10 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
-import android.provider.Settings;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
-import android.text.Html;
 import android.util.Log;
 import android.webkit.CookieManager;
 import android.webkit.CookieSyncManager;
@@ -54,22 +53,21 @@ public class InAppBrowserPresenter {
         return ContextCompat.checkSelfPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED;
     }
 
-    public void showStoragePermissionAlertDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
-        builder.setCancelable(false);
-        builder.setTitle("Enable Storage Permission");
-        builder.setMessage(Html.fromHtml("Please enable your storage permission for GoSCELE." +
-                "<br><br>Go to <i>Permission Manager</i> -> <i>Storage</i> -> <i>Accept</i>"));
-        builder.setInverseBackgroundForced(true);
-        builder.setPositiveButton("Enable", (dialog, which) -> {
-            Intent intent = new Intent();
-            intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-            intent.setData(Uri.fromParts("package", activity.getPackageName(), null));
-            activity.startActivity(intent);
-        });
-        builder.setNegativeButton("Ignore", (dialog, which) -> dialog.dismiss());
-        alertDialog = builder.create();
-        alertDialog.show();
+    public void showStoragePermissionAlertDialog(Context context) {
+        if (ActivityCompat.shouldShowRequestPermissionRationale((Activity) context, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+            builder.setCancelable(true);
+            builder.setTitle("Permission necessary");
+            builder.setMessage("External storage permission is necessary");
+            builder.setPositiveButton(android.R.string.yes,
+                    (dialogInterface, i) -> ActivityCompat.requestPermissions((Activity) context,
+                            new String[] {Manifest.permission.WRITE_EXTERNAL_STORAGE}, 123));
+            alertDialog = builder.create();
+            alertDialog.show();
+        }
+        else {
+            ActivityCompat.requestPermissions((Activity) context, new String[] {Manifest.permission.WRITE_EXTERNAL_STORAGE}, 123);
+        }
     }
 
     public boolean isContinueOpenWebView() {
