@@ -1,0 +1,49 @@
+<resources>
+    <string name="app_name">GoSCELE</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="signin">Sign In</string>
+    <string name="copyrights">GoSCELE - Unofficial App © 2017</string>
+    <string name="username_password_required_field">Username and password are required field</string>
+    <string name="connection_problem">Connection problem</string>
+    <string name="username_password_wrong">Username or password wrong</string>
+    <string name="loading">Loading...</string>
+    <string name="greeting_message">Welcome back, %s!</string>
+    <string name="home">HOME</string>
+    <string name="courses">COURSES</string>
+    <string name="schedules">SCHEDULES</string>
+    <string name="settings">SETTINGS</string>
+    <string name="copy_url">Copy URL</string>
+    <string name="share">Share</string>
+    <string name="search">Search</string>
+    <string name="open_in_other_app">Open in other app</string>
+    <string name="academic_announcement">Pengumuman Akademis</string>
+    <string name="forum_curriculum">Forum Kurikulum 2016</string>
+    <string name="forum_general">Forum Umum</string>
+    <string name="forum_kp_st_ta">Forum KP - ST - TA</string>
+    <string name="forum_library">Forum Perpustakaan</string>
+    <string name="forum_scholarship">Forum Beasiswa</string>
+    <string name="forum_assistant">Forum Asisten</string>
+    <string name="forum_feedback">Forum Feedback</string>
+    <string name="forum_suggestion">Forum Usul</string>
+    <string name="forum_lounge">Forum Santai</string>
+    <string name="forum_question_answer">Forum Tanya-Jawab</string>
+    <string name="forum_vacancy">Forum Lowongan</string>
+    <string name="forum_academic_rule">Forum Peraturan Akademis</string>
+    <string name="forum_lost_found">Forum Lost and Found</string>
+    <string name="forum_competition_info">Forum Kompetisi</string>
+    <string name="forum_graduate_info">Forum Informasi Wisudawan</string>
+    <string name="forum_helpdesk">Forum Heldesk</string>
+    <string name="forum_labsitter">Forum Labsitter</string>
+    <string name="forum_ukm">Forum UKM</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_fragment_home">Latest Update</string>
+    <string name="empty">Empty</string>
+    <string name="permission_title">Permission necessary</string>
+    <string name="storage_permission">External storage permission is necessary</string>
+    <string name="downloading_file">Downloading file...</string>
+    <string name="download_failed">Download failed!</string>
+    <string name="url_copied">URL Copied!</string>
+</resources>

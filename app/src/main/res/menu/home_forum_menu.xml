@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/item_search"
+        android:icon="@drawable/ic_search_black_24dp"
+        android:title="@string/search"
+        app:showAsAction="ifRoom" />
+
+    <group android:checkableBehavior="none">
+        <item
+            android:id="@+id/academic_announcement"
+            android:icon="@null"
+            android:title="@string/academic_announcement" />
+        <item
+            android:id="@+id/forum_curriculum"
+            android:icon="@null"
+            android:title="@string/forum_curriculum" />
+        <item
+            android:id="@+id/forum_general"
+            android:icon="@null"
+            android:title="@string/forum_general" />
+        <item
+            android:id="@+id/forum_kp_st_ta"
+            android:icon="@null"
+            android:title="@string/forum_kp_st_ta" />
+        <item
+            android:id="@+id/forum_library"
+            android:icon="@null"
+            android:title="@string/forum_library" />
+        <item
+            android:id="@+id/forum_scholarship"
+            android:icon="@null"
+            android:title="@string/forum_scholarship" />
+        <item
+            android:id="@+id/forum_assistant"
+            android:icon="@null"
+            android:title="@string/forum_assistant" />
+        <item
+            android:id="@+id/forum_feedback"
+            android:icon="@null"
+            android:title="@string/forum_feedback" />
+        <item
+            android:id="@+id/forum_suggestion"
+            android:icon="@null"
+            android:title="@string/forum_suggestion" />
+        <item
+            android:id="@+id/forum_lounge"
+            android:icon="@null"
+            android:title="@string/forum_lounge" />
+        <item
+            android:id="@+id/forum_question_answer"
+            android:icon="@null"
+            android:title="@string/forum_question_answer" />
+        <item
+            android:id="@+id/forum_vacancy"
+            android:icon="@null"
+            android:title="@string/forum_vacancy" />
+        <item
+            android:id="@+id/forum_academic_rule"
+            android:icon="@null"
+            android:title="@string/forum_academic_rule" />
+        <item
+            android:id="@+id/forum_lost_found"
+            android:icon="@null"
+            android:title="@string/forum_lost_found" />
+        <item
+            android:id="@+id/forum_ukm"
+            android:icon="@null"
+            android:title="@string/forum_ukm" />
+        <item
+            android:id="@+id/forum_competition_info"
+            android:icon="@null"
+            android:title="@string/forum_competition_info" />
+        <item
+            android:id="@+id/forum_graduate_info"
+            android:icon="@null"
+            android:title="@string/forum_graduate_info" />
+        <item
+            android:id="@+id/forum_helpdesk"
+            android:icon="@null"
+            android:title="@string/forum_helpdesk" />
+        <item
+            android:id="@+id/forum_labsitter"
+            android:icon="@null"
+            android:title="@string/forum_labsitter" />
+    </group>
+
+</menu>

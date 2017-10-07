@@ -1,0 +1,31 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.mgilangjanuar.dev.goscele.modules.forum.detail.view.ForumCommentFragment">
+
+    <TextView
+        android:id="@+id/text_status_forum_comments"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="20dp"
+        android:text="@string/loading"
+        android:textAlignment="center"
+        android:textColor="@android:color/darker_gray"
+        android:textStyle="italic" />
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_refresh_forum_detail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler_view_forum_detail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clipToPadding="false"
+            android:paddingBottom="80dp" />
+
+    </android.support.v4.widget.SwipeRefreshLayout>
+
+</FrameLayout>
