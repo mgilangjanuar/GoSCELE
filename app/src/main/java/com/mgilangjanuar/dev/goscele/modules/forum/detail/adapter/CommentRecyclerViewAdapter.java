@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
-import android.text.Html;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +17,9 @@ import com.mgilangjanuar.dev.goscele.base.BaseViewHolder;
 import com.mgilangjanuar.dev.goscele.modules.forum.detail.listener.ForumDeleteListener;
 import com.mgilangjanuar.dev.goscele.modules.forum.detail.model.ForumCommentModel;
 import com.mgilangjanuar.dev.goscele.modules.forum.detail.provider.DeleteProvider;
+
+import org.sufficientlysecure.htmltextview.HtmlHttpImageGetter;
+import org.sufficientlysecure.htmltextview.HtmlTextView;
 
 import java.util.List;
 
@@ -56,7 +58,7 @@ public class CommentRecyclerViewAdapter extends BaseRecyclerViewAdapter<CommentR
         final ForumCommentModel model = list.get(position);
         holder.author.setText(model.author);
         holder.date.setText(model.date);
-        holder.content.setText(Html.fromHtml(model.content, Html.FROM_HTML_MODE_COMPACT));
+        holder.content.setHtml(model.content, new HtmlHttpImageGetter(holder.content));
 
         if (!TextUtils.isEmpty(model.deleteUrl)) {
             holder.delete.setVisibility(Button.VISIBLE);
@@ -111,7 +113,7 @@ public class CommentRecyclerViewAdapter extends BaseRecyclerViewAdapter<CommentR
         @BindView(R.id.date_forum_comment)
         TextView date;
         @BindView(R.id.content_forum_comment)
-        TextView content;
+        HtmlTextView content;
         @BindView(R.id.button_delete_comment)
         Button delete;
 

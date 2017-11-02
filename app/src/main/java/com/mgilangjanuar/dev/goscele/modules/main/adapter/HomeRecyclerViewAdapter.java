@@ -1,5 +1,6 @@
 package com.mgilangjanuar.dev.goscele.modules.main.adapter;
 
+import android.app.AlertDialog.Builder;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
@@ -84,7 +85,7 @@ public class HomeRecyclerViewAdapter extends BaseRecyclerViewAdapter<HomeRecycle
     }
 
     private void buildMenuView(Context context, final HomeModel model) {
-        android.app.AlertDialog.Builder alertDialog = new android.app.AlertDialog.Builder(context);
+        Builder alertDialog = new Builder(context);
         alertDialog.setTitle(model.title);
 
         LinearLayout container = new LinearLayout(context);

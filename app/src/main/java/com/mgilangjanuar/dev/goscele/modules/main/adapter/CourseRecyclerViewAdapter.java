@@ -1,11 +1,14 @@
 package com.mgilangjanuar.dev.goscele.modules.main.adapter;
 
+import android.app.AlertDialog;
 import android.content.Context;
-import android.graphics.PorterDuff;
-import android.os.Bundle;
+import android.graphics.Color;
+import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -14,10 +17,8 @@ import com.mgilangjanuar.dev.goscele.R;
 import com.mgilangjanuar.dev.goscele.base.BaseFragment;
 import com.mgilangjanuar.dev.goscele.base.BaseRecyclerViewAdapter;
 import com.mgilangjanuar.dev.goscele.base.BaseViewHolder;
-import com.mgilangjanuar.dev.goscele.modules.main.listener.CourseAllListener;
-import com.mgilangjanuar.dev.goscele.modules.main.listener.CourseCurrentListener;
 import com.mgilangjanuar.dev.goscele.modules.main.model.CourseModel;
-import com.mgilangjanuar.dev.goscele.modules.main.presenter.CoursePresenter;
+import com.mgilangjanuar.dev.goscele.modules.main.view.CourseAllFragment;
 import com.mgilangjanuar.dev.goscele.modules.main.view.CourseCurrentFragment;
 
 import java.util.List;
@@ -63,32 +64,59 @@ public class CourseRecyclerViewAdapter extends BaseRecyclerViewAdapter<CourseRec
                 Toast.makeText(v.getContext(), "Not implemented yet", Toast.LENGTH_SHORT).show();
             }
         });
+        holder.relativeLayout.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                AlertDialog.Builder alertDialog = new AlertDialog.Builder(context);
+                alertDialog.setTitle(model.name);
 
-        if (fragment instanceof CourseCurrentFragment) {
-            holder.buttonAction.setText(context.getString(R.string.archive));
-            holder.buttonAction.getBackground().setColorFilter(context.getResources().getColor(android.R.color.holo_red_light), PorterDuff.Mode.MULTIPLY);
-            holder.buttonAction.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    model.isCurrent = false;
-                    model.save();
-                    list.remove(position);
-                    notifyItemRemoved(position);
-                    notifyItemRangeChanged(position, getItemCount());
+                LinearLayout container = new LinearLayout(context);
+                container.setPadding(0, 40, 0, 0);
+                container.setOrientation(LinearLayout.VERTICAL);
+                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+
+                TypedValue typedValue = new TypedValue();
+                context.getTheme().resolveAttribute(android.R.attr.selectableItemBackground, typedValue, true);
+
+                View divider = new View(context);
+                divider.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 1));
+                divider.setBackgroundColor(container.getResources().getColor(android.R.color.darker_gray));
+
+                Button btnAction = new Button(context);
+                if (model.isCurrent) {
+                    btnAction.setText(context.getString(R.string.archive));
+                } else {
+                    btnAction.setText(context.getString(R.string.add_to_current));
                 }
-            });
-        } else {
-            holder.enableButton(!model.isCurrent);
-            holder.buttonAction.setText(context.getString(R.string.add_to_current));
-            holder.buttonAction.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    model.isCurrent = true;
-                    model.save();
-                    holder.enableButton(false);
-                }
-            });
-        }
+                btnAction.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.CENTER_VERTICAL);
+                btnAction.setPadding(50, 0, 50, 0);
+                btnAction.setAllCaps(false);
+                btnAction.setBackgroundResource(typedValue.resourceId);
+                btnAction.setLayoutParams(params);
+
+                container.addView(divider);
+                container.addView(btnAction);
+
+                alertDialog.setView(container);
+                final android.app.AlertDialog alert = alertDialog.create();
+
+                btnAction.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        list.remove(position);
+                        notifyItemRemoved(position);
+                        notifyItemRangeChanged(position, getItemCount());
+
+                        model.isCurrent = !model.isCurrent;
+                        model.save();
+                        alert.dismiss();
+                    }
+                });
+
+                alert.show();
+                return true;
+            }
+        });
     }
 
     @Override
@@ -103,21 +131,10 @@ public class CourseRecyclerViewAdapter extends BaseRecyclerViewAdapter<CourseRec
 
         @BindView(R.id.title_course_name)
         public TextView title;
-        
-        @BindView(R.id.button_course)
-        public Button buttonAction;
 
         public ViewHolder(View itemView) {
             super(itemView);
         }
 
-        public void enableButton(boolean enable) {
-            if (enable) {
-                buttonAction.getBackground().setColorFilter(context.getResources().getColor(android.R.color.holo_green_dark), PorterDuff.Mode.MULTIPLY);
-            } else {
-                buttonAction.getBackground().setColorFilter(context.getResources().getColor(android.R.color.darker_gray), PorterDuff.Mode.MULTIPLY);
-            }
-            buttonAction.setEnabled(enable);
-        }
     }
 }

@@ -35,6 +35,7 @@ public class CoursePresenter extends BasePresenter {
                 models = new CourseModel().find().where("is_current = ?", true).execute();
                 currentListener.onRetrieve(new CourseRecyclerViewAdapter(fragment.getContext(), fragment, models));
             } else {
+                models = new CourseModel().find().where("is_current = ?", false).execute();
                 allListener.onRetrieve(new CourseRecyclerViewAdapter(fragment.getContext(), fragment, models));
             }
         } else {
