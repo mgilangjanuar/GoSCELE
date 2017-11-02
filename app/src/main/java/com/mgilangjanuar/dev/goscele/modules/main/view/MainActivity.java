@@ -1,6 +1,7 @@
 package com.mgilangjanuar.dev.goscele.modules.main.view;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -10,8 +11,8 @@ import com.mgilangjanuar.dev.goscele.R;
 import com.mgilangjanuar.dev.goscele.base.BaseActivity;
 import com.mgilangjanuar.dev.goscele.modules.auth.view.AuthActivity;
 import com.mgilangjanuar.dev.goscele.modules.common.listener.CheckLoginListener;
-import com.mgilangjanuar.dev.goscele.modules.main.util.BottomNavigationViewUtil;
 import com.mgilangjanuar.dev.goscele.modules.main.presenter.MainPresenter;
+import com.mgilangjanuar.dev.goscele.modules.main.util.BottomNavigationViewUtil;
 
 import butterknife.BindView;
 
@@ -33,6 +34,14 @@ public class MainActivity extends BaseActivity implements CheckLoginListener {
     public void initialize(Bundle savedInstanceState) {
         presenter.checkLogin();
         BottomNavigationViewUtil.disableShiftMode(bottomNavigationView);
+
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                selectMenu(item);
+                return true;
+            }
+        });
 
         MenuItem menuItem;
         if (savedInstanceState != null) {
@@ -74,6 +83,9 @@ public class MainActivity extends BaseActivity implements CheckLoginListener {
         switch (item.getItemId()) {
             case R.id.action_home:
                 fragment = HomeFragment.newInstance();
+                break;
+            case R.id.action_course:
+                fragment = CourseFragment.newInstance();
                 break;
         }
 

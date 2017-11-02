@@ -2,7 +2,6 @@ package com.mgilangjanuar.dev.goscele.modules.forum.detail.model;
 
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
-import com.google.gson.internal.Streams;
 import com.mgilangjanuar.dev.goscele.base.BaseModel;
 
 /**

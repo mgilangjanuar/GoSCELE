@@ -20,6 +20,7 @@
             com.mgilangjanuar.dev.goscele.modules.common.model.CookieModel,
             com.mgilangjanuar.dev.goscele.modules.common.model.UserModel,
             com.mgilangjanuar.dev.goscele.modules.main.model.HomeModel,
+            com.mgilangjanuar.dev.goscele.modules.main.model.CourseModel,
             com.mgilangjanuar.dev.goscele.modules.forum.detail.model.ForumDetailModel,
             com.mgilangjanuar.dev.goscele.modules.forum.detail.model.ForumCommentModel" />
 

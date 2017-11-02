@@ -15,9 +15,9 @@ import android.webkit.WebView;
 import android.widget.ProgressBar;
 
 import com.mgilangjanuar.dev.goscele.base.BasePresenter;
+import com.mgilangjanuar.dev.goscele.modules.browser.listener.BrowserListener;
 import com.mgilangjanuar.dev.goscele.modules.browser.util.DownloadWrapper;
 import com.mgilangjanuar.dev.goscele.modules.browser.util.WebViewClientUtil;
-import com.mgilangjanuar.dev.goscele.modules.browser.listener.BrowserListener;
 import com.mgilangjanuar.dev.goscele.modules.browser.view.BrowserActivity;
 import com.mgilangjanuar.dev.goscele.modules.common.model.CookieModel;
 import com.mgilangjanuar.dev.goscele.utils.Constant;

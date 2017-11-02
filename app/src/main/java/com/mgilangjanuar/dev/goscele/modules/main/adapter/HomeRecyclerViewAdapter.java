@@ -8,7 +8,6 @@ import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -18,11 +17,13 @@ import android.widget.Toast;
 import com.mgilangjanuar.dev.goscele.R;
 import com.mgilangjanuar.dev.goscele.base.BaseRecyclerViewAdapter;
 import com.mgilangjanuar.dev.goscele.base.BaseViewHolder;
-import com.mgilangjanuar.dev.goscele.modules.browser.view.BrowserActivity;
+import com.mgilangjanuar.dev.goscele.modules.forum.detail.view.ForumDetailActivity;
 import com.mgilangjanuar.dev.goscele.modules.main.model.HomeModel;
 import com.mgilangjanuar.dev.goscele.utils.Constant;
 import com.mgilangjanuar.dev.goscele.utils.ShareContentUtil;
-import com.mgilangjanuar.dev.goscele.utils.WebViewContentUtil;
+
+import org.sufficientlysecure.htmltextview.HtmlHttpImageGetter;
+import org.sufficientlysecure.htmltextview.HtmlTextView;
 
 import java.util.List;
 
@@ -34,7 +35,7 @@ import butterknife.BindView;
  * @since 2017
  */
 
-public class HomeRecyclerViewAdapter extends BaseRecyclerViewAdapter<HomeRecyclerViewAdapter.HomeViewHolder> {
+public class HomeRecyclerViewAdapter extends BaseRecyclerViewAdapter<HomeRecyclerViewAdapter.ViewHolder> {
 
     private List<HomeModel> list;
 
@@ -43,8 +44,8 @@ public class HomeRecyclerViewAdapter extends BaseRecyclerViewAdapter<HomeRecycle
     }
 
     @Override
-    public HomeViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new HomeViewHolder(createView(parent));
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        return new ViewHolder(createView(parent));
     }
 
     @Override
@@ -58,16 +59,19 @@ public class HomeRecyclerViewAdapter extends BaseRecyclerViewAdapter<HomeRecycle
     }
 
     @Override
-    public void initialize(HomeViewHolder holder, int position) {
+    public void initialize(ViewHolder holder, int position) {
         final HomeModel model = list.get(position);
+        holder.model = model;
+
         holder.title.setText(model.title);
         holder.author.setText(model.author);
         holder.info.setText(model.date);
-        WebViewContentUtil.setWebView(holder.content, model.content);
+
+        holder.content.setHtml(model.content, new HtmlHttpImageGetter(holder.content));
         holder.layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), BrowserActivity.class).putExtra(Constant.URL, model.url);
+                Intent intent = new Intent(v.getContext(), ForumDetailActivity.class).putExtra(Constant.URL, model.url);
                 v.getContext().startActivity(intent);
             }
         });
@@ -143,7 +147,7 @@ public class HomeRecyclerViewAdapter extends BaseRecyclerViewAdapter<HomeRecycle
         alert.show();
     }
 
-    public class HomeViewHolder extends BaseViewHolder {
+    public class ViewHolder extends BaseViewHolder {
 
         @BindView(R.id.title_home)
         TextView title;
@@ -155,7 +159,7 @@ public class HomeRecyclerViewAdapter extends BaseRecyclerViewAdapter<HomeRecycle
         TextView info;
 
         @BindView(R.id.content_home)
-        WebView content;
+        HtmlTextView content;
 
         @BindView(R.id.main_layout_home)
         LinearLayout layout;
@@ -163,7 +167,9 @@ public class HomeRecyclerViewAdapter extends BaseRecyclerViewAdapter<HomeRecycle
         @BindView(R.id.menu_more_home)
         ImageButton menuMore;
 
-        public HomeViewHolder(View itemView) {
+        private HomeModel model;
+
+        public ViewHolder(View itemView) {
             super(itemView);
         }
     }

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layout_course_list"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?attr/selectableItemBackground"
+    android:paddingBottom="7dp"
+    android:paddingLeft="20dp"
+    android:paddingRight="20dp"
+    android:paddingTop="7dp">
+
+    <TextView
+        android:id="@+id/title_course_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="16dp" />
+
+    <Button
+        android:id="@+id/button_course"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/title_course_name"
+        android:layout_marginTop="10dp"
+        android:text="Make Current"
+        android:textColor="@android:color/white"
+        android:textSize="10sp" />
+
+</RelativeLayout>

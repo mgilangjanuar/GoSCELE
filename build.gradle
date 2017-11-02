@@ -3,6 +3,10 @@
 buildscript {
     repositories {
         jcenter()
+        maven {
+            url 'https://maven.google.com/'
+            name 'Google'
+        }
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:2.3.3'
@@ -17,6 +21,13 @@ allprojects {
         jcenter()
         mavenCentral()
         maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
+        maven {
+            url 'https://maven.google.com/'
+            name 'Google'
+        }
+        maven {
+            url 'https://jitpack.io'
+        }
     }
 }
 

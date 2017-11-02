@@ -46,4 +46,18 @@
     <string name="downloading_file">Downloading file...</string>
     <string name="download_failed">Download failed!</string>
     <string name="url_copied">URL Copied!</string>
+    <string name="delete_thread">Delete Thread</string>
+    <string name="are_you_sure_want_to_delete_this">Are you sure want to delete this?</string>
+    <string name="yes">Yes</string>
+    <string name="please_wait">Please wait...</string>
+    <string name="cancel">Cancel</string>
+    <string name="thread_deleted">Thread deleted!</string>
+    <string name="post">Post</string>
+    <string name="comment">Comments</string>
+    <string name="delete_comment">Delete Comment</string>
+    <string name="comment_deleted">Comment deleted!</string>
+    <string name="title_fragment_current_course">Current</string>
+    <string name="title_fragment_all_course">All</string>
+    <string name="archive">Archive</string>
+    <string name="add_to_current">Add To Current</string>
 </resources>

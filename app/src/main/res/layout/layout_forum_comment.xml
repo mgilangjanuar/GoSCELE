@@ -42,12 +42,17 @@
                 android:textColor="@android:color/darker_gray"
                 android:textSize="13sp" />
 
-            <WebView
+            <!--<WebView-->
+                <!--android:id="@+id/content_forum_comment"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:scrollbars="none"-->
+                <!--android:textSize="15sp" />-->
+            <TextView
                 android:id="@+id/content_forum_comment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:scrollbars="none"
-                android:textSize="15sp" />
+                android:textSize="15sp"/>
 
             <Button
                 android:id="@+id/button_delete_comment"

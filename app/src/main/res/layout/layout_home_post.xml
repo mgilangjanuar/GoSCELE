@@ -87,12 +87,12 @@
                 android:paddingRight="20dp"
                 android:paddingTop="10dp">
 
-                <WebView
+                <org.sufficientlysecure.htmltextview.HtmlTextView
                     android:id="@+id/content_home"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:scrollbars="none"
-                    android:textSize="15sp" />
+                    android:textAppearance="@android:style/TextAppearance.Small" />
+
             </LinearLayout>
 
         </LinearLayout>

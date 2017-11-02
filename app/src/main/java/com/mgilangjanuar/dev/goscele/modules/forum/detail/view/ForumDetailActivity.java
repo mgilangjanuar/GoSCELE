@@ -9,7 +9,6 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.mgilangjanuar.dev.goscele.R;
 import com.mgilangjanuar.dev.goscele.base.BaseActivity;
@@ -59,13 +58,13 @@ public class ForumDetailActivity extends BaseActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
-        presenter = new ForumDetailPresenter(getIntent().getExtras().getString(Constant.URL));
+        presenter = new ForumDetailPresenter(this, getIntent().getExtras().getString(Constant.URL));
 
         actionButton.hide();
 
         TabPagerAdapterUtil tabPagerAdapter = new TabPagerAdapterUtil(getSupportFragmentManager());
-        tabPagerAdapter.addFragment(ForumPostFragment.newInstance());
-        tabPagerAdapter.addFragment(ForumCommentFragment.newInstance());
+        tabPagerAdapter.addFragment(ForumPostFragment.newInstance(presenter), getString(R.string.post));
+        tabPagerAdapter.addFragment(ForumCommentFragment.newInstance(presenter, actionButton), getString(R.string.comment));
 
         viewPager.setAdapter(tabPagerAdapter);
         tabLayout.setupWithViewPager(viewPager);
@@ -73,7 +72,7 @@ public class ForumDetailActivity extends BaseActivity {
 
     @Override
     public boolean onSupportNavigateUp() {
-        super.onSupportNavigateUp();
+        onBackPressed();
         return true;
     }
 
