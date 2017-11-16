@@ -14,9 +14,6 @@ import butterknife.BindView;
 
 public class CourseFragment extends BaseFragment {
 
-    @BindView(R.id.toolbar_course)
-    Toolbar toolbar;
-
     @BindView(R.id.view_pager_fragment_course)
     ViewPager viewPager;
 
@@ -66,15 +63,5 @@ public class CourseFragment extends BaseFragment {
             public void onTabReselected(TabLayout.Tab tab) {
             }
         });
-    }
-
-    @Override
-    public String findTitle() {
-        return getString(R.string.courses);
-    }
-
-    @Override
-    public Toolbar findToolbar() {
-        return toolbar;
     }
 }

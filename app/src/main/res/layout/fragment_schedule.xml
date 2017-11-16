@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="bottom"
-    app:umanoPanelHeight="68dp"
+    app:umanoPanelHeight="?attr/actionBarSize"
     app:umanoParallaxOffset="?attr/actionBarSize"
     app:umanoScrollableView="@+id/recycler_view_schedule"
     app:umanoShadowHeight="4dp"
@@ -49,8 +49,8 @@
             android:layout_height="wrap_content"
             android:background="@color/color_primary"
             android:paddingLeft="20dp"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp">
+            android:paddingTop="7dp"
+            android:paddingBottom="7dp">
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -72,7 +72,7 @@
                     android:layout_height="wrap_content"
                     android:layout_toRightOf="@+id/img_detail_description"
                     android:paddingLeft="10dp"
-                    android:text="Loading..."
+                    android:text="@string/loading"
                     android:textColor="@android:color/white"
                     android:textSize="20dp" />
             </LinearLayout>

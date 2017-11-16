@@ -60,4 +60,8 @@
     <string name="title_fragment_all_course">All</string>
     <string name="archive">Archive</string>
     <string name="add_to_current">Add To Current</string>
+    <string name="courses_fragment_title">Courses</string>
+    <string name="schedule_fragment_title">Schedule</string>
+    <string name="title_fragment_deadline">Deadline</string>
+    <string name="title_fragment_daily">Daily</string>
 </resources>

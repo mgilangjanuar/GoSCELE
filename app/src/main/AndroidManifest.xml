@@ -39,7 +39,21 @@
         <activity
             android:name=".modules.browser.view.BrowserActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".modules.forum.detail.view.ForumDetailActivity"></activity>
+        <activity
+            android:name=".modules.forum.detail.view.ForumDetailActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".modules.deeplink.view.DeepLinkActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="http" />
+                <data android:scheme="https" />
+                <data android:host="scele.cs.ui.ac.id" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

@@ -115,6 +115,12 @@ public class CourseRecyclerViewAdapter extends BaseRecyclerViewAdapter<CourseRec
                                 notifyItemRangeChanged(position, getItemCount());
                             } else if (fragment instanceof CourseAllFragment && !model.isCurrent) {
                                 holder.title.setTextColor(Color.GRAY);
+                                holder.relativeLayout.setOnLongClickListener(new View.OnLongClickListener() {
+                                    @Override
+                                    public boolean onLongClick(View v) {
+                                        return false;
+                                    }
+                                });
                             }
 
                             model.isCurrent = !model.isCurrent;

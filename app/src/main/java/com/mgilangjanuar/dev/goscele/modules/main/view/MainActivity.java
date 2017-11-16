@@ -87,6 +87,8 @@ public class MainActivity extends BaseActivity implements CheckLoginListener {
             case R.id.action_course:
                 fragment = CourseFragment.newInstance();
                 break;
+            case R.id.action_schedule:
+                fragment = ScheduleFragment.newInstance();
         }
 
         if (currentItem == null || !item.equals(currentItem)) {
