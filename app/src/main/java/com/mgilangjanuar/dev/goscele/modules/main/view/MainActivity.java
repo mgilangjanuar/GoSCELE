@@ -72,6 +72,15 @@ public class MainActivity extends BaseActivity implements CheckLoginListener {
         }
     }
 
+    @Override
+    public void onBackPressed() {
+        if (currentItem.getItemId() == R.id.action_home) {
+            super.onBackPressed();
+        } else {
+            selectMenu(bottomNavigationView.getMenu().getItem(0));
+        }
+    }
+
     private void selectMenu(MenuItem item) {
         Fragment fragment = null;
 
@@ -84,6 +93,10 @@ public class MainActivity extends BaseActivity implements CheckLoginListener {
                 break;
             case R.id.action_schedule:
                 fragment = ScheduleFragment.newInstance();
+                break;
+            case R.id.action_setting:
+                fragment = SettingFragment.newInstance();
+                break;
         }
 
         if (currentItem == null || !item.equals(currentItem)) {

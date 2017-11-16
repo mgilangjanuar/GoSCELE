@@ -64,6 +64,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
                     android:backgroundTint="@android:color/white"
+                    android:paddingTop="3dp"
                     android:src="@drawable/ic_sliding_up" />
 
                 <TextView

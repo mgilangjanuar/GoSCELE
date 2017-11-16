@@ -91,16 +91,11 @@ public class ScheduleDeadlineFragment extends BaseFragment implements ScheduleDe
             @Override
             public void onDateSelected(@NonNull MaterialCalendarView widget, @NonNull final CalendarDay date, boolean selected) {
                 ScheduleDeadlineFragment.this.date = date.getDate();
-
                 slidingUpPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);
-
                 status.setText(getString(R.string.loading));
                 status.setTextColor(getResources().getColor(android.R.color.darker_gray));
-
                 recyclerView.setAdapter(new ScheduleDeadlineRecyclerViewAdapter(new ArrayList<ScheduleDeadlineModel>()));
-
                 materialCalendarView.clearSelection();
-
                 presenter.getDeadlineDetail(ScheduleDeadlineFragment.this.date.getTime() / 1000);
             }
         });
@@ -116,10 +111,20 @@ public class ScheduleDeadlineFragment extends BaseFragment implements ScheduleDe
 
             }
         });
+
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                titleSlidingUpPanel.setText(getString(R.string.loading));
+                materialCalendarView.removeDecorators();
+                presenter.getDeadlineDays(ScheduleDeadlineFragment.this.date.getTime() / 1000);
+            }
+        });
     }
 
     @Override
     public void onRetrieveDeadlineDays(final List<Integer> days) {
+        swipeRefreshLayout.setRefreshing(false);
         titleSlidingUpPanel.setText(new SimpleDateFormat("MMMM yyyy").format(date.getTime()));
         recyclerView.setAdapter(new ScheduleDeadlineRecyclerViewAdapter(new ArrayList<ScheduleDeadlineModel>()));
         materialCalendarView.addDecorator(new DayViewDecorator() {
@@ -147,6 +152,6 @@ public class ScheduleDeadlineFragment extends BaseFragment implements ScheduleDe
 
     @Override
     public void onError(String error) {
-        ((BaseActivity) getActivity()).showSnackbar(error);
+        if (getActivity() != null) ((BaseActivity) getActivity()).showSnackbar(error);
     }
 }

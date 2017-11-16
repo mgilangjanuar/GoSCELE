@@ -81,9 +81,4 @@ public class ScheduleFragment extends BaseFragment {
             }
         });
     }
-
-    @Override
-    public String findTitle() {
-        return getString(R.string.schedule_fragment_title);
-    }
 }
