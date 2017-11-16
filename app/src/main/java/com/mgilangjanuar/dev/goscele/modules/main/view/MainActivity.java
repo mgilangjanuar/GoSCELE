@@ -50,12 +50,7 @@ public class MainActivity extends BaseActivity implements CheckLoginListener {
         } else {
             menuItem = bottomNavigationView.getMenu().getItem(0);
         }
-
-        try {
-            selectMenu(menuItem);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        selectMenu(menuItem);
     }
 
     @Override

@@ -8,6 +8,7 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.style.ForegroundColorSpan;
+import android.view.View;
 import android.widget.TextView;
 
 import com.mgilangjanuar.dev.goscele.R;
@@ -91,7 +92,6 @@ public class ScheduleDeadlineFragment extends BaseFragment implements ScheduleDe
             public void onDateSelected(@NonNull MaterialCalendarView widget, @NonNull final CalendarDay date, boolean selected) {
                 ScheduleDeadlineFragment.this.date = date.getDate();
 
-                titleSlidingUpPanel.setText(new SimpleDateFormat("MMMM dd, yyyy").format(date.getDate().getTime()));
                 slidingUpPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);
 
                 status.setText(getString(R.string.loading));
@@ -102,6 +102,18 @@ public class ScheduleDeadlineFragment extends BaseFragment implements ScheduleDe
                 materialCalendarView.clearSelection();
 
                 presenter.getDeadlineDetail(ScheduleDeadlineFragment.this.date.getTime() / 1000);
+            }
+        });
+
+        slidingUpPanelLayout.addPanelSlideListener(new SlidingUpPanelLayout.PanelSlideListener() {
+            @Override
+            public void onPanelSlide(View panel, float slideOffset) {
+                titleSlidingUpPanel.setText(new SimpleDateFormat(slideOffset > 0.5 ? "MMMM dd, yyyy" : "MMMM yyyy").format(date.getTime()));
+            }
+
+            @Override
+            public void onPanelStateChanged(View panel, SlidingUpPanelLayout.PanelState previousState, SlidingUpPanelLayout.PanelState newState) {
+
             }
         });
     }

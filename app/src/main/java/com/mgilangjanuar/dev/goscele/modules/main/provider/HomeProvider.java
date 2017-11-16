@@ -1,5 +1,6 @@
 package com.mgilangjanuar.dev.goscele.modules.main.provider;
 
+import com.activeandroid.Model;
 import com.mgilangjanuar.dev.goscele.base.BaseProvider;
 import com.mgilangjanuar.dev.goscele.modules.common.model.CookieModel;
 import com.mgilangjanuar.dev.goscele.modules.main.adapter.HomeRecyclerViewAdapter;
@@ -48,6 +49,9 @@ public class HomeProvider extends BaseProvider {
         super.onPostExecute(elementses);
         try {
             Elements elements = elementses.get(0);
+
+            for (Model e: new HomeModel().find().execute()) e.delete();
+
             List<HomeModel> list = new ArrayList<>();
             for (Element e : elements) {
                 String url = e.select(".link > a").attr("href");
@@ -56,9 +60,7 @@ public class HomeProvider extends BaseProvider {
                 String date = e.select(".author").text().replace("by " + author + " - ", "");
                 String content = e.select(".posting").html();
 
-                HomeModel model = new HomeModel().find().where("url = ?", url).executeSingle();
-                if (model == null) model = new HomeModel();
-
+                HomeModel model = new HomeModel();
                 model.url = url;
                 model.title = title;
                 model.author = author;

@@ -39,8 +39,8 @@ public class HomeFragment extends BaseFragment implements HomeListener {
 
     HomePresenter presenter = new HomePresenter(this);
 
-    public static Fragment newInstance() {
-        Fragment fragment = new HomeFragment();
+    public static HomeFragment newInstance() {
+        HomeFragment fragment = new HomeFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
