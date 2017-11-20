@@ -5,14 +5,26 @@ SCELE is a web application for academic information center that becomes daily ne
 
 GoSCELE is an open source project and my first native Android application with Java language.
 
-![featured image](https://mgilangjanuar.dev.php.or.id/uploads/666/b21c4040dc-untitled.png)
+![featured image](https://github.com/mgilangjanuar/GoSCELE/blob/dev/featured_image.png)
 
 
-How To Contributing
+Requirements
+------------
+ - Android Studio >= 2.3
+ - SDK 25
+
+
+Installation
+------------
+ - Clone this repository
+ - Open and run with Android Studio
+
+
+How To Contribute
 -------------------
  - Give star for this repository
  - Fork and make changes
- - Create pull request to branch [dev](https://github.com/mgilangjanuar/GoSCELE/tree/dev)
+ - Create pull request to [dev branch](https://github.com/mgilangjanuar/GoSCELE/tree/dev)
 
 
 Development Channel
