@@ -13,6 +13,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -111,7 +112,8 @@ public class DeadlineProvider {
                         courseModel = model;
                     }});
                 }
-                ScheduleDeadlineRecyclerViewAdapter adapter = new ScheduleDeadlineRecyclerViewAdapter(result);
+
+                ScheduleDeadlineRecyclerViewAdapter adapter = new ScheduleDeadlineRecyclerViewAdapter(new Date(time * 1000), result);
                 listener.onRetrieveDeadlineDetail(adapter);
             } catch (Exception e) {
                 listener.onError(e.getMessage());

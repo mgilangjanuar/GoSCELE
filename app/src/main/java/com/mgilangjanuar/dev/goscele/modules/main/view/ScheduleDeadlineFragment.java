@@ -17,7 +17,6 @@ import com.mgilangjanuar.dev.goscele.base.BaseFragment;
 import com.mgilangjanuar.dev.goscele.modules.main.adapter.ScheduleDeadlineRecyclerViewAdapter;
 import com.mgilangjanuar.dev.goscele.modules.main.listener.ScheduleDeadlineDetailListener;
 import com.mgilangjanuar.dev.goscele.modules.main.listener.ScheduleDeadlineListener;
-import com.mgilangjanuar.dev.goscele.modules.main.model.ScheduleDeadlineModel;
 import com.mgilangjanuar.dev.goscele.modules.main.presenter.SchedulePresenter;
 import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.prolificinteractive.materialcalendarview.DayViewDecorator;
@@ -28,7 +27,6 @@ import com.prolificinteractive.materialcalendarview.OnMonthChangedListener;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -81,9 +79,7 @@ public class ScheduleDeadlineFragment extends BaseFragment implements ScheduleDe
             @Override
             public void onMonthChanged(MaterialCalendarView widget, CalendarDay date) {
                 ScheduleDeadlineFragment.this.date = date.getDate();
-                titleSlidingUpPanel.setText(getString(R.string.loading));
-                materialCalendarView.removeDecorators();
-                presenter.getDeadlineDays(ScheduleDeadlineFragment.this.date.getTime() / 1000);
+                updateDeadlineDays();
             }
         });
 
@@ -91,12 +87,9 @@ public class ScheduleDeadlineFragment extends BaseFragment implements ScheduleDe
             @Override
             public void onDateSelected(@NonNull MaterialCalendarView widget, @NonNull final CalendarDay date, boolean selected) {
                 ScheduleDeadlineFragment.this.date = date.getDate();
-                slidingUpPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);
-                status.setText(getString(R.string.loading));
-                status.setTextColor(getResources().getColor(android.R.color.darker_gray));
-                recyclerView.setAdapter(new ScheduleDeadlineRecyclerViewAdapter(new ArrayList<ScheduleDeadlineModel>()));
                 materialCalendarView.clearSelection();
-                presenter.getDeadlineDetail(ScheduleDeadlineFragment.this.date.getTime() / 1000);
+                slidingUpPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);
+                updateDetails();
             }
         });
 
@@ -108,16 +101,18 @@ public class ScheduleDeadlineFragment extends BaseFragment implements ScheduleDe
 
             @Override
             public void onPanelStateChanged(View panel, SlidingUpPanelLayout.PanelState previousState, SlidingUpPanelLayout.PanelState newState) {
-
+                if (newState.equals(SlidingUpPanelLayout.PanelState.EXPANDED)
+                        && !presenter.validateAdapterCurrentDate(recyclerView.getAdapter(), date)) {
+                    updateDetails();
+                }
             }
         });
 
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                titleSlidingUpPanel.setText(getString(R.string.loading));
-                materialCalendarView.removeDecorators();
-                presenter.getDeadlineDays(ScheduleDeadlineFragment.this.date.getTime() / 1000);
+                updateDeadlineDays();
+                updateDetails();
             }
         });
     }
@@ -125,8 +120,9 @@ public class ScheduleDeadlineFragment extends BaseFragment implements ScheduleDe
     @Override
     public void onRetrieveDeadlineDays(final List<Integer> days) {
         swipeRefreshLayout.setRefreshing(false);
-        titleSlidingUpPanel.setText(new SimpleDateFormat("MMMM yyyy").format(date.getTime()));
-        recyclerView.setAdapter(new ScheduleDeadlineRecyclerViewAdapter(new ArrayList<ScheduleDeadlineModel>()));
+        if (slidingUpPanelLayout.getPanelState() != SlidingUpPanelLayout.PanelState.EXPANDED) {
+            titleSlidingUpPanel.setText(new SimpleDateFormat("MMMM yyyy").format(date.getTime()));
+        }
         materialCalendarView.addDecorator(new DayViewDecorator() {
             @Override
             public boolean shouldDecorate(CalendarDay day) {
@@ -153,5 +149,18 @@ public class ScheduleDeadlineFragment extends BaseFragment implements ScheduleDe
     @Override
     public void onError(String error) {
         if (getActivity() != null) ((BaseActivity) getActivity()).showSnackbar(error);
+    }
+
+    private void updateDeadlineDays() {
+        titleSlidingUpPanel.setText(getString(R.string.loading));
+        materialCalendarView.removeDecorators();
+        presenter.getDeadlineDays(ScheduleDeadlineFragment.this.date.getTime() / 1000);
+    }
+
+    private void updateDetails() {
+        status.setText(getString(R.string.loading));
+        status.setTextColor(getResources().getColor(android.R.color.darker_gray));
+        recyclerView.setAdapter(presenter.buildEmptyAdapter(date));
+        presenter.getDeadlineDetail(ScheduleDeadlineFragment.this.date.getTime() / 1000);
     }
 }

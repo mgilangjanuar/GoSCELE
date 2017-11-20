@@ -6,6 +6,7 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.mgilangjanuar.dev.goscele.R;
 import com.mgilangjanuar.dev.goscele.base.BaseActivity;
@@ -13,6 +14,7 @@ import com.mgilangjanuar.dev.goscele.modules.auth.view.AuthActivity;
 import com.mgilangjanuar.dev.goscele.modules.common.listener.CheckLoginListener;
 import com.mgilangjanuar.dev.goscele.modules.main.presenter.MainPresenter;
 import com.mgilangjanuar.dev.goscele.modules.main.util.BottomNavigationViewUtil;
+import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
 import butterknife.BindView;
 
@@ -27,6 +29,7 @@ public class MainActivity extends BaseActivity implements CheckLoginListener {
     BottomNavigationView bottomNavigationView;
 
     private MenuItem currentItem;
+    private Fragment currentFragment;
 
     private MainPresenter presenter = new MainPresenter(this, this);
 
@@ -74,7 +77,10 @@ public class MainActivity extends BaseActivity implements CheckLoginListener {
 
     @Override
     public void onBackPressed() {
-        if (currentItem.getItemId() == R.id.action_home) {
+        if (currentItem.getItemId() == R.id.action_schedule
+                && ((ScheduleFragment) currentFragment).slidingUpPanelLayout.getPanelState() == SlidingUpPanelLayout.PanelState.EXPANDED) {
+            ((ScheduleFragment) currentFragment).slidingUpPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
+        } else if (currentItem.getItemId() == R.id.action_home) {
             super.onBackPressed();
         } else {
             selectMenu(bottomNavigationView.getMenu().getItem(0));
@@ -82,27 +88,26 @@ public class MainActivity extends BaseActivity implements CheckLoginListener {
     }
 
     private void selectMenu(MenuItem item) {
-        Fragment fragment = null;
 
         switch (item.getItemId()) {
             case R.id.action_home:
-                fragment = HomeFragment.newInstance();
+                currentFragment = HomeFragment.newInstance();
                 break;
             case R.id.action_course:
-                fragment = CourseFragment.newInstance();
+                currentFragment = CourseFragment.newInstance();
                 break;
             case R.id.action_schedule:
-                fragment = ScheduleFragment.newInstance();
+                currentFragment = ScheduleFragment.newInstance();
                 break;
             case R.id.action_setting:
-                fragment = SettingFragment.newInstance();
+                currentFragment = SettingFragment.newInstance();
                 break;
         }
 
         if (currentItem == null || !item.equals(currentItem)) {
             item.setChecked(true);
             FragmentTransaction beginTransaction = getSupportFragmentManager().beginTransaction();
-            beginTransaction.replace(R.id.container, fragment);
+            beginTransaction.replace(R.id.container, currentFragment);
             beginTransaction.commit();
         }
         currentItem = item;

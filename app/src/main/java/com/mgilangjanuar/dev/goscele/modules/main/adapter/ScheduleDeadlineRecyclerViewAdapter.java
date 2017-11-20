@@ -15,6 +15,7 @@ import com.mgilangjanuar.dev.goscele.modules.main.model.ScheduleDeadlineModel;
 import org.sufficientlysecure.htmltextview.HtmlHttpImageGetter;
 import org.sufficientlysecure.htmltextview.HtmlTextView;
 
+import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
@@ -27,9 +28,12 @@ import butterknife.BindView;
 
 public class ScheduleDeadlineRecyclerViewAdapter extends BaseRecyclerViewAdapter<ScheduleDeadlineRecyclerViewAdapter.ViewHolder> {
 
+    public Date date;
+
     private List<ScheduleDeadlineModel> list;
 
-    public ScheduleDeadlineRecyclerViewAdapter(List<ScheduleDeadlineModel> list) {
+    public ScheduleDeadlineRecyclerViewAdapter(Date date, List<ScheduleDeadlineModel> list) {
+        this.date = date;
         this.list = list;
     }
 
