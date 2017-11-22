@@ -22,7 +22,11 @@
             com.mgilangjanuar.dev.goscele.modules.main.model.HomeModel,
             com.mgilangjanuar.dev.goscele.modules.main.model.CourseModel,
             com.mgilangjanuar.dev.goscele.modules.forum.detail.model.ForumDetailModel,
-            com.mgilangjanuar.dev.goscele.modules.forum.detail.model.ForumCommentModel" />
+            com.mgilangjanuar.dev.goscele.modules.forum.detail.model.ForumCommentModel,
+            com.mgilangjanuar.dev.goscele.modules.main.model.ScheduleDailyModel,
+            com.mgilangjanuar.dev.goscele.modules.main.model.ScheduleDailyGroupModel,
+            com.mgilangjanuar.dev.goscele.modules.main.model.ScheduleCourseModel,
+            com.mgilangjanuar.dev.goscele.modules.main.model.ScheduleDeadlineDaysModel" />
 
         <activity
             android:name=".modules.main.view.MainActivity"

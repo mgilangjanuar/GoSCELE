@@ -64,4 +64,6 @@
     <string name="schedule_fragment_title">Schedule</string>
     <string name="title_fragment_deadline">Deadline</string>
     <string name="title_fragment_daily">Daily</string>
+    <string name="sync_instruction">For the first time, please click the \"SYNC\" button to synchronize your account.</string>
+    <string name="course_detail">Courses Detail</string>
 </resources>

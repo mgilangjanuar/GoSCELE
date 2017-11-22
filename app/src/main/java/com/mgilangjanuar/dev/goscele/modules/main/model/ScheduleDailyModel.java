@@ -10,15 +10,15 @@ import com.mgilangjanuar.dev.goscele.base.BaseModel;
  * @since 2017
  */
 
-@Table(name = "course")
-public class CourseModel extends BaseModel {
-
-    @Column(name = "url")
-    public String url;
+@Table(name = "schedule_daily")
+public class ScheduleDailyModel extends BaseModel {
 
     @Column(name = "desc")
-    public String name;
+    public String desc;
 
-    @Column(name = "is_current")
-    public boolean isCurrent;
+    @Column(name = "time")
+    public String time;
+
+    @Column(name = "scheduleDailyGroupModel")
+    public ScheduleDailyGroupModel scheduleDailyGroupModel;
 }

@@ -1,11 +1,14 @@
 package com.mgilangjanuar.dev.goscele.modules.main.provider;
 
+import android.util.Log;
+
 import com.mgilangjanuar.dev.goscele.base.BaseProvider;
 import com.mgilangjanuar.dev.goscele.modules.common.model.CookieModel;
 import com.mgilangjanuar.dev.goscele.modules.main.adapter.ScheduleDeadlineRecyclerViewAdapter;
 import com.mgilangjanuar.dev.goscele.modules.main.listener.ScheduleDeadlineDetailListener;
 import com.mgilangjanuar.dev.goscele.modules.main.listener.ScheduleDeadlineListener;
 import com.mgilangjanuar.dev.goscele.modules.main.model.CourseModel;
+import com.mgilangjanuar.dev.goscele.modules.main.model.ScheduleDeadlineDaysModel;
 import com.mgilangjanuar.dev.goscele.modules.main.model.ScheduleDeadlineModel;
 import com.mgilangjanuar.dev.goscele.utils.Constant;
 
@@ -54,12 +57,19 @@ public class DeadlineProvider {
         protected void onPostExecute(List<Elements> elementses) {
             super.onPostExecute(elementses);
             try {
+                ScheduleDeadlineDaysModel model = new ScheduleDeadlineDaysModel();
+                model.month = new Date(time * 1000).getMonth();
+
                 List<Integer> result = new ArrayList<>();
                 Elements elements = elementses.get(0);
                 for (Element e: elements) {
                     result.add(Integer.parseInt(e.text()));
                 }
-                listener.onRetrieveDeadlineDays(result);
+
+                model.setDays(result);
+                model.save();
+
+                listener.onRetrieveDeadlineDays(model);
             } catch (Exception e) {
                 listener.onError(e.getMessage());
             }

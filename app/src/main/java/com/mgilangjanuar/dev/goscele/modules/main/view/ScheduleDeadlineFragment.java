@@ -9,6 +9,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.style.ForegroundColorSpan;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.mgilangjanuar.dev.goscele.R;
@@ -17,7 +18,8 @@ import com.mgilangjanuar.dev.goscele.base.BaseFragment;
 import com.mgilangjanuar.dev.goscele.modules.main.adapter.ScheduleDeadlineRecyclerViewAdapter;
 import com.mgilangjanuar.dev.goscele.modules.main.listener.ScheduleDeadlineDetailListener;
 import com.mgilangjanuar.dev.goscele.modules.main.listener.ScheduleDeadlineListener;
-import com.mgilangjanuar.dev.goscele.modules.main.presenter.SchedulePresenter;
+import com.mgilangjanuar.dev.goscele.modules.main.model.ScheduleDeadlineDaysModel;
+import com.mgilangjanuar.dev.goscele.modules.main.presenter.ScheduleDeadlinePresenter;
 import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.prolificinteractive.materialcalendarview.DayViewDecorator;
 import com.prolificinteractive.materialcalendarview.DayViewFacade;
@@ -28,7 +30,6 @@ import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 
 import butterknife.BindView;
 
@@ -45,7 +46,7 @@ public class ScheduleDeadlineFragment extends BaseFragment implements ScheduleDe
     SlidingUpPanelLayout slidingUpPanelLayout;
     TextView status;
 
-    private SchedulePresenter presenter = new SchedulePresenter(this, this);
+    private ScheduleDeadlinePresenter presenter = new ScheduleDeadlinePresenter(this, this);
     private Date date;
 
     public static ScheduleDeadlineFragment newInstance(TextView titleSlidingUpPanel, RecyclerView recyclerView, SlidingUpPanelLayout slidingUpPanelLayout, TextView status) {
@@ -111,6 +112,7 @@ public class ScheduleDeadlineFragment extends BaseFragment implements ScheduleDe
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
+                presenter.clearDeadlineDays(date);
                 updateDeadlineDays();
                 updateDetails();
             }
@@ -118,7 +120,7 @@ public class ScheduleDeadlineFragment extends BaseFragment implements ScheduleDe
     }
 
     @Override
-    public void onRetrieveDeadlineDays(final List<Integer> days) {
+    public void onRetrieveDeadlineDays(final ScheduleDeadlineDaysModel model) {
         swipeRefreshLayout.setRefreshing(false);
         if (slidingUpPanelLayout.getPanelState() != SlidingUpPanelLayout.PanelState.EXPANDED) {
             titleSlidingUpPanel.setText(new SimpleDateFormat("MMMM yyyy").format(date.getTime()));
@@ -126,7 +128,7 @@ public class ScheduleDeadlineFragment extends BaseFragment implements ScheduleDe
         materialCalendarView.addDecorator(new DayViewDecorator() {
             @Override
             public boolean shouldDecorate(CalendarDay day) {
-                return day.getMonth() == date.getMonth() && days.contains(day.getDay());
+                return day.getMonth() == model.month && model.getDays().contains(day.getDay());
             }
 
             @Override

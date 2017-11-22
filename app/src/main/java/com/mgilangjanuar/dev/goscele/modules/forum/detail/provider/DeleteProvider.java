@@ -46,9 +46,9 @@ public class DeleteProvider extends BaseProvider {
     protected void onPostExecute(List<Elements> elementses) {
         try {
             Elements elements = elementses.get(0);
-            String sesskey = elements.select("input[name=sesskey]").attr("value");
-            String delete = elements.select("input[name=delete]").attr("value");
-            String confirm = elements.select("input[name=confirm]").attr("value");
+            String sesskey = elements.select("input[desc=sesskey]").attr("value");
+            String delete = elements.select("input[desc=delete]").attr("value");
+            String confirm = elements.select("input[desc=confirm]").attr("value");
             String submit = "Continue";
 
             new DeletingPostProvider(sesskey, delete, confirm, submit).run();

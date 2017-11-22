@@ -8,7 +8,7 @@
     android:gravity="bottom"
     app:umanoPanelHeight="68dp"
     app:umanoParallaxOffset="?attr/actionBarSize"
-    app:umanoScrollableView="@+id/recycler_view_schedule"
+    app:umanoScrollableView="@+id/recycler_view_deadline"
     app:umanoShadowHeight="4dp"
     tools:context="com.mgilangjanuar.dev.goscele.modules.main.view.ScheduleDeadlineFragment">
 

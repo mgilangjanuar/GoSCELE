@@ -1,6 +1,6 @@
 package com.mgilangjanuar.dev.goscele.modules.main.listener;
 
-import java.util.List;
+import com.mgilangjanuar.dev.goscele.modules.main.model.ScheduleDeadlineDaysModel;
 
 /**
  * Created by mgilangjanuar (mgilangjanuar@gmail.com)
@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface ScheduleDeadlineListener {
 
-    void onRetrieveDeadlineDays(List<Integer> days);
+    void onRetrieveDeadlineDays(ScheduleDeadlineDaysModel model);
 
     void onError(String error);
 }

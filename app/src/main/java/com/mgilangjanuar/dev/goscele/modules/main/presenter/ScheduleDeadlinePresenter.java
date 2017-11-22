@@ -5,6 +5,8 @@ import android.support.v7.widget.RecyclerView;
 import com.mgilangjanuar.dev.goscele.modules.main.adapter.ScheduleDeadlineRecyclerViewAdapter;
 import com.mgilangjanuar.dev.goscele.modules.main.listener.ScheduleDeadlineDetailListener;
 import com.mgilangjanuar.dev.goscele.modules.main.listener.ScheduleDeadlineListener;
+import com.mgilangjanuar.dev.goscele.modules.main.model.ScheduleDailyModel;
+import com.mgilangjanuar.dev.goscele.modules.main.model.ScheduleDeadlineDaysModel;
 import com.mgilangjanuar.dev.goscele.modules.main.model.ScheduleDeadlineModel;
 import com.mgilangjanuar.dev.goscele.modules.main.provider.DeadlineProvider;
 
@@ -18,18 +20,24 @@ import java.util.Date;
  * @since 2017
  */
 
-public class SchedulePresenter {
+public class ScheduleDeadlinePresenter {
 
     private ScheduleDeadlineListener deadlineListener;
     private ScheduleDeadlineDetailListener deadlineDetailListener;
 
-    public SchedulePresenter(ScheduleDeadlineListener deadlineListener, ScheduleDeadlineDetailListener deadlineDetailListener) {
+    public ScheduleDeadlinePresenter(ScheduleDeadlineListener deadlineListener, ScheduleDeadlineDetailListener deadlineDetailListener) {
         this.deadlineListener = deadlineListener;
         this.deadlineDetailListener = deadlineDetailListener;
     }
 
     public void getDeadlineDays(long time) {
-        new DeadlineProvider.MonthView(time, deadlineListener).run();
+        Date date = new Date(time * 1000);
+        ScheduleDeadlineDaysModel model = new ScheduleDeadlineDaysModel().find().where("month = ?", date.getMonth()).executeSingle();
+        if (model == null) {
+            new DeadlineProvider.MonthView(time, deadlineListener).run();
+        } else {
+            deadlineListener.onRetrieveDeadlineDays(model);
+        }
     }
 
     public void getDeadlineDetail(long time) {
@@ -45,5 +53,10 @@ public class SchedulePresenter {
         String currentDate = new SimpleDateFormat("MMMM dd, yyyy").format(date.getTime());
         String adapterDate = new SimpleDateFormat("MMMM dd, yyyy").format(((ScheduleDeadlineRecyclerViewAdapter) adapter).date.getTime());
         return currentDate.equals(adapterDate);
+    }
+
+    public void clearDeadlineDays(Date date) {
+        ScheduleDeadlineDaysModel model = new ScheduleDeadlineDaysModel().find().where("month = ?", date.getMonth()).executeSingle();
+        model.delete();
     }
 }

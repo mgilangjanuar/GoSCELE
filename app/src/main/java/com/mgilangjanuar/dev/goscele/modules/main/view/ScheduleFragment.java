@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -25,11 +24,17 @@ public class ScheduleFragment extends BaseFragment {
     @BindView(R.id.tab_fragment_schedule)
     TabLayout tabLayout;
 
-    @BindView(R.id.recycler_view_schedule)
-    RecyclerView recyclerView;
+    @BindView(R.id.recycler_view_deadline)
+    RecyclerView recyclerViewDeadline;
+
+    @BindView(R.id.recycler_view_daily)
+    RecyclerView recyclerViewDaily;
 
     @BindView(R.id.title_slidingup_panel_schedule)
     TextView titleSlidingUpPanel;
+
+    @BindView(R.id.title_slidingup_panel_schedule_course)
+    TextView titleSlidingUpPanelCourse;
 
     @BindView(R.id.text_status_schedule)
     TextView status;
@@ -62,8 +67,8 @@ public class ScheduleFragment extends BaseFragment {
         super.initialize(savedInstanceState);
         final TabPagerAdapterUtil fragmentPagerAdapter = new TabPagerAdapterUtil(getChildFragmentManager());
 
-        fragmentPagerAdapter.addFragment(ScheduleDeadlineFragment.newInstance(titleSlidingUpPanel, recyclerView, slidingUpPanelLayout, status), getString(R.string.title_fragment_deadline));
-        fragmentPagerAdapter.addFragment(ScheduleDailyFragment.newInstance(), getString(R.string.title_fragment_daily));
+        fragmentPagerAdapter.addFragment(ScheduleDeadlineFragment.newInstance(titleSlidingUpPanel, recyclerViewDeadline, slidingUpPanelLayout, status), getString(R.string.title_fragment_deadline));
+        fragmentPagerAdapter.addFragment(ScheduleDailyFragment.newInstance(buttonRefresh, recyclerViewDaily), getString(R.string.title_fragment_daily));
 
         viewPager.setAdapter(fragmentPagerAdapter);
         tabLayout.setupWithViewPager(viewPager);
@@ -77,6 +82,45 @@ public class ScheduleFragment extends BaseFragment {
 
             @Override
             public void onPanelStateChanged(View panel, SlidingUpPanelLayout.PanelState previousState, SlidingUpPanelLayout.PanelState newState) {
+
+            }
+        });
+
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                if (tab.getText().toString().equals(getString(R.string.title_fragment_deadline))) {
+                    buttonRefresh.setVisibility(ImageButton.GONE);
+
+                    recyclerViewDeadline.setVisibility(RecyclerView.VISIBLE);
+                    recyclerViewDaily.setVisibility(RecyclerView.GONE);
+                    slidingUpPanelLayout.setScrollableView(recyclerViewDeadline);
+
+                    titleSlidingUpPanel.setVisibility(TextView.VISIBLE);
+                    titleSlidingUpPanelCourse.setVisibility(TextView.GONE);
+
+                    status.setVisibility(TextView.VISIBLE);
+                } else {
+                    buttonRefresh.setVisibility(ImageButton.VISIBLE);
+
+                    recyclerViewDeadline.setVisibility(RecyclerView.GONE);
+                    recyclerViewDaily.setVisibility(RecyclerView.VISIBLE);
+                    slidingUpPanelLayout.setScrollableView(recyclerViewDaily);
+
+                    titleSlidingUpPanel.setVisibility(TextView.GONE);
+                    titleSlidingUpPanelCourse.setVisibility(TextView.VISIBLE);
+
+                    status.setVisibility(TextView.GONE);
+                }
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
 
             }
         });

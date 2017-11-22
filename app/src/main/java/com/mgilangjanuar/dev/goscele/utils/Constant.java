@@ -9,7 +9,10 @@ package com.mgilangjanuar.dev.goscele.utils;
 public class Constant {
     // URL and routes
     public static final String BASE_URL = "https://scele.cs.ui.ac.id/";
+    public static final String BASE_URL_SIAK = "https://academic.ui.ac.id/main/";
+
     public static final String ROUTE_LOGIN = "login/index.php";
+    public static final String ROUTE_LOGIN_SIAK = "Authentication/Index";
     public static final String ROUTE_CHANGE_ROLE = "main/Authentication/ChangeRole";
 
     // Misc
