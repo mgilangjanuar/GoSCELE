@@ -5,7 +5,6 @@ import android.support.v7.widget.RecyclerView;
 import com.mgilangjanuar.dev.goscele.modules.main.adapter.ScheduleDeadlineRecyclerViewAdapter;
 import com.mgilangjanuar.dev.goscele.modules.main.listener.ScheduleDeadlineDetailListener;
 import com.mgilangjanuar.dev.goscele.modules.main.listener.ScheduleDeadlineListener;
-import com.mgilangjanuar.dev.goscele.modules.main.model.ScheduleDailyModel;
 import com.mgilangjanuar.dev.goscele.modules.main.model.ScheduleDeadlineDaysModel;
 import com.mgilangjanuar.dev.goscele.modules.main.model.ScheduleDeadlineModel;
 import com.mgilangjanuar.dev.goscele.modules.main.provider.DeadlineProvider;

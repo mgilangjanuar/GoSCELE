@@ -1,6 +1,5 @@
 package com.mgilangjanuar.dev.goscele.modules.main.presenter;
 
-import com.mgilangjanuar.dev.goscele.base.BaseRecyclerViewAdapter;
 import com.mgilangjanuar.dev.goscele.modules.main.adapter.ScheduleDailyDetailRecyclerViewAdapter;
 import com.mgilangjanuar.dev.goscele.modules.main.adapter.ScheduleDailyRecyclerViewAdapter;
 import com.mgilangjanuar.dev.goscele.modules.main.listener.ScheduleDailyDetailListener;
@@ -10,7 +9,6 @@ import com.mgilangjanuar.dev.goscele.modules.main.model.ScheduleDailyGroupModel;
 import com.mgilangjanuar.dev.goscele.modules.main.model.ScheduleDailyModel;
 import com.mgilangjanuar.dev.goscele.modules.main.provider.DailyProvider;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**

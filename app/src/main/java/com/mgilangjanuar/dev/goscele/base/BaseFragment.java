@@ -2,18 +2,13 @@ package com.mgilangjanuar.dev.goscele.base;
 
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
-import android.support.annotation.MenuRes;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import com.mgilangjanuar.dev.goscele.R;
 
 import butterknife.ButterKnife;
 

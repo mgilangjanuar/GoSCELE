@@ -3,7 +3,6 @@ package com.mgilangjanuar.dev.goscele.modules.main.view;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -18,10 +17,7 @@ import com.mgilangjanuar.dev.goscele.modules.main.adapter.ScheduleDailyDetailRec
 import com.mgilangjanuar.dev.goscele.modules.main.adapter.ScheduleDailyRecyclerViewAdapter;
 import com.mgilangjanuar.dev.goscele.modules.main.listener.ScheduleDailyDetailListener;
 import com.mgilangjanuar.dev.goscele.modules.main.listener.ScheduleDailyListener;
-import com.mgilangjanuar.dev.goscele.modules.main.model.ScheduleCourseModel;
 import com.mgilangjanuar.dev.goscele.modules.main.presenter.ScheduleDailyPresenter;
-
-import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.OnClick;

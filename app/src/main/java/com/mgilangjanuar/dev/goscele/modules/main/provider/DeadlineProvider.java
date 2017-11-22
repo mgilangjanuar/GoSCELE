@@ -1,7 +1,5 @@
 package com.mgilangjanuar.dev.goscele.modules.main.provider;
 
-import android.util.Log;
-
 import com.mgilangjanuar.dev.goscele.base.BaseProvider;
 import com.mgilangjanuar.dev.goscele.modules.common.model.CookieModel;
 import com.mgilangjanuar.dev.goscele.modules.main.adapter.ScheduleDeadlineRecyclerViewAdapter;

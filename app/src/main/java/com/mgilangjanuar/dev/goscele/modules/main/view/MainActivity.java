@@ -6,7 +6,6 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.view.MenuItem;
-import android.view.View;
 
 import com.mgilangjanuar.dev.goscele.R;
 import com.mgilangjanuar.dev.goscele.base.BaseActivity;

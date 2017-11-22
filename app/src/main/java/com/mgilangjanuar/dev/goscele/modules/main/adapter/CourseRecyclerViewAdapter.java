@@ -3,7 +3,6 @@ package com.mgilangjanuar.dev.goscele.modules.main.adapter;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.graphics.Color;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
@@ -22,7 +21,6 @@ import com.mgilangjanuar.dev.goscele.modules.main.model.CourseModel;
 import com.mgilangjanuar.dev.goscele.modules.main.view.CourseAllFragment;
 import com.mgilangjanuar.dev.goscele.modules.main.view.CourseCurrentFragment;
 
-import java.io.Console;
 import java.util.List;
 
 import butterknife.BindView;

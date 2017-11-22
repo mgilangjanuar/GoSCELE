@@ -9,7 +9,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.style.ForegroundColorSpan;
 import android.view.View;
-import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.mgilangjanuar.dev.goscele.R;
@@ -74,7 +73,6 @@ public class ScheduleDeadlineFragment extends BaseFragment implements ScheduleDe
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
         presenter.getDeadlineDays(date.getTime() / 1000);
-        presenter.getDeadlineDetail(date.getTime() / 1000);
 
         materialCalendarView.setOnMonthChangedListener(new OnMonthChangedListener() {
             @Override
