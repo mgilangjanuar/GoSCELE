@@ -45,7 +45,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".modules.forum.detail.view.ForumDetailActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity android:name=".modules.deeplink.view.DeepLinkActivity">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -58,6 +58,21 @@
                 <data android:host="scele.cs.ui.ac.id" />
             </intent-filter>
         </activity>
+
+        <receiver
+            android:label="@string/widget_schedule_daily_header"
+            android:name=".modules.widget.view.ScheduleDailyWidget">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/schedule_daily_widget_info" />
+        </receiver>
+
+        <service android:name=".modules.widget.service.ScheduleDailyService"
+            android:permission="android.permission.BIND_REMOTEVIEWS" />
     </application>
 
 </manifest>

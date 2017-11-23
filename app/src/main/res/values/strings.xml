@@ -37,7 +37,6 @@
     <string name="forum_labsitter">Forum Labsitter</string>
     <string name="forum_ukm">Forum UKM</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_fragment_home">Latest Update</string>
     <string name="empty">Empty</string>
@@ -66,4 +65,6 @@
     <string name="title_fragment_daily">Daily</string>
     <string name="sync_instruction">For the first time, please click the \"SYNC\" button to synchronize your account.</string>
     <string name="course_detail">Courses Detail</string>
+    <string name="widget_schedule_daily_header">Daily Schedule</string>
+    <string name="widget_sync_instruction">Please synchronize your account in daily schedule tab and re-create this widget.</string>
 </resources>
