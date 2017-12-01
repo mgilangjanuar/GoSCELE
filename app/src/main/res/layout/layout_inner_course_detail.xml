@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layout_inner_course_detail"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/title_inner_course_post"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/selectableItemBackground"
+        android:clickable="true"
+        android:drawableLeft="@drawable/ic_chevron_right_black_24dp"
+        android:drawablePadding="4dip"
+        android:paddingBottom="10dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:paddingTop="6dp"
+        android:textColor="@color/color_accent"
+        android:textSize="15sp"
+        android:textStyle="italic"
+        android:visibility="gone" />
+
+    <LinearLayout
+        android:id="@+id/layout_comment_inner_course_post"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="10dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:visibility="gone">
+
+        <org.sufficientlysecure.htmltextview.HtmlTextView
+            android:id="@+id/comment_inner_course_post"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scrollbars="none" />
+    </LinearLayout>
+
+</LinearLayout>

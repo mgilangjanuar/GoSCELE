@@ -51,6 +51,10 @@ public class CourseProvider extends BaseProvider {
         super.onPostExecute(elementses);
         try {
             Elements elements = elementses.get(0);
+
+            List<CourseModel> currentList = new CourseModel().find().where("is_current = ?", false).execute();
+            for (CourseModel model: currentList) model.delete();
+
             List<CourseModel> list = new ArrayList<>();
             for (Element e: elements) {
                 CourseModel courseModel = new CourseModel();

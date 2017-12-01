@@ -3,6 +3,7 @@ package com.mgilangjanuar.dev.goscele.modules.browser.presenter;
 import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.support.v4.app.ActivityCompat;
@@ -20,6 +21,10 @@ import com.mgilangjanuar.dev.goscele.modules.browser.util.DownloadWrapper;
 import com.mgilangjanuar.dev.goscele.modules.browser.util.WebViewClientUtil;
 import com.mgilangjanuar.dev.goscele.modules.browser.view.BrowserActivity;
 import com.mgilangjanuar.dev.goscele.modules.common.model.CookieModel;
+import com.mgilangjanuar.dev.goscele.modules.course.model.CourseDetailModel;
+import com.mgilangjanuar.dev.goscele.modules.course.view.CourseActivity;
+import com.mgilangjanuar.dev.goscele.modules.forum.detail.view.ForumDetailActivity;
+import com.mgilangjanuar.dev.goscele.modules.main.model.CourseModel;
 import com.mgilangjanuar.dev.goscele.utils.Constant;
 import com.mgilangjanuar.dev.goscele.utils.OpenOtherAppUtil;
 import com.mgilangjanuar.dev.goscele.utils.ShareContentUtil;
@@ -47,11 +52,11 @@ public class BrowserPresenter extends BasePresenter {
             return true;
         }
 
-//        if (url.contains("mod/forum/discuss.php?d=")) {
-//            Intent intent = new Intent(activity, ForumDetailActivity.class).putExtra("url", url);
-//            activity.startActivity(intent);
-//            return false;
-//        }
+        if (url.contains("mod/forum/discuss.php?d=")) {
+            Intent intent = new Intent(activity, ForumDetailActivity.class).putExtra(Constant.URL, url);
+            activity.startActivity(intent);
+            return false;
+        }
 //
 //        if (url.contains("mod/forum/view.php?")) {
 //            Intent intent = new Intent(activity, ForumActivity.class).putExtra("url", url);
@@ -59,11 +64,11 @@ public class BrowserPresenter extends BasePresenter {
 //            return false;
 //        }
 //
-//        if (url.contains("course/view.php?id=") && isAlreadyEnrollCourse()) {
-//            Intent intent = new Intent(activity, CourseDetailActivity.class).putExtra("url", url);
-//            activity.startActivity(intent);
-//            return false;
-//        }
+        if (url.contains("course/view.php?id=") && new CourseModel().find().where("url = ?", url).execute().size() > 0) {
+            Intent intent = new Intent(activity, CourseActivity.class).putExtra(Constant.URL, url);
+            activity.startActivity(intent);
+            return false;
+        }
 
         return true;
     }

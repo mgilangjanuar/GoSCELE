@@ -22,4 +22,5 @@ public class Constant {
     public static final int ASK_STORAGE_PERMISSION_CODE = 123;
     public static final CharSequence LABEL = "label";
     public static final String WIDGET_ACTION_DATA_CHANGE = "CHECK_LIST";
+    public static final String COURSE_NAME = "course name";
 }

@@ -16,7 +16,7 @@ public class CourseModel extends BaseModel {
     @Column(name = "url")
     public String url;
 
-    @Column(name = "desc")
+    @Column(name = "name")
     public String name;
 
     @Column(name = "is_current")

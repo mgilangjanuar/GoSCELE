@@ -2,6 +2,7 @@ package com.mgilangjanuar.dev.goscele.modules.main.adapter;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.util.TypedValue;
 import android.view.Gravity;
@@ -17,9 +18,11 @@ import com.mgilangjanuar.dev.goscele.R;
 import com.mgilangjanuar.dev.goscele.base.BaseFragment;
 import com.mgilangjanuar.dev.goscele.base.BaseRecyclerViewAdapter;
 import com.mgilangjanuar.dev.goscele.base.BaseViewHolder;
+import com.mgilangjanuar.dev.goscele.modules.course.view.CourseActivity;
 import com.mgilangjanuar.dev.goscele.modules.main.model.CourseModel;
 import com.mgilangjanuar.dev.goscele.modules.main.view.CourseAllFragment;
 import com.mgilangjanuar.dev.goscele.modules.main.view.CourseCurrentFragment;
+import com.mgilangjanuar.dev.goscele.utils.Constant;
 
 import java.util.List;
 
@@ -64,7 +67,9 @@ public class CourseRecyclerViewAdapter extends BaseRecyclerViewAdapter<CourseRec
         holder.relativeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(v.getContext(), "Not implemented yet", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(v.getContext(), CourseActivity.class);
+                intent.putExtra(Constant.URL, model.url);
+                v.getContext().startActivity(intent);
             }
         });
         if (fragment instanceof CourseCurrentFragment || (fragment instanceof CourseAllFragment && !model.isCurrent)) {

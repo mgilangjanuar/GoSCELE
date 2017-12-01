@@ -26,7 +26,9 @@
             com.mgilangjanuar.dev.goscele.modules.main.model.ScheduleDailyModel,
             com.mgilangjanuar.dev.goscele.modules.main.model.ScheduleDailyGroupModel,
             com.mgilangjanuar.dev.goscele.modules.main.model.ScheduleCourseModel,
-            com.mgilangjanuar.dev.goscele.modules.main.model.ScheduleDeadlineDaysModel" />
+            com.mgilangjanuar.dev.goscele.modules.main.model.ScheduleDeadlineDaysModel,
+            com.mgilangjanuar.dev.goscele.modules.course.model.CourseDetailModel,
+            com.mgilangjanuar.dev.goscele.modules.course.model.CourseDetailInnerModel" />
 
         <activity
             android:name=".modules.main.view.MainActivity"
@@ -46,6 +48,9 @@
         <activity
             android:name=".modules.forum.detail.view.ForumDetailActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".modules.course.view.CourseActivity"
+            android:screenOrientation="portrait" />
         <activity android:name=".modules.deeplink.view.DeepLinkActivity">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -60,8 +65,8 @@
         </activity>
 
         <receiver
-            android:label="@string/widget_schedule_daily_header"
-            android:name=".modules.widget.view.ScheduleDailyWidget">
+            android:name=".modules.widget.view.ScheduleDailyWidget"
+            android:label="@string/widget_schedule_daily_header">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
@@ -71,8 +76,10 @@
                 android:resource="@xml/schedule_daily_widget_info" />
         </receiver>
 
-        <service android:name=".modules.widget.service.ScheduleDailyService"
+        <service
+            android:name=".modules.widget.service.ScheduleDailyService"
             android:permission="android.permission.BIND_REMOTEVIEWS" />
+
     </application>
 
 </manifest>
