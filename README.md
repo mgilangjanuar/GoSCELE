@@ -24,7 +24,7 @@ Installation
 
 
 How To Contribute
--------------------
+-----------------
  - Give star for this repository
  - Fork and make changes
  - Create pull request to [dev branch](https://github.com/mgilangjanuar/GoSCELE/tree/dev)
@@ -38,10 +38,3 @@ Development Channel
 Download
 --------
 *[![Play Store Badge](https://developer.android.com/images/brand/en_app_rgb_wo_60.png)](https://play.google.com/store/apps/details?id=com.mgilangjanuar.dev.goscele)*
-
-
-License
--------
-[MIT](https://github.com/mgilangjanuar/GoSCELE/blob/dev/LICENSE.md)
-
-![Hi-Five](https://media.giphy.com/media/JhThbOq62vwn6/giphy.gif)
