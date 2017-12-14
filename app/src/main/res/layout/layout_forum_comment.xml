@@ -15,20 +15,20 @@
         app:cardCornerRadius="2dp">
 
         <LinearLayout
-            android:id="@+id/layout_forum_comment"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:padding="20dp">
+        android:id="@+id/layout_forum_comment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="20dp">
 
-            <TextView
-                android:id="@+id/date_forum_comment"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:drawableLeft="@drawable/ic_access_time_black_24dp"
-                android:drawablePadding="3dip"
-                android:textColor="@android:color/darker_gray"
-                android:textSize="13sp" />
+        <TextView
+            android:id="@+id/date_forum_comment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/ic_access_time_black_24dp"
+            android:drawablePadding="3dip"
+            android:textColor="@android:color/darker_gray"
+            android:textSize="13sp" />
 
             <TextView
                 android:id="@+id/author_forum_comment"

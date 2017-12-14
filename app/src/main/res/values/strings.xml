@@ -67,4 +67,5 @@
     <string name="course_detail">Courses Detail</string>
     <string name="widget_schedule_daily_header">Daily Schedule</string>
     <string name="widget_sync_instruction">Please synchronize your account in daily schedule tab and re-create this widget.</string>
+    <string name="title_activity_forum_list">ForumListActivity</string>
 </resources>

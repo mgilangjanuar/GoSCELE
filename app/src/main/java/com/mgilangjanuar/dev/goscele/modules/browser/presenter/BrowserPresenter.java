@@ -24,6 +24,7 @@ import com.mgilangjanuar.dev.goscele.modules.common.model.CookieModel;
 import com.mgilangjanuar.dev.goscele.modules.course.model.CourseDetailModel;
 import com.mgilangjanuar.dev.goscele.modules.course.view.CourseActivity;
 import com.mgilangjanuar.dev.goscele.modules.forum.detail.view.ForumDetailActivity;
+import com.mgilangjanuar.dev.goscele.modules.forum.list.view.ForumListActivity;
 import com.mgilangjanuar.dev.goscele.modules.main.model.CourseModel;
 import com.mgilangjanuar.dev.goscele.utils.Constant;
 import com.mgilangjanuar.dev.goscele.utils.OpenOtherAppUtil;
@@ -57,13 +58,13 @@ public class BrowserPresenter extends BasePresenter {
             activity.startActivity(intent);
             return false;
         }
-//
-//        if (url.contains("mod/forum/view.php?")) {
-//            Intent intent = new Intent(activity, ForumActivity.class).putExtra("url", url);
-//            activity.startActivity(intent);
-//            return false;
-//        }
-//
+
+        if (url.contains("mod/forum/view.php?")) {
+            Intent intent = new Intent(activity, ForumListActivity.class).putExtra("url", url);
+            activity.startActivity(intent);
+            return false;
+        }
+
         if (url.contains("course/view.php?id=") && new CourseModel().find().where("url = ?", url).execute().size() > 0) {
             Intent intent = new Intent(activity, CourseActivity.class).putExtra(Constant.URL, url);
             activity.startActivity(intent);
