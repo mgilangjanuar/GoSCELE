@@ -13,7 +13,7 @@ import com.mgilangjanuar.dev.goscele.base.BaseModel;
 @Table(name = "user")
 public class UserModel extends BaseModel {
 
-    @Column(name = "desc")
+    @Column(name = "name")
     public String name;
 
     @Column(name = "username")
