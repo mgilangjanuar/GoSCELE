@@ -32,7 +32,7 @@ How To Contribute
 
 Development Channel
 -------------------
-[Telegram](https://t.me/joinchat/BBhj0w69cebVtkvUWdCJLg)
+[Telegram](https://t.me/joinchat/BBhj00GbOxkbUNh4AyW1Ug)
 
 
 Download

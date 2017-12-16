@@ -28,8 +28,6 @@ public class ForumDetailActivity extends BaseActivity {
 
     @BindView(R.id.toolbar_forum_detail)
     Toolbar toolbar;
-    @BindView(R.id.fab_forum_comment)
-    FloatingActionButton actionButton;
     @BindView(R.id.view_pager_activity_forum_detail)
     ViewPager viewPager;
     @BindView(R.id.tab_forum_detail)
@@ -60,11 +58,9 @@ public class ForumDetailActivity extends BaseActivity {
 
         presenter = new ForumDetailPresenter(this, getIntent().getExtras().getString(Constant.URL));
 
-        actionButton.hide();
-
         TabPagerAdapterUtil tabPagerAdapter = new TabPagerAdapterUtil(getSupportFragmentManager());
         tabPagerAdapter.addFragment(ForumPostFragment.newInstance(presenter), getString(R.string.post));
-        tabPagerAdapter.addFragment(ForumCommentFragment.newInstance(presenter, actionButton), getString(R.string.comment));
+        tabPagerAdapter.addFragment(ForumCommentFragment.newInstance(presenter), getString(R.string.comment));
 
         viewPager.setAdapter(tabPagerAdapter);
         tabLayout.setupWithViewPager(viewPager);

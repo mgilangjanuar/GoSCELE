@@ -30,15 +30,13 @@ public class ForumCommentFragment extends BaseFragment implements ForumCommentLi
     TextView status;
     @BindView(R.id.swipe_refresh_forum_detail)
     SwipeRefreshLayout swipeRefreshLayout;
-    FloatingActionButton actionButton;
     private ForumDetailPresenter presenter;
 
-    public static BaseFragment newInstance(ForumDetailPresenter presenter, FloatingActionButton actionButton) {
+    public static BaseFragment newInstance(ForumDetailPresenter presenter) {
         Bundle args = new Bundle();
         ForumCommentFragment fragment = new ForumCommentFragment();
         fragment.presenter = presenter;
         fragment.presenter.setCommentListener(fragment);
-        fragment.actionButton = actionButton;
         fragment.setArguments(args);
         return fragment;
     }
@@ -53,22 +51,6 @@ public class ForumCommentFragment extends BaseFragment implements ForumCommentLi
         super.initialize(savedInstanceState);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
-                    actionButton.show();
-                }
-                super.onScrollStateChanged(recyclerView, newState);
-            }
-
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                if (dy > 0 || dy < 0 && actionButton.isShown()) {
-                    actionButton.hide();
-                }
-            }
-        });
 
         presenter.runProvider(this);
 
@@ -76,13 +58,6 @@ public class ForumCommentFragment extends BaseFragment implements ForumCommentLi
             @Override
             public void onRefresh() {
                 presenter.runProvider(ForumCommentFragment.this, true);
-            }
-        });
-
-        actionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showSnackbar("Not implemented yet");
             }
         });
     }
