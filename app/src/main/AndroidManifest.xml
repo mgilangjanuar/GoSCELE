@@ -16,20 +16,7 @@
         android:theme="@style/AppTheme">
         <meta-data
             android:name="AA_MODELS"
-            android:value="
-            com.mgilangjanuar.dev.goscele.modules.common.model.CookieModel,
-            com.mgilangjanuar.dev.goscele.modules.common.model.UserModel,
-            com.mgilangjanuar.dev.goscele.modules.main.model.HomeModel,
-            com.mgilangjanuar.dev.goscele.modules.main.model.CourseModel,
-            com.mgilangjanuar.dev.goscele.modules.forum.detail.model.ForumDetailModel,
-            com.mgilangjanuar.dev.goscele.modules.forum.detail.model.ForumCommentModel,
-            com.mgilangjanuar.dev.goscele.modules.main.model.ScheduleDailyModel,
-            com.mgilangjanuar.dev.goscele.modules.main.model.ScheduleDailyGroupModel,
-            com.mgilangjanuar.dev.goscele.modules.main.model.ScheduleCourseModel,
-            com.mgilangjanuar.dev.goscele.modules.main.model.ScheduleDeadlineDaysModel,
-            com.mgilangjanuar.dev.goscele.modules.course.model.CourseDetailModel,
-            com.mgilangjanuar.dev.goscele.modules.course.model.CourseDetailInnerModel,
-            com.mgilangjanuar.dev.goscele.modules.forum.list.model.ForumModel" />
+            android:value="             com.mgilangjanuar.dev.goscele.modules.common.model.CookieModel,             com.mgilangjanuar.dev.goscele.modules.common.model.UserModel,             com.mgilangjanuar.dev.goscele.modules.main.model.HomeModel,             com.mgilangjanuar.dev.goscele.modules.main.model.CourseModel,             com.mgilangjanuar.dev.goscele.modules.forum.detail.model.ForumDetailModel,             com.mgilangjanuar.dev.goscele.modules.forum.detail.model.ForumCommentModel,             com.mgilangjanuar.dev.goscele.modules.main.model.ScheduleDailyModel,             com.mgilangjanuar.dev.goscele.modules.main.model.ScheduleDailyGroupModel,             com.mgilangjanuar.dev.goscele.modules.main.model.ScheduleCourseModel,             com.mgilangjanuar.dev.goscele.modules.main.model.ScheduleDeadlineDaysModel,             com.mgilangjanuar.dev.goscele.modules.course.model.CourseDetailModel,             com.mgilangjanuar.dev.goscele.modules.course.model.CourseDetailInnerModel,             com.mgilangjanuar.dev.goscele.modules.forum.list.model.ForumModel" />
 
         <activity
             android:name=".modules.main.view.MainActivity"
@@ -83,6 +70,8 @@
         <service
             android:name=".modules.widget.service.ScheduleDailyService"
             android:permission="android.permission.BIND_REMOTEVIEWS" />
+
+        <activity android:name=".modules.course.view.CourseSearchActivity"></activity>
     </application>
 
 </manifest>
