@@ -69,4 +69,6 @@
     <string name="widget_sync_instruction">Please synchronize your account in daily schedule tab and re-create this widget.</string>
     <string name="title_activity_forum_list">ForumListActivity</string>
     <string name="settings_title_fragment">Settings</string>
+    <string name="about">ABOUT</string>
+    <string name="about_title_fragment">About</string>
 </resources>

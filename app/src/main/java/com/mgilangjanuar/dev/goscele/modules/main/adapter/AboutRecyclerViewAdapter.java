@@ -3,6 +3,7 @@ package com.mgilangjanuar.dev.goscele.modules.main.adapter;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
@@ -27,11 +28,11 @@ import butterknife.BindView;
  * @since 2017
  */
 
-public class SettingRecyclerViewAdapter extends BaseRecyclerViewAdapter<SettingRecyclerViewAdapter.ViewHolder> {
+public class AboutRecyclerViewAdapter extends BaseRecyclerViewAdapter<AboutRecyclerViewAdapter.ViewHolder> {
 
     private List<DataViewModel> list;
 
-    public SettingRecyclerViewAdapter(List<DataViewModel> list) {
+    public AboutRecyclerViewAdapter(List<DataViewModel> list) {
         this.list = list;
     }
 
@@ -47,14 +48,14 @@ public class SettingRecyclerViewAdapter extends BaseRecyclerViewAdapter<SettingR
 
     @Override
     public void initialize(ViewHolder holder, final int position) {
-        DataViewModel model = list.get(position);
+        final DataViewModel model = list.get(position);
         holder.title.setText(model.title);
         holder.subtitle.setText(model.content);
 
         holder.layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View v) {
-                if (position == 2) {
+                if ("Logout".equals(model.title)) {
                     new AlertDialog.Builder(v.getContext())
                             .setTitle("Logout")
                             .setMessage("Are you sure?")
@@ -79,6 +80,33 @@ public class SettingRecyclerViewAdapter extends BaseRecyclerViewAdapter<SettingR
                                 }
                             })
                             .show();
+                } else if ("GitHub Repository".equals(model.title)) {
+                    Intent intent = new Intent(Intent.ACTION_VIEW);
+                    intent.setData(Uri.parse("https://github.com/mgilangjanuar/GoSCELE"));
+                    v.getContext().startActivity(intent);
+                } else if ("License".equals(model.title)) {
+                    new AlertDialog.Builder(v.getContext())
+                            .setTitle("License")
+                            .setMessage("MIT License\n" +
+                                    "\n" +
+                                    "Copyright (c) 2017 M Gilang Januar\n" +
+                                    "\n" +
+                                    "Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the \"Software\"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:\n" +
+                                    "\n" +
+                                    "The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.\n" +
+                                    "\n" +
+                                    "THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.\n")
+                            .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                }
+                            })
+                            .show();
+                } else if ("Development Channel".equals(model.title)) {
+                    Intent intent = new Intent(Intent.ACTION_VIEW);
+                    intent.setData(Uri.parse("https://t.me/joinchat/BBhj0w69cebVtkvUWdCJLg"));
+                    v.getContext().startActivity(intent);
                 }
             }
         });

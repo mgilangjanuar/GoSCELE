@@ -98,8 +98,8 @@ public class MainActivity extends BaseActivity implements CheckLoginListener {
             case R.id.action_schedule:
                 currentFragment = ScheduleFragment.newInstance();
                 break;
-            case R.id.action_setting:
-                currentFragment = SettingFragment.newInstance();
+            case R.id.action_about:
+                currentFragment = AboutFragment.newInstance();
                 break;
         }
 

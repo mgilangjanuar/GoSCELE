@@ -9,11 +9,11 @@ import android.support.v7.widget.Toolbar;
 
 import com.mgilangjanuar.dev.goscele.R;
 import com.mgilangjanuar.dev.goscele.base.BaseFragment;
-import com.mgilangjanuar.dev.goscele.modules.main.presenter.SettingPresenter;
+import com.mgilangjanuar.dev.goscele.modules.main.presenter.AboutPresenter;
 
 import butterknife.BindView;
 
-public class SettingFragment extends BaseFragment {
+public class AboutFragment extends BaseFragment {
 
     @BindView(R.id.toolbar_setting)
     Toolbar toolbar;
@@ -21,10 +21,10 @@ public class SettingFragment extends BaseFragment {
     @BindView(R.id.recycler_view_setting)
     RecyclerView recyclerView;
 
-    private SettingPresenter presenter = new SettingPresenter();
+    private AboutPresenter presenter = new AboutPresenter();
 
-    public static SettingFragment newInstance() {
-        SettingFragment fragment = new SettingFragment();
+    public static AboutFragment newInstance() {
+        AboutFragment fragment = new AboutFragment();
         return fragment;
     }
 
@@ -35,7 +35,7 @@ public class SettingFragment extends BaseFragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
-        recyclerView.setAdapter(presenter.buildAdapter());
+        recyclerView.setAdapter(presenter.buildAdapter(getContext()));
     }
 
     @Override
@@ -50,6 +50,6 @@ public class SettingFragment extends BaseFragment {
 
     @Override
     public String findTitle() {
-        return getString(R.string.settings_title_fragment);
+        return getString(R.string.about_title_fragment);
     }
 }

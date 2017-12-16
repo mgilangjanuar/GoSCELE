@@ -20,9 +20,9 @@
         android:title="@string/schedules"
         app:showAsAction="ifRoom" />
     <item
-        android:id="@+id/action_setting"
+        android:id="@+id/action_about"
         android:enabled="true"
         android:icon="@drawable/ic_menu_more"
-        android:title="@string/settings"
+        android:title="@string/about"
         app:showAsAction="ifRoom" />
 </menu>
