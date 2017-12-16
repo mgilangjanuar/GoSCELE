@@ -1,7 +1,6 @@
 package com.mgilangjanuar.dev.goscele.modules.course.adapter;
 
 import android.content.Intent;
-import android.provider.Browser;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -12,7 +11,6 @@ import com.mgilangjanuar.dev.goscele.base.BaseRecyclerViewAdapter;
 import com.mgilangjanuar.dev.goscele.base.BaseViewHolder;
 import com.mgilangjanuar.dev.goscele.modules.browser.view.BrowserActivity;
 import com.mgilangjanuar.dev.goscele.modules.course.model.CourseSearchModel;
-import com.mgilangjanuar.dev.goscele.modules.course.view.CourseActivity;
 import com.mgilangjanuar.dev.goscele.utils.Constant;
 
 import java.util.List;

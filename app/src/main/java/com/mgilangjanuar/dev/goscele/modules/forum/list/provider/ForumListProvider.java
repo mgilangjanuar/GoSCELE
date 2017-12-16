@@ -51,7 +51,7 @@ public class ForumListProvider extends BaseProvider {
         try {
             List<ForumModel> models = new ArrayList<>();
             Elements elements = elementses.get(0);
-            String title = elements.select("#intro .no-overflow").text();
+            String title = elements.select("div[role=main] > h2").text();
             listener.onGetTitle(title);
             for (Element e: elements.select(".discussion")) {
                 String url = e.select(".topic.starter a").attr("href");

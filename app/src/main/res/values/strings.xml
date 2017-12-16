@@ -72,4 +72,5 @@
     <string name="about">ABOUT</string>
     <string name="about_title_fragment">About</string>
     <string name="hint_search_course">Search course...</string>
+    <string name="hint_search_forum">Search forum...</string>
 </resources>

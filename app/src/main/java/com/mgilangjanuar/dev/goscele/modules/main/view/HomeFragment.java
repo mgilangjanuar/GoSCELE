@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.mgilangjanuar.dev.goscele.R;
 import com.mgilangjanuar.dev.goscele.base.BaseFragment;
 import com.mgilangjanuar.dev.goscele.modules.forum.list.view.ForumListActivity;
+import com.mgilangjanuar.dev.goscele.modules.forum.list.view.ForumSearchActivity;
 import com.mgilangjanuar.dev.goscele.modules.main.adapter.HomeRecyclerViewAdapter;
 import com.mgilangjanuar.dev.goscele.modules.main.listener.HomeListener;
 import com.mgilangjanuar.dev.goscele.modules.main.presenter.HomePresenter;
@@ -107,6 +108,9 @@ public class HomeFragment extends BaseFragment implements HomeListener {
     public boolean onOptionsItemSelected(MenuItem item) {
         String url = "";
         switch (item.getItemId()) {
+            case (R.id.item_search):
+                startActivity(new Intent(getActivity(), ForumSearchActivity.class));
+                return super.onOptionsItemSelected(item);
             case (R.id.academic_announcement):
                 url = "https://scele.cs.ui.ac.id/mod/forum/view.php?id=1";
                 break;
