@@ -1,6 +1,7 @@
 package com.mgilangjanuar.dev.goscele.modules.auth.view;
 
 import android.app.ProgressDialog;
+import android.os.Bundle;
 import android.widget.EditText;
 
 import com.mgilangjanuar.dev.goscele.R;
@@ -26,7 +27,13 @@ public class AuthActivity extends BaseActivity implements AuthListener {
     @BindView(R.id.password)
     EditText password;
 
-    private AuthPresenter authPresenter = new AuthPresenter(this);
+    private AuthPresenter authPresenter;
+
+    @Override
+    public void initialize(Bundle savedInstanceState) {
+        super.initialize(savedInstanceState);
+        authPresenter = new AuthPresenter(this);
+    }
 
     @Override
     public int findLayout() {
