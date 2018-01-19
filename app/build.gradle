@@ -7,8 +7,8 @@ android {
         applicationId "com.mgilangjanuar.dev.goscele"
         minSdkVersion 17
         targetSdkVersion 25
-        versionCode 25
-        versionName "ORION 0.12.1"
+        versionCode 28
+        versionName "ORION 0.12.2"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {

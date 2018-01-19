@@ -1,7 +1,7 @@
 GoSCELE
 =======
 
-[![BuddyBuild](https://dashboard.buddybuild.com/api/statusImage?appID=5a0e3fbf9cb23b000114ce9e&branch=dev&build=latest)](https://dashboard.buddybuild.com/apps/5a0e3fbf9cb23b000114ce9e/build/latest?branch=dev)
+[![BuddyBuild](https://dashboard.buddybuild.com/api/statusImage?appID=5a0e3fbf9cb23b000114ce9e&branch=dev&build=latest)](https://dashboard.buddybuild.com/apps/5a0e3fbf9cb23b000114ce9e/build/latest?branch=master)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 SCELE is a web application for academic information center that becomes daily needs for students in Computer Science of University of Indonesia. Therefore, here is GoSCELE which gives you the best experience in mobile app version of SCELE. 

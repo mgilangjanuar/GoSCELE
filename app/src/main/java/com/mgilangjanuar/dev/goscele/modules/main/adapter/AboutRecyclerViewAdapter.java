@@ -105,7 +105,7 @@ public class AboutRecyclerViewAdapter extends BaseRecyclerViewAdapter<AboutRecyc
                             .show();
                 } else if ("Development Channel".equals(model.title)) {
                     Intent intent = new Intent(Intent.ACTION_VIEW);
-                    intent.setData(Uri.parse("https://t.me/joinchat/BBhj0w69cebVtkvUWdCJLg"));
+                    intent.setData(Uri.parse("https://t.me/joinchat/BBhj00GbOxkbUNh4AyW1Ug"));
                     v.getContext().startActivity(intent);
                 }
             }
