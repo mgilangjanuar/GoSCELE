@@ -3,7 +3,7 @@
     <string name="username">Username</string>
     <string name="password">Password</string>
     <string name="signin">Sign In</string>
-    <string name="copyrights">GoSCELE - Unofficial App © 2017</string>
+    <string name="copyrights">GoSCELE - Unofficial App © 2018</string>
     <string name="username_password_required_field">Username and password are required field</string>
     <string name="connection_problem">Connection problem</string>
     <string name="username_password_wrong">Username or password wrong</string>

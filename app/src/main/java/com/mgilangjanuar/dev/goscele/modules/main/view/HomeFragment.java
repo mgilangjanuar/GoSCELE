@@ -59,6 +59,9 @@ public class HomeFragment extends BaseFragment implements HomeListener {
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         presenter.runProvider();
 
+        presenter.runProvider(true);
+        swipeRefreshLayout.setRefreshing(true);
+
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {

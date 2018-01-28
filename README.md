@@ -1,14 +1,14 @@
 GoSCELE
 =======
 
-[![BuddyBuild](https://dashboard.buddybuild.com/api/statusImage?appID=5a0e3fbf9cb23b000114ce9e&branch=dev&build=latest)](https://dashboard.buddybuild.com/apps/5a0e3fbf9cb23b000114ce9e/build/latest?branch=master)
+[![BuddyBuild](https://dashboard.buddybuild.com/api/statusImage?appID=5a0e3fbf9cb23b000114ce9e&branch=master&build=latest)](https://dashboard.buddybuild.com/apps/5a0e3fbf9cb23b000114ce9e/build/latest?branch=master)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 SCELE is a web application for academic information center that becomes daily needs for students in Computer Science of University of Indonesia. Therefore, here is GoSCELE which gives you the best experience in mobile app version of SCELE. 
 
 GoSCELE is an open source project and my first native Android application with Java language.
 
-![featured image](https://github.com/mgilangjanuar/GoSCELE/blob/dev/featured_image.png)
+![featured image](https://github.com/mgilangjanuar/GoSCELE/blob/master/featured_image.png)
 
 
 Requirements
@@ -27,7 +27,7 @@ How To Contribute
 -----------------
  - Give star for this repository
  - Fork and make changes
- - Create pull request to [dev branch](https://github.com/mgilangjanuar/GoSCELE/tree/dev)
+ - Create pull request to [master branch](https://github.com/mgilangjanuar/GoSCELE/tree/master)
 
 
 Development Channel
